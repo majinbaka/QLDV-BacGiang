@@ -1,0 +1,134 @@
+body{
+    background-color: #36bbfa;
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
+    text-align: center;
+}
+#app{
+    padding: 10px;
+    text-align: center;
+}
+.title {
+    line-height: 1.5em;
+    font-size: 2em;
+    font-weight: 500;
+    margin-block-end: 0;
+}
+.sub-title {
+    line-height: 1.5em;
+    font-size: 2em;
+    font-weight: 700;
+    margin-block-start: 0;
+}
+
+footer {
+    position:absolute;
+    width: 100%;
+    font-size: 13px;
+    font-weight: 400;
+    bottom: 10px;
+}
+
+.block-login{
+    color: #4f4f4f;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    background-image: url(../images/logindiv.png);
+    margin: 0 auto;
+    width: 362px;
+    height: 340px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 12px;
+    box-shadow: 5px 10px 25px rgba(0, 0, 0, 0.26);
+}
+
+.block-login .title-login {
+    font-size: 20px;
+    text-align: left;
+}
+
+.block-login input.login-button {
+    background: #da251d;
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+    padding: 10px 90px;
+    border-radius: 4px;
+    border-bottom-width: 3px;
+    border-bottom-color: #ff703e;
+    margin: 0 auto;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.block-login label{
+    display: block;
+    text-align: left;
+}
+
+.group-login{
+    margin-top: 25px;
+    text-align: left;
+}
+
+.block-login .login-input {
+    width: 278px;
+    margin-top: 6px;
+    text-align: left;
+    padding: 10px;
+    border-radius: 1px;
+    border: 1px #e2f3fb solid;
+    background-color: #fff !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #4f4f4f;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.remember {
+    float: left;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.remember-span {
+    float: left;
+    margin-top: 7px;
+    padding-left: 4px;
+}
+
+.forgot-href {
+    float: right;
+    margin-right: 5px;
+    margin-top: 7px;
+}
+
+.show-password{
+    position: absolute;
+    margin-top: -30px;
+    margin-left: 230px;
+    background-color: #e7d42459;
+    padding: 4px 10px;
+    cursor: pointer;
+    width: 45px;
+}
+
+.block-login .container {
+    margin: 20px 30px 20px 30px;
+    padding: 30px 0px 0px 0px;
+}
+
+.login-item {
+
+}
