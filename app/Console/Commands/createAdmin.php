@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\User;
 use Bouncer;
+use Illuminate\Support\Facades\Hash;
 
 class createAdmin extends Command
 {
@@ -57,7 +58,7 @@ class createAdmin extends Command
             $user = new User();
             $user->name = $name;
             $user->email = $email;
-            $user->password = $password;
+            $user->password = Hash::make($password);
             $user->save();
             Bouncer::assign('admin')->to($user);
             $this->info('User '.$user->name.' has been generated !');
