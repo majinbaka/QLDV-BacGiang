@@ -22,11 +22,11 @@
                     <div>
                         <div class="group-login">
                             <label for="">TÀI KHOẢN</label>
-                            <input type="text" class="login-input">
+                            <input type="text" name="email" class="login-input">
                         </div>
                         <div class="group-login">
                             <label for="">MẬT KHẨU</label>
-                            <input type="password" class="login-input input-password">
+                            <input type="password" name="password" class="login-input input-password">
                             <span class="show-password">Hiển thị</span>
                         </div>
                         <div>
