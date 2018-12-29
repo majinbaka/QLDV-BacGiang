@@ -47,7 +47,7 @@ img.notification-img:last-child {
     width: 100%;
 }
 .container.body {
-    margin-top: 19px;
+    margin-top: 20px;
 }
 .left-bar {
     width:255px;
@@ -56,9 +56,15 @@ img.notification-img:last-child {
 }
 .left-bar span{
     display: block;
-    line-height: 28px;
+    line-height: 30px;
     background-color: #006db7;
-    height: 28px;
+    height: 30px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding-left: 12px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
 }
 .main-list ul{
     list-style-type: none;
@@ -66,21 +72,35 @@ img.notification-img:last-child {
     padding: 0;
     overflow: hidden;
 }
+.main-list li {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 27px;
+    background-color: #fbfbfb;
+    border: 1px solid #e2e2e2;
+    border-bottom: 0;
+}
+.main-list li ul li {
+    border-left: 0px;
+    border-right: 0px;
+}
+.main-list li:last-child {
+    border-bottom: 1px solid #e2e2e2;
+}
+.main-list li ul li:last-child {
+    border-bottom: 0px;
+}
 .main-list ul li a {
     display: block;
     color: #000;
-    padding: 16px;
     text-decoration: none;
 }
-.main-list ul li.active a {
-    background-color: #006db7;
-    color: #fff;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
+.main-list li.active a {
+    color: #006db7;
 }
-.main-list ul li a:hover {
-    background-color: #006db7;
-    color: #fff;
+.main-list li a:hover {
+    background-color: #c0ebff;
 }
 .main-list, .submenu {
     list-style: none;
@@ -89,26 +109,17 @@ img.notification-img:last-child {
 }
 .main-list a {
     display: block;
-    background-color: #CCC;
     text-decoration: none;
-    padding: 10px;
     color: #000;
+    padding-left: 20px;
 }
 .main-list a:hover {
-      background-color: #C5C5C5;
+      background-color: #c0ebff;
 }
   
 .main-list li.active .submenu {
     display: block;
     max-height: 200px;
-}
-  
-.submenu a {
-    background-color: #999;
-}
-  
-.submenu a:hover {
-    background-color: #666;
 }
   
 .submenu {

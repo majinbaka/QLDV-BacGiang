@@ -10,7 +10,8 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:700&amp;subset=vietnamese" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:600,700&amp;subset=vietnamese" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,500&amp;subset=vietnamese" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -28,9 +29,7 @@
                     <div class="span">
                         <span>Admin</span>
                         <span>
-                            <img src="{{asset('images/thong bao icon.png')}}" class="notification-img" >
-                            <img class="notification-img" src="{{asset('images/doi mat khau icon.png')}}">
-                            <img class="notification-img" src="{{asset('images/Logout icon.png')}}" >
+                            <img src="{{asset('images/thong bao icon.png')}}" class="notification-img" ><img class="notification-img" src="{{asset('images/doi mat khau icon.png')}}"><img class="notification-img" src="{{asset('images/Logout icon.png')}}" >
                         </span>
                     </div>
                     <img class="avatar"  src="{{asset('images/icon_doan.png')}}">
@@ -47,7 +46,12 @@
                 </ul>
             </div>
         </div>
-        @yield('content')
+        <div class="body container">
+            <div class="left-bar">
+                @yield('left-bar')
+            </div>
+            @yield('content')
+        </div>
         <footer>
             Copyright &copy; Tỉnh Đoàn Bắc Giang<br>
         </footer>
