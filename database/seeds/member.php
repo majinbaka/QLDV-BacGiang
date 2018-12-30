@@ -12,8 +12,8 @@ class member extends Seeder
      */
     public function run()
     {
-        for($i =0; $i < 80000; $i++)
-        DB::table('members')->insert([
+        for ($i =0; $i < 80000; $i++) {
+            DB::table('members')->insert([
             'uuid' => str_random(10).$i,
             'avatar' => str_random(10).$i,
             'fullname' => str_random(10).$i,
@@ -44,5 +44,6 @@ class member extends Seeder
             'english_level' => 1,
             'join_dang' => '2012-11-11',
         ]);
+        }
     }
 }

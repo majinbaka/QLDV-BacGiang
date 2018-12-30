@@ -35,98 +35,85 @@
     </div>
 </div>
 <div class="body">
-  <a class="addnew" href="#" >Thêm mới</a>
-  <a class="addnew" href="#" >Sửa </a> 
-  <button class="delete">Xoá</button>
-  Có tổng sô <span style="color:#fc0202;font-weight:bold;line-height: 30px;">{{$memberc}}</span> đoàn viên
-  <table>
-    <thead>
-      <td><input type="checkbox" id="checkAll"></td>
-      <td>MÃ ĐOÀN VIÊN</td>
-      <td>HỌ TÊN</td>
-      <td>ĐƠN VỊ</td>
-      <td>CHỨC VỤ</td>
-    </thead>
-    <tbody>
-      @foreach ($members as $member)
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>{{$member->code}}</td>
-            <td>{{$member->fullname}}</td>
-            <td>{{$member->group_id}}</td>
-            <td>{{$member->position}}</td>
-        </tr>
-      @endforeach
-    </tbody>
-  </table>
-  {{ $members->links() }}
+    <a class="addnew" href="#" >Thêm mới</a>
+    <a class="addnew" href="#" >Sửa </a> 
+    <button class="delete">Xoá</button>
+    Có tổng số <span style="color:#fc0202;font-weight:bold;line-height: 30px;">{{$memberc}}</span> đoàn viên
+    <form action="" method="POST">
+        @csrf
+        <table>
+            <thead>
+                <td><input type="checkbox" id="checkAll"></td>
+                <td>MÃ ĐOÀN VIÊN</td>
+                <td>HỌ TÊN</td>
+                <td>ĐƠN VỊ</td>
+                <td>CHỨC VỤ</td>
+            </thead>
+            <tbody>
+                @foreach ($members as $member)
+                    <tr>
+                        <td><input type="checkbox" name="member_ids[]" value="{{$member->id}}"></td>
+                        <td>{{$member->code}}</td>
+                        <td>{{$member->fullname}}</td>
+                        <td>{{$member->group_id}}</td>
+                        <td>{{$member->position}}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </form>
+    {{ $members->links() }}
 </div>
 <script>
-    $("#checkAll").click(function(){
-    $('input:checkbox').not(this).prop('checked', this.checked);
-});
-$('select').each(function () {
-
-// Cache the number of options
-var $this = $(this),
-    numberOfOptions = $(this).children('option').length;
-
-// Hides the select element
-$this.addClass('s-hidden');
-
-// Wrap the select element in a div
-$this.wrap('<div class="select"></div>');
-
-// Insert a styled div to sit over the top of the hidden select element
-$this.after('<div class="styledSelect"></div>');
-
-// Cache the styled div
-var $styledSelect = $this.next('div.styledSelect');
-
-// Show the first select option in the styled div
-$styledSelect.text($this.children('option').eq(0).text());
-
-// Insert an unordered list after the styled div and also cache the list
-var $list = $('<ul />', {
-    'class': 'options'
-}).insertAfter($styledSelect);
-
-// Insert a list item into the unordered list for each select option
-for (var i = 0; i < numberOfOptions; i++) {
-    $('<li />', {
-        text: $this.children('option').eq(i).text(),
-        rel: $this.children('option').eq(i).val()
-    }).appendTo($list);
-}
-
-// Cache the list items
-var $listItems = $list.children('li');
-
-// Show the unordered list when the styled div is clicked (also hides it if the div is clicked again)
-$styledSelect.click(function (e) {
-    e.stopPropagation();
-    $('div.styledSelect.active').each(function () {
-        $(this).removeClass('active').next('ul.options').hide();
+    $("#checkAll").click(function() {
+        $('input:checkbox').not(this).prop('checked', this.checked);
     });
-    $(this).toggleClass('active').next('ul.options').toggle();
-});
+    $('select').each(function() {
+        var $this = $(this)
+            , numberOfOptions = $(this).children('option').length;
 
-// Hides the unordered list when a list item is clicked and updates the styled div to show the selected list item
-// Updates the select element to have the value of the equivalent option
-$listItems.click(function (e) {
-    e.stopPropagation();
-    $styledSelect.text($(this).text()).removeClass('active');
-    $this.val($(this).attr('rel'));
-    $list.hide();
-    /* alert($this.val()); Uncomment this for demonstration! */
-});
+        $this.addClass('s-hidden');
 
-// Hides the unordered list when clicking outside of it
-$(document).click(function () {
-    $styledSelect.removeClass('active');
-    $list.hide();
-});
+        $this.wrap('<div class="select"></div>');
 
-});
+        $this.after('<div class="styledSelect"></div>');
+
+        var $styledSelect = $this.next('div.styledSelect');
+
+        $styledSelect.text($this.children('option').eq(0).text());
+        var $list = $('<ul />', {
+            'class': 'options'
+        }).insertAfter($styledSelect);
+
+        for(var i = 0; i < numberOfOptions; i++) {
+            $('<li />', {
+                text: $this.children('option').eq(i).text()
+                , rel: $this.children('option').eq(i).val()
+            }).appendTo($list);
+        }
+
+        var $listItems = $list.children('li');
+
+        $styledSelect.click(function(e) {
+            e.stopPropagation();
+            $('div.styledSelect.active').each(function() {
+                $(this).removeClass('active').next('ul.options').hide();
+            });
+            $(this).toggleClass('active').next('ul.options').toggle();
+        });
+
+        $listItems.click(function(e) {
+            e.stopPropagation();
+            $styledSelect.text($(this).text()).removeClass('active');
+            $this.val($(this).attr('rel'));
+            $list.hide();
+        });
+
+        $(document).click(function() {
+            $styledSelect.removeClass('active');
+            $list.hide();
+        });
+
+    });
 </script>
 @endsection
