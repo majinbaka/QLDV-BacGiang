@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:600,700&amp;subset=vietnamese" rel="stylesheet">
@@ -50,7 +50,9 @@
             <div class="left-bar">
                 @yield('left-bar')
             </div>
-            @yield('content')
+            <div class="content">
+                @yield('content')
+            </div>
         </div>
         <footer>
             Copyright &copy; Tỉnh Đoàn Bắc Giang<br>
