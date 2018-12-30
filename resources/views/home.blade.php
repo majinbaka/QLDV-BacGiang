@@ -41,7 +41,7 @@
   Có tổng sô <span style="color:#fc0202;font-weight:bold;line-height: 30px;">{{$memberc}}</span> đoàn viên
   <table>
     <thead>
-      <td><input type="checkbox"></td>
+      <td><input type="checkbox" id="checkAll"></td>
       <td>MÃ ĐOÀN VIÊN</td>
       <td>HỌ TÊN</td>
       <td>ĐƠN VỊ</td>
@@ -62,6 +62,9 @@
   {{ $members->links() }}
 </div>
 <script>
+    $("#checkAll").click(function(){
+    $('input:checkbox').not(this).prop('checked', this.checked);
+});
 $('select').each(function () {
 
 // Cache the number of options
