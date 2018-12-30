@@ -85,7 +85,35 @@
     border: 1px solid #e2e2e2;
 }
 .content .body {
+    margin-top: 12px;
+    border-radius: 5px;
+    border: 1px solid #e2e2e2;
+    padding: 8px;
 }
+.content .body table{
+    border-collapse: collapse;
+    width: 100%;
+  }
+  .content .body table thead{
+    background-color: #36bbfa;
+    border: none;
+    color: #fff;
+  }
+  .content .body table thead td, th {
+    border: none;
+    text-align: center;
+    padding: 8px;
+  }
+
+  .content .body table td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .content .body table tr:nth-child(even) {
+    background-color: #dddddd;
+  }
 img.notification-img {
     margin-right: 8px;
     margin-left: 0px;

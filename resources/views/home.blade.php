@@ -16,7 +16,7 @@
             <input type="text" name="fullname" class="search-fullname">
             <label> Đơn vị </label>
             <select name="group" class="custom-select">
-                <option value="0">Select car:</option>
+                <option value=""></option>
                 <option value="1">Audi</option>
                 <option value="2">BMW</option>
                 <option value="3">Citroen</option>
@@ -35,7 +35,47 @@
     </div>
 </div>
 <div class="body">
-321
+  Thêm mới sửa xoá 
+  Có tổng sô 77201 đoàn viên
+  <table>
+    <thead>
+      <td><input type="checkbox"></td>
+      <td>MÃ ĐOÀN VIÊN</td>
+      <td>HỌ TÊN</td>
+      <td>ĐƠN VỊ</td>
+      <td>CHỨC VỤ</td>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td>A8052005</td>
+        <td>Đào thị an</td>
+        <td>Chi đoàn thôn nhất, Đoàn xã cảnh thuỵ, huyện yên dũng </td>
+        <td>Đoàn viên</td>
+      </tr>
+      <tr>
+          <td><input type="checkbox"></td>
+          <td>A8052005</td>
+          <td>Đào thị an</td>
+          <td>Chi đoàn thôn nhất, Đoàn xã cảnh thuỵ, huyện yên dũng </td>
+          <td>Đoàn viên</td>
+      </tr>
+      <tr>
+          <td><input type="checkbox"></td>
+          <td>A8052005</td>
+          <td>Đào thị an</td>
+          <td>Chi đoàn thôn nhất, Đoàn xã cảnh thuỵ, huyện yên dũng </td>
+          <td>Đoàn viên</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox"></td>
+            <td>A8052005</td>
+            <td>Đào thị an</td>
+            <td>Chi đoàn thôn nhất, Đoàn xã cảnh thuỵ, huyện yên dũng </td>
+            <td>Đoàn viên</td>
+        </tr>
+    </tbody>
+  </table>
 </div>
 <script>
 $('select').each(function () {
