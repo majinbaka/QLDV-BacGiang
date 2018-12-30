@@ -2,6 +2,13 @@
     margin: 0 auto;
     padding: 0;
 }
+body{
+    height: 100%;
+    background-image: url(../images/bg.png);
+    background-position: bottom right;
+    background-size: 502px 600px;
+    background-repeat: no-repeat;
+}
 .header {
     background-color: #36bbfa;
     height: 75px;
@@ -16,6 +23,9 @@
     position: absolute;
     line-height: 75px;
     font-size: 30px;
+}
+.main-area {
+
 }
 .content {
     width: 100%;
@@ -33,6 +43,7 @@
     padding-left: 12px;
 }
 .content .search-area {
+    background: rgba(255,255,255,0.55);
     height: 92px;
     border: 1px solid #e2e2e2;
 }
@@ -85,10 +96,13 @@
     border: 1px solid #e2e2e2;
 }
 .content .body {
+    background-color: #fff;
     margin-top: 12px;
     border-radius: 5px;
     border: 1px solid #e2e2e2;
     padding: 8px;
+    text-align: right;
+    margin-bottom: 20px;
 }
 .content .body table{
     border-collapse: collapse;
@@ -101,18 +115,21 @@
   }
   .content .body table thead td, th {
     border: none;
+    font-weight: 500;
     text-align: center;
-    padding: 8px;
+    padding: 0px 8px;
+    height: 24px;
   }
 
   .content .body table td, th {
     border: 1px solid #dddddd;
     text-align: left;
-    padding: 8px;
+    padding: 0px 8px;
+    height: 24px;
   }
   
   .content .body table tr:nth-child(even) {
-    background-color: #dddddd;
+    background-color: #efefef;
   }
 img.notification-img {
     margin-right: 8px;
@@ -243,7 +260,6 @@ footer{
     height: 39px;
     text-align: center;
     bottom: 0;
-    position: absolute;
     width: 100%;
     line-height: 40px;
     font-family: 'Roboto', sans-serif;
@@ -362,6 +378,19 @@ footer{
 .options li:hover {
     background-color:#39f;
     color:white;
+}
+
+.pagination {
+    list-style: none;
+    display: inline-flex;
+    margin-top: 12px;
+    margin-bottom: 20px;
+}
+.pagination li{
+    padding: 0px 5px;
+}
+.page-item.active{
+    color: #d56e1e;
 }
 @media (min-width: 576px) {
     .container{

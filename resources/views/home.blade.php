@@ -36,7 +36,7 @@
 </div>
 <div class="body">
   Thêm mới sửa xoá 
-  Có tổng sô 77201 đoàn viên
+  Có tổng sô {{$memberc}} đoàn viên
   <table>
     <thead>
       <td><input type="checkbox"></td>
@@ -46,36 +46,18 @@
       <td>CHỨC VỤ</td>
     </thead>
     <tbody>
-      <tr>
-        <td><input type="checkbox"></td>
-        <td>A8052005</td>
-        <td>Đào thị an</td>
-        <td>Chi đoàn thôn nhất, Đoàn xã cảnh thuỵ, huyện yên dũng </td>
-        <td>Đoàn viên</td>
-      </tr>
-      <tr>
-          <td><input type="checkbox"></td>
-          <td>A8052005</td>
-          <td>Đào thị an</td>
-          <td>Chi đoàn thôn nhất, Đoàn xã cảnh thuỵ, huyện yên dũng </td>
-          <td>Đoàn viên</td>
-      </tr>
-      <tr>
-          <td><input type="checkbox"></td>
-          <td>A8052005</td>
-          <td>Đào thị an</td>
-          <td>Chi đoàn thôn nhất, Đoàn xã cảnh thuỵ, huyện yên dũng </td>
-          <td>Đoàn viên</td>
-        </tr>
+      @foreach ($members as $member)
         <tr>
             <td><input type="checkbox"></td>
-            <td>A8052005</td>
-            <td>Đào thị an</td>
-            <td>Chi đoàn thôn nhất, Đoàn xã cảnh thuỵ, huyện yên dũng </td>
-            <td>Đoàn viên</td>
+            <td>{{$member->code}}</td>
+            <td>{{$member->fullname}}</td>
+            <td>{{$member->group_id}}</td>
+            <td>{{$member->position}}</td>
         </tr>
+      @endforeach
     </tbody>
   </table>
+  {{ $members->links() }}
 </div>
 <script>
 $('select').each(function () {
