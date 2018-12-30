@@ -35,8 +35,10 @@
     </div>
 </div>
 <div class="body">
-  Thêm mới sửa xoá 
-  Có tổng sô {{$memberc}} đoàn viên
+  <a class="addnew" href="#" >Thêm mới</a>
+  <a class="addnew" href="#" >Sửa </a> 
+  <button class="delete">Xoá</button>
+  Có tổng sô <span style="color:#fc0202;font-weight:bold;line-height: 30px;">{{$memberc}}</span> đoàn viên
   <table>
     <thead>
       <td><input type="checkbox"></td>

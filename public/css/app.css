@@ -181,6 +181,30 @@ img.notification-img:last-child {
     font-size: 15px;
     font-weight: 500;
 }
+button.delete{
+    background-color: #da251d;
+    padding: 5px 10px;
+    color: #fff;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    float:left;
+    margin-left: 7px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+}
+a.addnew{
+    background-color: #006db7;
+    padding: 4px 10px;
+    color: #fff;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    float: left;
+    text-decoration: none;
+    margin: 0px 7px;
+    font-size: 14px;
+    font-weight: 500;
+}
 .main-list ul{
     list-style-type: none;
     margin: 0;
@@ -385,6 +409,10 @@ footer{
     display: inline-flex;
     margin-top: 12px;
     margin-bottom: 20px;
+}
+.pagination a {
+    text-decoration: none;
+    color: #000;
 }
 .pagination li{
     padding: 0px 5px;
