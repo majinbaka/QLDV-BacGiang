@@ -42,9 +42,11 @@
         </div>
 
         <footer>
+            <div class="container">
             Copyright &copy; Tỉnh Đoàn Bắc Giang<br>
             Hỗ trợ kỹ thuật 0964.232.988<br>
             Email: ducdq@bacgiang.gov.vn<br>
+            </div>
         </footer>
     </div>
     <script
