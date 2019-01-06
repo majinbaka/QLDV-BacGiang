@@ -29,7 +29,7 @@
                     <div class="span">
                         <span>{{Auth::user()->name}}</span>
                         <span>
-                            <img src="{{asset('images/thong bao icon.png')}}" class="notification-img" ><img class="notification-img" src="{{asset('images/doi mat khau icon.png')}}"><a class="dropdown-item" href="{{ route('logout') }}"
+                            <img class="notification-img" src="{{asset('images/doi mat khau icon.png')}}"><a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                           document.getElementById('logout-form').submit();"><img class="notification-img" src="{{asset('images/Logout icon.png')}}" >
                          </a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
