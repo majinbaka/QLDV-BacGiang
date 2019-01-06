@@ -8,7 +8,10 @@
 	font-weight: normal;
 	font-style: normal;
 }
-
+html, body {
+    margin: 0px;
+    padding: 0px;
+}
 body{
     background-color: #36bbfa;
     font-family: 'Roboto', sans-serif;
