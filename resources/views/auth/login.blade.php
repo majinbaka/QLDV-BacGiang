@@ -30,8 +30,8 @@
                             <span class="show-password">Hiển thị</span>
                         </div>
                         <div>
-                            <input class="remember" type="checkbox"><span class="remember-span"> Ghi nhớ</span>
-                            <a class="forgot-href" href="">Quên mật khẩu</a>
+                            <input name="remember" class="remember" type="checkbox"><span class="remember-span"> Ghi nhớ</span>
+                            <a class="forgot-href" href="/password/reset">Quên mật khẩu</a>
                         </div>
                         <div class="login-item">
                             <input class="login-button" type="submit" value="ĐĂNG NHẬP">

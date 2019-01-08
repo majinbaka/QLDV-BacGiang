@@ -420,6 +420,10 @@ footer{
 .page-item.active{
     color: #d56e1e;
 }
+.left-bar .avatar-member
+{
+    
+}
 @media (min-width: 576px) {
     .container{
         max-width: 576px;
