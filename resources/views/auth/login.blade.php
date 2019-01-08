@@ -23,11 +23,21 @@
                         <div class="group-login">
                             <label for="">TÀI KHOẢN</label>
                             <input type="text" name="email" class="login-input">
+                            @if ($errors->has('email'))
+                                <span style="color:red;">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="group-login">
                             <label for="">MẬT KHẨU</label>
                             <input type="password" name="password" class="login-input input-password">
                             <span class="show-password">Hiển thị</span>
+                            @if ($errors->has('password'))
+                                <span style="color:red">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div>
                             <input name="remember" class="remember" type="checkbox"><span class="remember-span"> Ghi nhớ</span>
