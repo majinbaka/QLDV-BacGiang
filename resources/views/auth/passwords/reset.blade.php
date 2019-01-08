@@ -14,7 +14,7 @@
         <h1 class="title">ĐOÀN TNCS HỒ CHÍ MINH TỈNH BẮC GIANG</h1>
         <h2 class="sub-title">PHẦN MỀM QUẢN LÝ ĐOÀN VIÊN</h2>
 
-        <div class="block-login" style="height: 400px;background-repeat:no-repeat;background-color:#fafcfd;">
+        <div class="block-login" style="height: 430px;background-repeat:no-repeat;background-color:#fafcfd;">
             <div class="container">
                 <form method="POST" action="{{route('password.update')}}">
                     @csrf
@@ -24,10 +24,20 @@
                         <div class="group-login">
                             <label for="">EMAIL</label>
                             <input type="email" name="email" class="login-input">
+                            @if ($errors->has('email'))
+                                <span style="color:red;">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="group-login">
                             <label for="">MẬT KHẨU</label>
                             <input type="password" name="password" class="login-input">
+                            @if ($errors->has('password'))
+                                <span style="color:red;">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="group-login">
                             <label for="">XÁC NHẬN MẬT KHẨU</label>
