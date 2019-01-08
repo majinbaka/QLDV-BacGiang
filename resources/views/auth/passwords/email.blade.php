@@ -23,6 +23,11 @@
                         <div class="group-login">
                             <label for="">EMAIL</label>
                             <input type="text" name="email" class="login-input">
+                            @if ($errors->has('email'))
+                                <span style="color:red;">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="login-item">
                             <input class="login-button" type="submit" value="Gửi mail đặt lại mật khẩu">
