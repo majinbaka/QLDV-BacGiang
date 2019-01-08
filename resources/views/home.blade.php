@@ -9,11 +9,12 @@
         <div class="arrow-down"></div>
     </div>
     <div class="content-area">
-        <form class="search-form"> 
+        <form class="search-form" method="POST" action="{{route('member.search')}}"> 
+            @csrf
             <label>Mã đoàn viên</label>
-            <input type="text" name="code" class="search-code" >
+        <input type="text" name="code" class="search-code" @isset($code)value="{{$code}}"@endisset>
             <label> Họ tên</label>
-            <input type="text" name="fullname" class="search-fullname">
+            <input type="text" name="fullname" class="search-fullname" @isset($fullname)value="{{$fullname}}"@endisset>
             <label> Đơn vị </label>
             <select name="group" class="custom-select">
                 <option value=""></option>
