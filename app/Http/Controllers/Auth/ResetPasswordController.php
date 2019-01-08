@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\ResetsPasswords;
 use App\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class ResetPasswordController extends Controller
 {
@@ -42,7 +43,7 @@ class ResetPasswordController extends Controller
 
     public function showResetForm(Request $request, $token = null)
     {
-        $ps = PasswordReset::all();
+        $ps = PasswordReset::where('created_at', '>', Carbon::now()->subHour()->toDateTimeString())->get();
         foreach($ps as $p){
             if (Hash::check($token, $p->token))
                 return view('auth.passwords.reset')->with(
