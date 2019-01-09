@@ -100,7 +100,6 @@ body{
     border: 1px solid #e2e2e2;
     padding: 8px;
     text-align: right;
-    margin-bottom: 20px;
 }
 .content .body table{
     border-collapse: collapse;
@@ -279,6 +278,7 @@ a.addnew{
 }
 
 footer{
+    margin-top:20px;
     height: 39px;
     text-align: center;
     bottom: 0;
