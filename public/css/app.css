@@ -8,6 +8,7 @@ body{
     background-position: bottom right;
     background-size: 502px 600px;
     background-repeat: no-repeat;
+    font-size: 0;
 }
 .header {
     background-color: #36bbfa;
@@ -23,9 +24,6 @@ body{
     position: absolute;
     line-height: 75px;
     font-size: 30px;
-}
-.main-area {
-
 }
 .content {
     width: 100%;
@@ -143,7 +141,7 @@ img.notification-img:last-child {
 
 .header .right-area {
     float: right;
-    padding: 17px;
+    padding: 17px 0px;
 }
 .header .right-area .span{
     text-align: right;
@@ -422,7 +420,123 @@ footer{
 }
 .left-bar .avatar-member
 {
-    
+    border-radius: 4px;
+    width: 222px;
+    height: 330px;
+    background-color: #efefef;
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    text-align: center;
+    color: #000;
+    border: 1px solid #e5e5e5;
+    margin-bottom: 40px;
+}
+
+.left-bar .avatar-member .name
+{
+    width: 222px;
+    height: 42px;
+    background-color: #e5e5e5;
+    line-height: 42px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.content-member .title {
+    text-align: left;
+    height: 36px;
+    line-height: 36px;
+    background-color: #36bbfa;
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color:#fff;
+    padding-left: 15px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.content-member .content-body{
+    padding: 25px 35px 20px 25px;
+    background-color: #eeeded;
+    border-radius: 4px;
+    border: 1px solid #e5e5e5;
+    font-size: 0px;
+}
+.attachment {
+    margin-top: 15px;
+    margin-bottom:23px;
+    border-radius: 4px;
+    border: 1px solid #e5e5e5;
+    font-size: 12px;
+    height: 66px;
+}
+.content-body label{
+    font-size: 12px;
+    font-weight:500;
+}
+.attachment .title{
+    height: 26px;
+    background-color: #ebebeb;
+    line-height: 26px;
+    padding-left: 10px;
+}
+.content-body input[type=text] {
+    height:20px;
+    border-radius:3px;
+    background-color:#dddddd;
+    border-style:solid;
+    border-width:1px;
+    border-color:#d0d0d0;
+    padding-left: 10px;
+    margin-bottom: 12px;
+  }
+
+  label.mini-label {
+    font-size: 10px;
+    font-weight: 300;
+    position: absolute;
+    margin-top: -13px;
+}
+.notification {
+    margin-top: 10px;
+    line-height: 30px;
+    width: 500px;
+}
+.my-notify-error {
+    padding: 0px 10px;
+    color: #D8000C;
+    font-size: 14px;
+    background-color: #FFD2D2;
+}
+
+.my-notify-success {
+    padding: 0px 10px;
+    color: #00a508;
+    font-size: 14px;
+    background-color: rgb(214, 255, 210);
+}
+
+.change-pass-label{
+    width: 180px;
+    display: inline-block;
+    margin-left: 0px;
+}
+.change-pass-login-input{
+    width: 200px;
+    padding: 4px;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+}
+.group-login{
+    margin: 10px;
+}
+.login-button{
+    width: 120px;
+    height: 24px;
+    background-color: #006db7;
+    color: #fff;
+    border-radius: 5px;
 }
 @media (min-width: 576px) {
     .container{
@@ -442,8 +556,8 @@ footer{
     }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1161px) {
     .container{
-        max-width: 1200px;
+        max-width: 1161px;
     }
 }

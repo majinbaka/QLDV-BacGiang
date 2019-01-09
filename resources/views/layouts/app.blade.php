@@ -29,7 +29,7 @@
                     <div class="span">
                         <span>{{Auth::user()->name}}</span>
                         <span>
-                            <img class="notification-img" src="{{asset('images/doi mat khau icon.png')}}"><a class="dropdown-item" href="{{ route('logout') }}"
+                            <a href="{{route('profile.edit')}}"><img class="notification-img" src="{{asset('images/doi mat khau icon.png')}}"></a> <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                           document.getElementById('logout-form').submit();"><img class="notification-img" src="{{asset('images/Logout icon.png')}}" >
                          </a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -44,13 +44,14 @@
         <div class="top-navigation">
             <div class="container">
                 <ul>
-                    <li class="active"><a href="">HỒ SƠ ĐOÀN VIÊN</a></li>
+                    <li class="active"><a href="{{route('home')}}">HỒ SƠ ĐOÀN VIÊN</a></li>
                     <li><a href="">BÁO CÁO THỐNG KÊ</a></li>
-                    <li><a href="">DANH MỤC</a></li>
+                    <li><a href="{{route('group.index')}}">DANH MỤC</a></li>
                     <li><a href="">QUẢN TRỊ</a></li>
                 </ul>
             </div>
         </div>
+        @include('layouts.notification')
         <div class="body container">
             <div class="left-bar">
                 @yield('left-bar')
