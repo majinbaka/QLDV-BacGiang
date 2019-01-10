@@ -27,14 +27,14 @@ $(".has_sub").click(function() {
                 <label>Tên đơn vị</label>
                 <input type="text" name="name" class="search-code" style="width:300px">
                 <label for="parent_id"> Đơn vị cấp trên</label>
-                <select name="parent_id" class="custom-select">
+                <select name="parent_id" class="custom-select ">
                     <option value="0">TỈNH ĐOÀN BẮC GIANG</option>
                     @foreach($groupsFilter as $group)
                         <option value="{{$group->uuid}}">
-                            {{$group->name}}
+                            --{{$group->name}}
                         </option>
                         @if($group->childrens)
-                            @include('groups._child_option', ['groupsFilter' => $group->childrens])
+                            @include('groups._child_option', ['groupsFilter' => $group->childrens, 'selected' => 0])])
                         @endif
                     @endforeach
                 </select>

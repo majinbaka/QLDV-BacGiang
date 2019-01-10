@@ -34,4 +34,11 @@ class Group extends Model
 
         return $father;
     }
+
+    public function getExceptChildrens($uuid = null){
+        if($uuid === null)
+            return $this->childrens->where('uuid', '<>', $this->uuid);
+        else
+            return $this->childrens->where('uuid', '<>', $uuid)->where('parent_id','<>', $uuid);
+    }
 }

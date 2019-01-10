@@ -27,8 +27,16 @@ class GroupController extends Controller
     //     return view('groups.create');
     // }
 
-    public function edit(){
+    public function edit($uuid){
+        $user = Auth::user();
+        if ($user->isAn('admin')){
+            $group = Group::where('uuid', $uuid)->first();
+            $groups = Group::where('uuid', "<>", $uuid)->where('parent_id', 0)->get();
 
+            return view('groups.edit')->with('groups', $groups)->with('group', $group)->withSuccess(session()->get('success'));
+        }
+
+        return "Tính năng đang phát triển";
     }
 
     public function store(){
@@ -69,9 +77,54 @@ class GroupController extends Controller
 
         return \redirect()->route('group.index');
     }
-    public function update(){
 
+    public function update($uuid){
+        $user = Auth::user();
+        if ($user->isAn('admin')){
+            $group = Group::where('uuid', $uuid)->first();
+            if (!$group){
+                return redirect()->route('group.index')
+                    ->withErrors('đơn vị không tồn tại');
+            }
+
+            $validator = Validator::make(request()->all(), [
+                'name' => 'required',
+                'parent_id' => 'required',
+            ],
+            [
+                'name.required' => 'Chưa nhập tên đơn vị cần tạo',
+                'parent_id.required' => 'Đơn vị cấp trên không hợp lệ',
+            ]);
+    
+            if ($validator->fails()) {
+                return redirect()->route('group.edit', $uuid)
+                            ->withErrors($validator)
+                            ->withInput();
+            }
+
+            try{
+                $parent_id = 0;
+                $level = 1;
+                if (request()->get('parent_id') != '0'){
+                    $parent_group = Group::where('uuid', request()->get('parent_id'))->first();
+                    $parent_id = $parent_group->id;
+                    $level = $parent_group->level + 1;
+                }
+
+                $group->name = request()->get('name');
+                $group->parent_id = $parent_id;
+                $group->level = $level;
+                $group->save();
+
+                return redirect()->route('group.edit', $group->uuid)->withSuccess('Sửa thông tin thành công');
+            } catch(Exception $e){
+    
+            }
+        }
+
+        return "Tính năng đang phát triển";
     }
+
     public function delete(){
         $group_ids = request()->get('group_ids');
         if (is_array($group_ids))

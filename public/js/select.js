@@ -1,6 +1,5 @@
 $('select').each(function() {
-    var $this = $(this)
-        , numberOfOptions = $(this).children('option').length;
+    var $this = $(this), numberOfOptions = $(this).children('option').length;
 
     $this.addClass('s-hidden');
 
@@ -10,7 +9,7 @@ $('select').each(function() {
 
     var $styledSelect = $this.next('div.styledSelect');
 
-    $styledSelect.text($this.children('option').eq(0).text());
+    $styledSelect.text($this.children('option:selected').eq(0).text());
     var $list = $('<ul />', {
         'class': 'options'
     }).insertAfter($styledSelect);
