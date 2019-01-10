@@ -36,7 +36,7 @@
     </div>
 </div>
 <div class="body">
-    <a class="addnew" href="#" >Thêm mới</a>
+    <a class="addnew" href="{{route('member.create')}}" >Thêm mới</a>
     <a class="addnew" href="#" >Sửa </a> 
     <button class="delete" id="removeItems">Xoá</button>
     Có tổng số <span style="color:#fc0202;font-weight:bold;line-height: 30px;">{{$memberc}}</span> đoàn viên

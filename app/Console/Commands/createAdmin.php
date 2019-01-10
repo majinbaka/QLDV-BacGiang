@@ -6,11 +6,12 @@ use Illuminate\Console\Command;
 use App\User;
 use Bouncer;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class createAdmin extends Command
 {
-    protected $signature = 'admin:create {name} {email} {password}';
-    protected $description = 'Command description';
+    protected $signature = 'admin:create {name} {username} {email} {password}';
+    protected $description = 'admin:create {name} {username} {email} {password}';
 
     public function __construct()
     {
@@ -27,6 +28,7 @@ class createAdmin extends Command
         $this->info('You are trying to add new user. By default, this user will be super admin. But, you can update role of this user later.');
         $email = $this->argument('email');
         $name  = $this->argument('name');
+        $username  = $this->argument('username');
         $password = $this->argument('password');
 
         if (trim($email) == "" || trim($name) == "" || trim($password) == "") {
@@ -39,7 +41,9 @@ class createAdmin extends Command
         if (!$user) {
             $user = new User();
             $user->name = $name;
+            $user->username = $username;
             $user->email = $email;
+            $user->uuid = Str::uuid();
             $user->password = Hash::make($password);
             $user->save();
             Bouncer::assign('admin')->to($user);
