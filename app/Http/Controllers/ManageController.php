@@ -11,4 +11,9 @@ class ManageController extends Controller
     {
         return view('manage.index');
     }
+
+    public function setting()
+    {
+        return "Tính năng đang phát triển";
+    }
 }

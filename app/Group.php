@@ -16,8 +16,22 @@ class Group extends Model
         return $this->belongsTo(self::class, 'parent_id');
     }
 
-    public function children()
+    public function childrens()
     {
         return $this->hasMany(self::class, 'parent_id');
+    }
+
+    public function getTopFatherAttribute($value){
+        $father = $this->father;
+        try{
+            if ($father && $father !== null)
+            while($father->level >= 2){
+                $father = $father->father;
+            }
+        }catch(\Exception $e){
+            dd($father);
+        }
+
+        return $father;
     }
 }
