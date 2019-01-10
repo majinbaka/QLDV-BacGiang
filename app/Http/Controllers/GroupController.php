@@ -26,7 +26,12 @@ class GroupController extends Controller
     }
 
     public function show($uuid){
-        return view('groups.create');
+        $group = Group::where('uuid', $uuid)->first();
+        $memberc = Member::where('group_id', $group->id)->count();
+        $groups = Group::where('level', 1)->get();
+        $members = Member::where('group_id', $group->id)->paginate(20);
+
+        return view('home', compact('memberc', 'members', 'groups', 'group'));
     }
 
     public function edit($uuid){

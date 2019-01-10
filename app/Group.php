@@ -35,6 +35,24 @@ class Group extends Model
         return $father;
     }
 
+    public function hasFatherRelation($id){
+        $father = $this->father;
+        try{
+            if ($father && $father !== null)
+            {
+                if ($father->id == $id) return true;
+                while($father = $father->father){
+                    if ($father && $father !== null)
+                    if ($father->id == $id) return true;
+                }
+            }
+        }catch(\Exception $e){
+            dd($father);
+        }
+
+        return $father !== null ? true : false;
+    }
+
     public function getExceptChildrens($uuid = null){
         if($uuid === null)
             return $this->childrens->where('uuid', '<>', $this->uuid);

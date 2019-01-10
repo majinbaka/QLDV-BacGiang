@@ -2,14 +2,20 @@
 <ul class="main-list">
     @foreach($groups as $gr)
         @if(count($gr->childrens) > 0)
-            <li class="has_sub {{$gr->uuid}}" data-uuid="{{$gr->uuid}}" data-parent="0" style="background-color: #c0ebff;">
-                <a style="color: #000;" href="#">{{$gr->name}}</a>
-                <ul style="display:none">
-                    @include('layouts._child_list_group', ['groups' => $gr->childrens])
+            <li class="has_sub {{$gr->uuid}} @isset($group)@if($group->hasFatherRelation($gr->id) === true || $group->id == $gr->id) active @endif @endisset"
+                data-uuid="{{$gr->uuid}}" data-parent="0" style="background-color: #c0ebff;">
+                <a style="color: #000;" href="{{route('group.show', $gr->uuid)}}">{{$gr->name}}</a>
+                <ul @isset($group)@if(!$group->hasFatherRelation($gr->id) === true && $group->id != $gr->id) style="display:none" @endif @endisset>
+                    @isset($group)
+                        @include('layouts._child_list_group', ['groups' => $gr->childrens, 'group' => $group])
+                    @else
+                        @include('layouts._child_list_group', ['groups' => $gr->childrens])
+                    @endisset
                 </ul>
             </li>
         @else
-            <li style="background-color: #c0ebff;"><a href="#">{{$gr->name}}</a></li>
+            <li style="background-color: #c0ebff;" class="@isset($group)@if($group->id == $gr->id) active @endif @endisset">
+                <a href="{{route('group.show', $gr->uuid)}}">{{$gr->name}}</a></li>
         @endif
     @endforeach
 </ul>
