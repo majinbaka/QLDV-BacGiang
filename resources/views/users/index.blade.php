@@ -62,7 +62,7 @@
         $('#edit-user').hide();
     });
 
-    var $checkboxes = $('#member_form input[type="checkbox"]');
+    var $checkboxes = $('#member_form tbody input[type="checkbox"]');
     
     $checkboxes.change(function(){
         var countCheckedCheckboxes = $checkboxes.filter(':checked').length;
