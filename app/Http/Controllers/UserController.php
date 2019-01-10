@@ -16,7 +16,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         if ($user->isAn('admin')){
-            $users = User::all();
+            $users = User::paginate(20);
             $user_count = User::count();
 
             return view('users.index')
@@ -88,5 +88,19 @@ class UserController extends Controller
         }
 
         return "Tính năng đang phát triển";
+    }
+
+    public function delete(){
+        $user_ids = request()->get('user_ids');
+        if (is_array($user_ids))
+        {
+            User::whereIn('uuid', $user_ids)->delete();
+            return redirect()->route('user.index')->withSuccess('Xoá thành công');
+        }
+        else{
+            return redirect()->route('user.index')->withSuccess('Xoá thành công');
+        }
+
+        return \redirect()->back();
     }
 }

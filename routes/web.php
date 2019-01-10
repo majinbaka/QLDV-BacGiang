@@ -22,10 +22,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('manage/setting', 'ManageController@setting')->name('manage.setting');
     Route::post('manage/setting', 'ManageController@updateSetting')->name('manage.update');
 
+
+    //User
     Route::get('user', 'UserController@index')->name('user.index');
     Route::get('user/create', 'UserController@create')->name('user.create');
-    Route::get('user/edit', 'UserController@edit')->name('user.edit');
     Route::post('user', 'UserController@store')->name('user.store');
+    Route::get('user/edit', 'UserController@edit')->name('user.edit');
     Route::post('user/search', 'UserController@search')->name('user.search');
     Route::post('user/{uuid}', 'UserController@update')->name('user.update');
     Route::delete('user/delete', 'UserController@delete')->name('user.delete');

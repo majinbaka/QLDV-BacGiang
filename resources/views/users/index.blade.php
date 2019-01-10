@@ -43,6 +43,7 @@
                 </tbody>
             </table>
         </form>
+        {{ $users->links() }}
     </div>
     <script>
         $("#removeItems").click(function(e) {
@@ -50,7 +51,7 @@
             if (confirma){
                 e.preventDefault();
                 $('#member_form').prepend('<input type="hidden" name="_method" value="DELETE">');
-                $('#member_form').attr('action', "{{route('group.delete')}}").submit();
+                $('#member_form').attr('action', "{{route('user.delete')}}").submit();
             }
         });
         $("#checkAll").click(function() {
