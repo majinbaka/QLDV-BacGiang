@@ -77,11 +77,86 @@ class UserController extends Controller
                 $user->name = request()->get('name');
                 $user->username = request()->get('username');
                 $user->email = request()->get('email');
-                $user->password = Hash::make(request()->get('username'));
+                $user->password = Hash::make(request()->get('password'));
                 $user->uuid = Str::uuid();
                 $user->save();
 
                 return redirect()->route('user.index')->withSuccess('Tạo người dùng mới thành công');
+            } catch(Exception $e){
+    
+            }
+        }
+
+        return "Tính năng đang phát triển";
+    }
+
+    public function edit($uuid){
+        $user = Auth::user();
+        if ($user->isAn('admin')){
+            $groups = Group::all();
+            $user = User::where('uuid', $uuid)->first();
+
+            return view('users.edit')->with('groups', $groups)->with('user', $user)->withSuccess(session()->get( 'success' ));;
+        }
+
+        return "Tính năng đang phát triển";
+    }
+
+    public function update($uuid){
+        $user = Auth::user();
+        if ($user->isAn('admin')){
+            $user = User::where('uuid', $uuid)->first();
+            if (!$user){
+                return redirect()->route('user.index')
+                    ->withErrors('Người dùng không tồn tại');
+            }
+
+            $request = request()->all();
+            if ($request['group'] === null)
+                unset($request['group']);
+            $validator = Validator::make($request, [
+                'name' => 'required',
+                'username' => 'required|regex:/^\S*$/u|unique:users,username,'.$user->id,
+                'email' => 'required|email|unique:users,email,'.$user->id,
+                'group' => 'exists:groups,uuid'
+            ],
+            [
+                'name.required' => 'Chưa nhập tên người dùng',
+                'username.required' => 'Chưa nhập tên đăng nhập',
+                'username.regex' => 'Tên đăng nhập chưa đúng định dạng',
+                'username.unique' => 'Tên đăng nhập đã tồn tại',
+                'email.required' => 'Chưa nhập email',
+                'email.unique' => 'Email đã tồn tại',
+                'email.email' => 'Email chưa chính xác',
+                'group.exists' => 'Đơn vị được chọn chưa tồn tại',
+            ]
+            );
+    
+            if ($validator->fails()) {
+                return redirect()->route('user.edit', $user->uuid)
+                            ->withErrors($validator)
+                            ->withInput();
+            }
+    
+            try{
+
+                $password = request()->get('password');
+                $user = User::where('uuid', $uuid)->first();
+                $user->name = request()->get('name');
+                $user->username = request()->get('username');
+                $user->email = request()->get('email');
+                //validate password
+                if (strlen($password) > 6){
+                    $user->password = Hash::make($password);
+                }
+                else if (strlen($password) >= 1){
+                    return redirect()->route('user.edit', $user->uuid)
+                        ->withErrors(['Mật khẩu phải có tối thiểu 6 ký tự'])
+                        ->withInput();
+                }
+                $user->save();
+
+                return redirect()->route('user.edit', $user->uuid)->withSuccess('Sửa thông tin thành công');
             } catch(Exception $e){
     
             }
