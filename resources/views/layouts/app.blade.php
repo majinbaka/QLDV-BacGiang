@@ -41,7 +41,7 @@
                             </form>
                         </span>
                     </div>
-                    <img class="avatar"  src="{{asset('images/icon_doan.png')}}">
+                    <img class="avatar"  src="{{asset('images/AVATA.png')}}">
                 </div>
             </div>
         </div>
