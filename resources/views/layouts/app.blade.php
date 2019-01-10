@@ -49,7 +49,7 @@
             <div class="container">
                 <ul>
                     <li @if(in_array(\Route::currentRouteName(), ["home","member.search"])) class="active" @endif><a href="{{route('home')}}">HỒ SƠ ĐOÀN VIÊN</a></li>
-                    <li @if(in_array(\Route::currentRouteName(), ["hom1e","memb1er.search"])) class="active" @endif><a href="">BÁO CÁO THỐNG KÊ</a></li>
+                    <li @if(in_array(\Route::currentRouteName(), ["hom1e","memb1er.search"])) class="active" @endif><a href="{{route('manage.setting')}}">BÁO CÁO THỐNG KÊ</a></li>
                     <li @if(in_array(\Route::currentRouteName(), ["home1","mem1ber.search"])) class="active" @endif><a href="{{route('group.index')}}">DANH MỤC</a></li>
                     <li @if(in_array(\Route::currentRouteName(), ["manage.index","user.index", "user.create"])) class="active" @endif><a href="{{route('manage.index')}}">QUẢN TRỊ</a></li>
                 </ul>

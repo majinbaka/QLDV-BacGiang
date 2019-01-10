@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Member;
+use App\Group;
 
 class MemberController extends Controller
 {
     public function search(){
+        $groups = Group::where('level', 1)->get();
+
         $code = request()->get('code');
         $fullname = request()->get('fullname');
         $group = request()->get('group');
@@ -17,8 +20,10 @@ class MemberController extends Controller
             $members = $members->where('code','like', '%'.$code.'%');
         if ($fullname !== null)
             $members = $members->where('fullname','like', '%'.$fullname.'%');
-        if ($group !== null)
-            $members = $members->where('group_id', $group);
+        if ($group !== null){
+            $group = Group::where('uuid', $group)->first();
+            $members = $members->where('group_id', $group->id);
+        }
         $memberc = $members->count();
         $members = $members->paginate(20);
 
@@ -27,6 +32,7 @@ class MemberController extends Controller
             ->with('fullname', $fullname)
             ->with('group', $group)
             ->with('members', $members)
+            ->with('groups', $groups)
             ->with('memberc', $memberc);
     }
 

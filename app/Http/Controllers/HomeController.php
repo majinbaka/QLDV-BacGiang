@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Member;
+use App\Group;
 
 class HomeController extends Controller
 {
@@ -25,8 +26,9 @@ class HomeController extends Controller
     public function index()
     {
         $memberc = Member::count();
+        $groups = Group::where('level', 1)->get();
         $members = Member::paginate(20);
 
-        return view('home', compact('memberc', 'members'));
+        return view('home', compact('memberc', 'members', 'groups'));
     }
 }

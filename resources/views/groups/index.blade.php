@@ -2,12 +2,12 @@
 @section('left-bar')
 <span>DANH MỤC</span>
 <ul class="main-list">
-    <li><a href="">Đơn vị</a></li>
-    <li><a href="">Chức vụ</a></li>
-    <li><a href="">Trình độ</a></li>
-    <li><a href="">Chính trị</a></li>
-    <li><a href="">Tin học</a></li>
-    <li><a href="">Tiêng anh</a></li>
+    <li><a href="{{route('group.index')}}">Đơn vị</a></li>
+    <li><a href="{{route('manage.setting')}}">Chức vụ</a></li>
+    <li><a href="{{route('manage.setting')}}">Trình độ</a></li>
+    <li><a href="{{route('manage.setting')}}">Chính trị</a></li>
+    <li><a href="{{route('manage.setting')}}">Tin học</a></li>
+    <li><a href="{{route('manage.setting')}}">Tiêng anh</a></li>
 </ul>
 <script>
 $(".has_sub").click(function() {

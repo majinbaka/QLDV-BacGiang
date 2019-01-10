@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('left-bar')
-    @include('layouts.list_group')
+    @include('layouts.list_group', ['groups' => $groups])
 @endsection
 @section('content')
 <div class="search-area">
@@ -16,20 +16,16 @@
             <label> Họ tên</label>
             <input type="text" name="fullname" class="search-fullname" @isset($fullname)value="{{$fullname}}"@endisset>
             <label> Đơn vị </label>
-            <select name="group" class="custom-select">
-                <option value=""></option>
-                <option value="1">Audi</option>
-                <option value="2">BMW</option>
-                <option value="3">Citroen</option>
-                <option value="4">Ford</option>
-                <option value="5">Honda</option>
-                <option value="6">Jaguar</option>
-                <option value="7">Land Rover</option>
-                <option value="8">Mercedes</option>
-                <option value="9">Mini</option>
-                <option value="10">Nissan</option>
-                <option value="11">Toyota</option>
-                <option value="12">Volvo</option>
+            <select name="group" class="custom-select ">
+                <option value="">TỈNH ĐOÀN BẮC GIANG</option>
+                @foreach($groups as $gr)
+                    <option value="{{$gr->uuid}}" @isset($group)@if($gr->id == $group->id) selected @endif @endisset>
+                        {{$gr->name}}
+                    </option>
+                    @if($gr->childrens)
+                        @include('groups._child_option', ['groupsFilter' => $gr->childrens, 'selected' => $gr->id])])
+                    @endif
+                @endforeach
             </select>
             <input type="submit" value='Tìm kiếm'>
         </form>

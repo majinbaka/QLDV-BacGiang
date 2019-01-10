@@ -167,6 +167,10 @@ class UserController extends Controller
 
     public function delete(){
         $user_ids = request()->get('user_ids');
+        $user = Auth::user();
+        if (!$user->isAn('admin')){
+            return "Tính năng đang phát triển";
+        }
         if (is_array($user_ids))
         {
             User::whereIn('uuid', $user_ids)->delete();

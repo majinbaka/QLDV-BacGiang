@@ -18,14 +18,16 @@ class GroupController extends Controller
             $group_count = Group::count();
             $groups = Group::all();
             $groupsFilter = Group::where('level', 1)->get();
+
+            return view('groups.index', compact('group_count', 'groups', 'groupsFilter'))->withSuccess(session()->get( 'success' ));;
         }
 
-        return view('groups.index', compact('group_count', 'groups', 'groupsFilter'))->withSuccess(session()->get( 'success' ));;
+        return "Tính năng đang phát triển";
     }
 
-    // public function create(){
-    //     return view('groups.create');
-    // }
+    public function show($uuid){
+        return view('groups.create');
+    }
 
     public function edit($uuid){
         $user = Auth::user();
@@ -40,6 +42,11 @@ class GroupController extends Controller
     }
 
     public function store(){
+        $user = Auth::user();
+        if (!$user->isAn('admin')){
+            return "Tính năng đang phát triển";
+        }
+
         $validator = Validator::make(request()->all(), [
             'name' => 'required',
             'parent_id' => 'required',
@@ -127,6 +134,10 @@ class GroupController extends Controller
 
     public function delete(){
         $group_ids = request()->get('group_ids');
+        $user = Auth::user();
+        if (!$user->isAn('admin')){
+            return "Tính năng đang phát triển";
+        }
         if (is_array($group_ids))
         {
             $groups = Group::whereIn('uuid', $group_ids)->get();
