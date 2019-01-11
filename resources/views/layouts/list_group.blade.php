@@ -37,11 +37,14 @@
             $('.position-list').removeClass( "sub-ico" );
             $('.position-list').addClass( "plus-ico" );
             $(".has_sub ul").hide();
+            var counter = 0;
             while(true){
                 if (parent == "0") break;
                 $("."+parent+" > ul").show();
                 $("."+parent).addClass('active');
                 parent = $("."+parent).attr("data-parent");
+                counter++;
+                if(counter >= 20) break;
             }
             e.stopPropagation();
         }
@@ -59,10 +62,13 @@
                 $('.position-list').removeClass( "sub-ico" );
                 $("."+uuid+" > div").addClass( "sub-ico" );
                 $("."+uuid+" > div").removeClass( "plus-ico" );
+                var counter = 0;
                 while(true){
                     if (parent == "0") break;
                     $("."+parent+" > ul").show();
                     parent = $("."+parent).first().attr("data-parent");
+                    counter++;
+                    if(counter >= 20) break;
                 }
                 e.stopPropagation();
             }
