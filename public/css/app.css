@@ -380,7 +380,7 @@ a.addnew{
     color: #000;
     text-decoration: none;
 }
-.main-list li.active a {
+.main-list li.active > a {
     color: #006db7;
     font-weight: 500;
 }

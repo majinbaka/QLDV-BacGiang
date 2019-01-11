@@ -29,6 +29,7 @@
         {
             $(".has_sub").removeClass( "active" );
             $(".has_sub ul").hide();
+            e.preventDefault();
             e.stopPropagation();
         }
         else if (active && parent != "0")
@@ -46,6 +47,8 @@
                 counter++;
                 if(counter >= 20) break;
             }
+            if ($(this).hasClass( "has_sub" ))
+                e.preventDefault();
             e.stopPropagation();
         }
         else if (!active)
