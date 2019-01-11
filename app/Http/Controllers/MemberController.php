@@ -302,6 +302,10 @@ class MemberController extends Controller
     }
     public function delete(){
         $member_ids = request()->get('member_ids');
+        $avatars = Member::whereIn('uuid', $member_ids)->pluck('avatar');
+        foreach($avatars as $a){
+            Storage::delete($a);
+        }
         Member::whereIn('uuid', $member_ids)->delete();
 
         return \redirect()->back();
