@@ -9,7 +9,7 @@
             @endfor
             {{$gr->name}}
         </a>
-            <ul @isset($group)@if(!$group->hasFatherRelation($gr->id) === true && $group->id != $gr->id) style="display:none" @endif @endisset>
+            <ul @isset($group)@if(!$group->hasFatherRelation($gr->id) === true && $group->id != $gr->id) style="display:none" @endif @else style="display:none" @endisset>
                 @isset($group)
                     @include('layouts._child_list_group', ['groups' => $gr->childrens, 'group' => $group])
                 @else
