@@ -52,6 +52,13 @@ body{
     position: relative;
 }
 
+.selectcus{
+    margin-left: 15px;
+    width: 150px;
+    margin-right: 30px;
+    height: 24px;
+    border-radius: 5px;
+}
 /* Header area */
 #header {
     background-color: #36bbfa;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Member;
 use App\Group;
@@ -96,7 +97,8 @@ class MemberController extends Controller
             'it_level' => 'exists:it_levels,id',
             'english_level' => 'exists:english_levels,id',
             'is_dangvien' => 'digits_between:0,1',
-            'join_dang' => 'required|date_format:d/m/Y'
+            'join_dang' => 'required|date_format:d/m/Y',
+            'avatar' => 'image',
         ],
         [
             'fullname.required' => 'Chưa nhập họ và tên đoàn viên',
@@ -122,7 +124,8 @@ class MemberController extends Controller
             'english_level.exists' => 'Ngoại ngữ chưa chính xác',
             'is_dangvien.digits_between' => 'không xác định được có phải là đảng viên hay không',
             'join_dang.required' => 'Chưa điền ngày vào đảng',
-            'join_dang.date_format' => 'Ngày vào đảng chưa đúng định dạng'
+            'join_dang.date_format' => 'Ngày vào đảng chưa đúng định dạng',
+            'avatar.image' => 'Ảnh đại diện chưa đúng định dạng'
         ]
         );
 
@@ -132,13 +135,14 @@ class MemberController extends Controller
                 ->withInput();
         }
 
-        try{
+        // try{
             $parent_group = Group::where('uuid', request()->get('group_id'))->first();
             if(!$parent_group){
                 return redirect()->route('member.create')->withErrors(['Đơn vị không tồn tại']);
             }
             $group_id = $parent_group->id;
 
+            $avatar = null;
             $member = new Member;
             $member->uuid = Str::uuid();
             $member->fullname = \request()->get('fullname');
@@ -166,9 +170,19 @@ class MemberController extends Controller
             $member->is_dangvien = \request()->get('is_dangvien');
             $member->join_dang = Carbon::createFromFormat('d/m/Y', request()->get('join_dang'))->toDateString();
             $member->save();
-        } catch(Exception $e){
 
-        }
+            if (request()->has('avatar'))
+            {
+                $extension = request()->file('avatar')->extension();
+                $avatar = request()->file('avatar')->storeAs(
+                    'public/avatars', $member->id.'.'.$extension
+                );
+                $member->avatar = $avatar;
+                $member->save();
+            }
+        // } catch(Exception $e){
+
+        // }
 
         return \redirect()->route('member.edit', ['uuid' => $member->uuid])->withSuccess('Tạo thông tin thành công');
     }
@@ -202,7 +216,8 @@ class MemberController extends Controller
             'it_level' => 'exists:it_levels,id',
             'english_level' => 'exists:english_levels,id',
             'is_dangvien' => 'digits_between:0,1',
-            'join_dang' => 'required|date_format:d/m/Y'
+            'join_dang' => 'required|date_format:d/m/Y',
+            'avatar' => 'image',
         ],
         [
             'fullname.required' => 'Chưa nhập họ và tên đoàn viên',
@@ -228,7 +243,8 @@ class MemberController extends Controller
             'english_level.exists' => 'Ngoại ngữ chưa chính xác',
             'is_dangvien.digits_between' => 'không xác định được có phải là đảng viên hay không',
             'join_dang.required' => 'Chưa điền ngày vào đảng',
-            'join_dang.date_format' => 'Ngày vào đảng chưa đúng định dạng'
+            'join_dang.date_format' => 'Ngày vào đảng chưa đúng định dạng',
+            'avatar.image' => 'Ảnh đại diện chưa đúng định dạng'
         ]
         );
 
@@ -244,7 +260,14 @@ class MemberController extends Controller
                 return redirect()->route('member.create')->withErrors(['Đơn vị không tồn tại']);
             }
             $group_id = $parent_group->id;
-
+            if (request()->has('avatar'))
+            {
+                $extension = request()->file('avatar')->extension();
+                $avatar = request()->file('avatar')->storeAs(
+                    'public/avatars', $member->id.'.'.$extension
+                );
+                $member->avatar = $avatar;
+            }
             $member->fullname = \request()->get('fullname');
             $member->code = \request()->get('code');
             $member->birthday = Carbon::createFromFormat('d/m/Y', request()->get('birthday'))->toDateString();

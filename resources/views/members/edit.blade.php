@@ -2,13 +2,14 @@
 @section('left-bar')
     <div class="avatar-member">
         <div class="name">{{$member->fullname}}</div>
+        <img src="{{Storage::url($member->avatar)}}" id="preview" style="max-width:207px;max-height:275px;margin:auto;margin-top:4px;">
     </div>
 @endsection
 @section('content')
     <div class="content-member">
         <div class="title">THÔNG TIN CHUNG</div>
         <div class="content-body">
-            <form method="POST" action="{{route('member.update', $member->uuid)}}">
+            <form method="POST" action="{{route('member.update', $member->uuid)}}" id="form-create" enctype="multipart/form-data">
                 @csrf
             <label for="fullname" style="padding-right:33px">Họ và tên</label>
             <input type="text" name="fullname" style="width:140px;" value="{{$member->fullname}}">
@@ -96,6 +97,7 @@
             <label for="join_dang" style="margin-left:29px;margin-right:12px">Ngày vào đảng</label>
             <input type="text" name="join_dang" placeholder="dd/mm/yyyy" value="{{Carbon\Carbon::createFromFormat('Y-m-d', $member->join_dang)->format('d/m/Y')}}">
             <hr style="margin-bottom:17px">
+            <input type="file" name="avatar" id="avatar" style="display:none">
             <input type="submit" value="Lưu">
             </form>
         </div>
@@ -108,3 +110,27 @@
         </div>
     </div>
 @endsection
+@push('script')
+<script>
+    $('.avatar-member').click(function(){
+        $( "#avatar" ).trigger( "click" );
+    });
+
+    function readURL(input) {
+
+if (input.files && input.files[0]) {
+  var reader = new FileReader();
+
+  reader.onload = function(e) {
+    $('#preview').attr('src', e.target.result);
+  }
+
+  reader.readAsDataURL(input.files[0]);
+}
+}
+
+$("#avatar").change(function() {
+readURL(this);
+});
+</script>
+@endpush
