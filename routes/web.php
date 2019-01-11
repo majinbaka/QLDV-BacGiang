@@ -16,6 +16,37 @@ Route::middleware(['auth'])->group(function () {
     Route::get('manage/setting', 'ManageController@setting')->name('manage.setting');
     Route::post('manage/setting', 'ManageController@updateSetting')->name('manage.update');
 
+    //CRUD MEMBER INFO SELECT
+    Route::get('english', 'EnglishController@index')->name('english.index');
+    Route::get('english/{id}/edit', 'EnglishController@edit')->name('english.edit');
+    Route::post('english', 'EnglishController@store')->name('english.store');
+    Route::post('english/{id}', 'EnglishController@update')->name('english.update');
+    Route::delete('english/delete', 'EnglishController@delete')->name('english.delete');
+
+    Route::get('it', 'ItController@index')->name('it.index');
+    Route::get('it/{id}/edit', 'ItController@edit')->name('it.edit');
+    Route::post('it', 'ItController@store')->name('it.store');
+    Route::post('it/{id}', 'ItController@update')->name('it.update');
+    Route::delete('it/delete', 'ItController@delete')->name('it.delete');
+
+    Route::get('knowledge', 'KnowledgeController@index')->name('knowledge.index');
+    Route::get('knowledge/{id}/edit', 'KnowledgeController@edit')->name('knowledge.edit');
+    Route::post('knowledge', 'KnowledgeController@store')->name('knowledge.store');
+    Route::post('knowledge/{id}', 'KnowledgeController@update')->name('knowledge.update');
+    Route::delete('knowledge/delete', 'KnowledgeController@delete')->name('knowledge.delete');
+
+    Route::get('political', 'PoliticalController@index')->name('political.index');
+    Route::get('political/{id}/edit', 'PoliticalController@edit')->name('political.edit');
+    Route::post('political', 'PoliticalController@store')->name('political.store');
+    Route::post('political/{id}', 'PoliticalController@update')->name('political.update');
+    Route::delete('political/delete', 'PoliticalController@delete')->name('political.delete');
+
+    Route::get('position', 'PositionController@index')->name('position.index');
+    Route::get('position/{id}/edit', 'PositionController@edit')->name('position.edit');
+    Route::post('position', 'PositionController@store')->name('position.store');
+    Route::post('position/{id}', 'PositionController@update')->name('position.update');
+    Route::delete('position/delete', 'PositionController@delete')->name('position.delete');
+
     //Group
     Route::get('group', 'GroupController@index')->name('group.index');
     Route::get('group/create', 'GroupController@create')->name('group.create');

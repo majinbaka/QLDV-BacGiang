@@ -1,19 +1,6 @@
 @extends('layouts.app')
 @section('left-bar')
-<span>DANH MỤC</span>
-<ul class="main-list">
-    <li><a href="{{route('group.index')}}">Đơn vị</a></li>
-    <li><a href="{{route('manage.setting')}}">Chức vụ</a></li>
-    <li><a href="{{route('manage.setting')}}">Trình độ</a></li>
-    <li><a href="{{route('manage.setting')}}">Chính trị</a></li>
-    <li><a href="{{route('manage.setting')}}">Tin học</a></li>
-    <li><a href="{{route('manage.setting')}}">Tiêng anh</a></li>
-</ul>
-<script>
-$(".has_sub").click(function() {
-    $(this).toggleClass( "active" );
-}) 
-</script>
+    @include('layouts.danhmuc')
 @endsection
 @section('content')
 <div class="content-crud"  style="margin-top:0px;font-size:12px;text-align:left;padding-left:20px">
