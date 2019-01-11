@@ -73,10 +73,16 @@ class UserController extends Controller
             }
     
             try{
+                $parent_group = Group::where('uuid', request()->get('group'))->first();
+                if(!$parent_group){
+                    return redirect()->route('user.create')->withErrors(['Đơn vị không tồn tại']);
+                }
+                $group_id = $parent_group->id;
                 $user = new User;
                 $user->name = request()->get('name');
                 $user->username = request()->get('username');
                 $user->email = request()->get('email');
+                $user->group_id = $group_id;
                 $user->password = Hash::make(request()->get('password'));
                 $user->uuid = Str::uuid();
                 $user->save();
@@ -139,12 +145,17 @@ class UserController extends Controller
             }
     
             try{
-
+                $parent_group = Group::where('uuid', request()->get('group'))->first();
+                if(!$parent_group){
+                    return redirect()->route('user.create')->withErrors(['Đơn vị không tồn tại']);
+                }
+                $group_id = $parent_group->id;
                 $password = request()->get('password');
                 $user = User::where('uuid', $uuid)->first();
                 $user->name = request()->get('name');
                 $user->username = request()->get('username');
                 $user->email = request()->get('email');
+                $user->group_id = $group_id;
                 //validate password
                 if (strlen($password) > 6){
                     $user->password = Hash::make($password);
