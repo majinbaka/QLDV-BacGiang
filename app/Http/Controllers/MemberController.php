@@ -11,6 +11,7 @@ use App\EnglishLevel;
 use App\Knowledge;
 use App\Political;
 use App\Position;
+use App\Attachment;
 use Auth;
 use Exception;
 use Validator;
@@ -135,7 +136,7 @@ class MemberController extends Controller
                 ->withInput();
         }
 
-        // try{
+        try{
             $parent_group = Group::where('uuid', request()->get('group_id'))->first();
             if(!$parent_group){
                 return redirect()->route('member.create')->withErrors(['Đơn vị không tồn tại']);
@@ -180,9 +181,27 @@ class MemberController extends Controller
                 $member->avatar = $avatar;
                 $member->save();
             }
-        // } catch(Exception $e){
 
-        // }
+            //Attachment
+            if(request()->has('attachment') ){
+                $attachments = request()->file('attachment') ;
+                foreach ($attachments as $v) {
+                    $extension = $v->extension();
+                    $attachment = new Attachment;
+                    $attachment->name = $v->getClientOriginalName();
+                    $attachment->member_id = $member->id;
+                    $attachment->attachment_url = 'xxx';
+                    $attachment->save();
+                    $path = $v->storeAs(
+                        'public/attachment', $attachment->id.'.'.$extension
+                    );
+                    $attachment->attachment_url = $path;
+                    $attachment->save();
+                }
+            }
+        } catch(Exception $e){
+
+        }
 
         return \redirect()->route('member.edit', ['uuid' => $member->uuid])->withSuccess('Tạo thông tin thành công');
     }

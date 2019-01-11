@@ -106,7 +106,8 @@
     <div class="attachment">
         <div class="title">File đính kèm</div>
         <div class='content'>
-            <input type="submit" value="Thêm" >
+            <div id="add_attachment">Thêm</div>
+            <div id="attachlist"></div>
         </div>
     </div>
 @endsection
@@ -132,5 +133,28 @@ if (input.files && input.files[0]) {
 $("#avatar").change(function() {
 readURL(this);
 });
+
+$('#add_attachment').click(function(){
+    var e = $("<input type='file' name='attachment[]' style='display:none' onchange='previewFile(this)'>");
+    $('#form-create').append(e);
+    e.trigger( "click" );
+    });
+
+    function previewFile(e){
+        var fullPath = e.value;
+        if (fullPath) {
+            var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+            var filename = fullPath.substring(startIndex);
+            if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                filename = filename.substring(1);
+            }
+            $('#attachlist').append('<span>'+filename+'</span>');
+        }
+    }
+
+
+
+
+    
 </script>
 @endpush
