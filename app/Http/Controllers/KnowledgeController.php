@@ -14,7 +14,7 @@ class KnowledgeController extends Controller
         if ($user->isAn('admin')){
             $knowledges = Knowledge::all();
 
-            return view('knowledges.index', compact('knowledges'))->withSuccess(session()->get( 'success' ));;
+            return view('knowledges.index', compact('knowledges'))->withSuccess(session()->get( 'success' ));
         }
 
         return "Tính năng đang phát triển";

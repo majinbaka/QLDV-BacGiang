@@ -5,7 +5,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::delete('member/delete', 'MemberController@delete')->name('member.delete');
     Route::get('member/create', 'MemberController@create')->name('member.create');
-    Route::get('member/edit', 'MemberController@edit')->name('member.edit');
+    Route::get('member/{uuid}/edit', 'MemberController@edit')->name('member.edit');
     Route::post('member', 'MemberController@store')->name('member.store');
     Route::post('member/search', 'MemberController@search')->name('member.search');
     Route::post('member/{uuid}', 'MemberController@update')->name('member.update');

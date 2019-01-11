@@ -49,7 +49,7 @@
             <tbody>
                 @foreach ($members as $member)
                     <tr>
-                        <td><input type="checkbox" name="member_ids[]" value="{{$member->id}}"></td>
+                        <td><input type="checkbox" name="member_ids[]" value="{{$member->uuid}}"></td>
                         <td>{{$member->code}}</td>
                         <td>{{$member->fullname}}</td>
                         <td>{{$member->group->name}}</td>

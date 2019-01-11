@@ -29,6 +29,6 @@ class HomeController extends Controller
         $groups = Group::where('level', 1)->get();
         $members = Member::paginate(20);
 
-        return view('home', compact('memberc', 'members', 'groups'));
+        return view('home', compact('memberc', 'members', 'groups'))->withSuccess(session()->get( 'success' ));;
     }
 }
