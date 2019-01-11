@@ -52,8 +52,8 @@
                         <td><input type="checkbox" name="member_ids[]" value="{{$member->id}}"></td>
                         <td>{{$member->code}}</td>
                         <td>{{$member->fullname}}</td>
-                        <td>{{$member->group_id}}</td>
-                        <td>{{$member->position}}</td>
+                        <td>{{$member->group->name}}</td>
+                        <td>{{$member->positionr->name}}</td>
                     </tr>
                 @endforeach
             </tbody>

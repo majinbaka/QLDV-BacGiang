@@ -10,4 +10,9 @@ class Member extends Model
     {
         return $this->belongsTo('App\Group');
     }
+
+    public function positionr()
+    {
+        return $this->belongsTo('App\Position', 'position');
+    }
 }
