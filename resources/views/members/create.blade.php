@@ -116,6 +116,7 @@
 @push('script')
 <script src="{{ asset('js/selectstyle2.js') }}"></script>
 <script>
+    var at =1;
     $('.avatar-member').click(function(){
         $( "#avatar" ).trigger( "click" );
     });
@@ -138,7 +139,7 @@ readURL(this);
 });
 
 $('#add_attachment').click(function(){
-    var e = $("<input type='file' name='attachment[]' style='display:none' onchange='previewFile(this)'>");
+    var e = $("<input type='file' class='at_"+at+"' name='attachment[]' style='display:none' onchange='previewFile(this)'>");
     $('#form-create').append(e);
     e.trigger( "click" );
     });
@@ -151,8 +152,14 @@ $('#add_attachment').click(function(){
             if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
                 filename = filename.substring(1);
             }
-            $('#attachlist').append('<span>'+filename+'</span>');
+            $('#attachlist').append('<span class="atl_'+at+'">'+filename+' <span style="color:red;margin:0;cursor:pointer" onclick="removeE(this,'+at+')">Huỷ</span></span>');
+            at++;
         }
     }
+function removeE(e, id){
+    $('.at_'+id).remove();
+    $('.atl_'+id).remove();
+    $(e).remove();
+}
 </script>
 @endpush
