@@ -21,6 +21,42 @@ class Group extends Model
         return $this->hasMany(self::class, 'parent_id');
     }
 
+    public function getIdsG(){
+        $group = $this;
+        $res = [];
+        $res[] = $this->id;
+        foreach ($this->childrens as $g) {
+            $res = \array_merge($res, $g->getIdsG());
+        }
+        return $res;
+    }
+
+    public function hasRelation($id){
+        $t = $this->level;
+        $g = Group::find($id);
+        if ($g)
+        {
+            if($t > $g->level)
+                return $this->hasFatherRelation($id);
+            else
+                return $this->hasChildRelation($id);
+        }
+
+        return false;
+    }
+
+    public function hasChildRelation($id){
+        $childs = $this->childrens;
+        $g = Group::find($id);
+        foreach ($childs as $child) {
+            if ($child->id == $id) return true;
+            if ($child->level < $g->level) return false;
+            $child->hasChildRelation($id);
+        }
+
+        return false;
+    }
+
     public function getTopFatherAttribute($value){
         $father = $this->father;
         try{

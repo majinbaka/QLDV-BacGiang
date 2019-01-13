@@ -33,7 +33,7 @@
             <select name="group" class="custom-select form-select">
                 <option value=""></option>
                 @foreach ($groups as $group)
-                    <option value="{{$group->uuid}}" @if($group->id == $user->group_id)>{{$group->name}}</option>
+                    <option value="{{$group->uuid}}" @if($group->id == $user->group_id) selected @endif>{{$group->name}}</option>
                 @endforeach
             </select>
         </div>

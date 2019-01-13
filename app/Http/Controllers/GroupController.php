@@ -26,12 +26,28 @@ class GroupController extends Controller
     }
 
     public function show($uuid){
-        $group = Group::where('uuid', $uuid)->first();
-        $memberc = Member::where('group_id', $group->id)->count();
-        $groups = Group::where('level', 1)->get();
-        $members = Member::where('group_id', $group->id)->paginate(20);
+        $user = Auth::user();
+        if ($user->isAn('admin')){
+            $group = Group::where('uuid', $uuid)->first();
+            $ids = $group->getIdsG();
+            $memberc = Member::whereIn('group_id', $ids)->count();
+            $groups = Group::where('level', 1)->get();
+            $members = Member::whereIn('group_id', $ids)->paginate(20);
 
-        return view('home', compact('memberc', 'members', 'groups', 'group'));
+            return view('home', compact('memberc', 'members', 'groups', 'group'));  
+        }
+        else{
+            $user_group = $user->group_id;
+            $group = Group::where('uuid', $uuid)->first();
+            $has = $group->hasRelation($user_group);
+            if (!$has) return \redirect()->route('home')->withErrors(['Không có quyền truy cập đơn vị này']);
+            $ids = $group->getIdsG();
+            $memberc = Member::whereIn('group_id', $ids)->count();
+            $groups = Group::where('level', $user->group->level + 1)->where('parent_id', $user->group->id)->get();
+            $members = Member::whereIn('group_id', $ids)->paginate(20);
+
+            return view('home', compact('memberc', 'members', 'groups', 'group'));  
+        }
     }
 
     public function edit($uuid){
