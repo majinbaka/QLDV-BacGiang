@@ -88,26 +88,53 @@ class MemberController extends Controller
     }
 
     public function create(){
+        $user = Auth::user();
         $its = ItLevel::all();
         $englishs = EnglishLevel::all();
         $knowledges = Knowledge::all();
         $politicals = Political::all();
         $positions = Position::all();
-        $groups = Group::all();
-        return view('members.create', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups'));
+
+        if ($user->isAn('admin')){
+            $groups = Group::all();
+
+            return view('members.create', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups'));
+        }else
+        {
+            $group = $user->group;
+            $ids = $group->getIdsG();
+            $groups = Group::whereIn('id', $ids)->get();
+
+            return view('members.create', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups'));
+        }
     }
 
     public function edit($uuid){
+        $user = Auth::user();
         $member = Member::where('uuid', $uuid)->first();
         $its = ItLevel::all();
         $englishs = EnglishLevel::all();
         $knowledges = Knowledge::all();
         $politicals = Political::all();
         $positions = Position::all();
-        $groups = Group::all();
+        if ($user->isAn('admin')){
+            $groups = Group::all();
 
-        return view('members.edit', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'member'))
+            return view('members.edit', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'member'))
         ->withSuccess(session()->get( 'success' ));
+        }else
+        {
+            $group = $user->group;
+            $ids = $group->getIdsG();
+            if (!in_array($member->group_id, $ids)){
+                return \redirect()->route('home')->withErrors(['Không có quyền truy cập đoàn viên này']);
+            }
+            $groups = Group::whereIn('id', $ids)->get();
+
+            return view('members.edit', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'member'))
+        ->withSuccess(session()->get( 'success' ));
+        }
+        
     }
 
     public function store(){
