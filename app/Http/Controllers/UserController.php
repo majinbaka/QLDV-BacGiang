@@ -111,6 +111,7 @@ class UserController extends Controller
                 $user->uuid = Str::uuid();
                 $user->can_create_user = request()->get('can_create_user') == "on" ? 1 : 0;
                 $user->can_create_group = request()->get('can_create_group') == "on" ? 1 : 0;
+                $user->save();
                 if (request()->get('can_create_user') == "on")
                     $user->allow('user');
                 else
@@ -119,7 +120,6 @@ class UserController extends Controller
                     $user->allow('group');
                 else 
                     $user->disallow('group');
-                $user->save();
 
                 return redirect()->route('user.index')->withSuccess('Tạo người dùng mới thành công');
             } catch(Exception $e){
@@ -132,6 +132,7 @@ class UserController extends Controller
 
     public function edit($uuid){
         if (Bouncer::can('user')){
+            $user = Auth::user();
             if ($user->isAn('admin')){
                 $groups = Group::all();
                 $user = User::where('uuid', $uuid)->first();
@@ -151,88 +152,88 @@ class UserController extends Controller
 
     public function update($uuid){
         $user = Auth::user();
-        if ($user->isAn('admin')){
-            $user = User::where('uuid', $uuid)->first();
-            if (!$user){
-                return redirect()->route('user.index')
-                    ->withErrors('Người dùng không tồn tại');
-            }
-
-            $request = request()->all();
-            if ($request['group'] === null)
-                unset($request['group']);
-            $validator = Validator::make($request, [
-                'name' => 'required',
-                'username' => 'required|regex:/^\S*$/u|unique:users,username,'.$user->id,
-                'email' => 'required|email|unique:users,email,'.$user->id,
-                'group' => 'exists:groups,uuid'
-            ],
-            [
-                'name.required' => 'Chưa nhập tên người dùng',
-                'username.required' => 'Chưa nhập tên đăng nhập',
-                'username.regex' => 'Tên đăng nhập chưa đúng định dạng',
-                'username.unique' => 'Tên đăng nhập đã tồn tại',
-                'email.required' => 'Chưa nhập email',
-                'email.unique' => 'Email đã tồn tại',
-                'email.email' => 'Email chưa chính xác',
-                'group.exists' => 'Đơn vị được chọn chưa tồn tại',
-            ]
-            );
-    
-            if ($validator->fails()) {
-                return redirect()->route('user.edit', $user->uuid)
-                            ->withErrors($validator)
-                            ->withInput();
-            }
-    
-            try{
-                $parent_group = Group::where('uuid', request()->get('group'))->first();
-                if(!$parent_group){
-                    return redirect()->route('user.create')->withErrors(['Đơn vị không tồn tại']);
-                }
-                $group_id = $parent_group->id;
-                $password = request()->get('password');
+        if (Bouncer::can('user')){
                 $user = User::where('uuid', $uuid)->first();
-                $user->name = request()->get('name');
-                $user->username = request()->get('username');
-                $user->email = request()->get('email');
-                $user->group_id = $group_id;
-                $user->can_create_user = request()->get('can_create_user') == "on" ? 1 : 0;
-                $user->can_create_group = request()->get('can_create_group') == "on" ? 1 : 0;
-                if (request()->get('can_create_user') == "on")
-                    $user->allow('user');
-                else
-                    $user->disallow('user');
-                if (request()->get('can_create_group') == "on")
-                    $user->allow('group');
-                else 
-                    $user->disallow('group');
-                //validate password
-                if (strlen($password) > 6){
-                    $user->password = Hash::make($password);
+                if (!$user){
+                    return redirect()->route('user.index')
+                        ->withErrors('Người dùng không tồn tại');
                 }
-                else if (strlen($password) >= 1){
-                    return redirect()->route('user.edit', $user->uuid)
-                        ->withErrors(['Mật khẩu phải có tối thiểu 6 ký tự'])
-                        ->withInput();
-                }
-                $user->save();
 
-                return redirect()->route('user.edit', $user->uuid)->withSuccess('Sửa thông tin thành công');
-            } catch(Exception $e){
-    
-            }
+                $request = request()->all();
+                if ($request['group'] === null)
+                    unset($request['group']);
+                $validator = Validator::make($request, [
+                    'name' => 'required',
+                    'username' => 'required|regex:/^\S*$/u|unique:users,username,'.$user->id,
+                    'email' => 'required|email|unique:users,email,'.$user->id,
+                    'group' => 'exists:groups,uuid'
+                ],
+                [
+                    'name.required' => 'Chưa nhập tên người dùng',
+                    'username.required' => 'Chưa nhập tên đăng nhập',
+                    'username.regex' => 'Tên đăng nhập chưa đúng định dạng',
+                    'username.unique' => 'Tên đăng nhập đã tồn tại',
+                    'email.required' => 'Chưa nhập email',
+                    'email.unique' => 'Email đã tồn tại',
+                    'email.email' => 'Email chưa chính xác',
+                    'group.exists' => 'Đơn vị được chọn chưa tồn tại',
+                ]
+                );
+        
+                if ($validator->fails()) {
+                    return redirect()->route('user.edit', $user->uuid)
+                                ->withErrors($validator)
+                                ->withInput();
+                }
+        
+                try{
+                    $parent_group = Group::where('uuid', request()->get('group'))->first();
+                    if(!$parent_group){
+                        return redirect()->route('user.create')->withErrors(['Đơn vị không tồn tại']);
+                    }
+                    $group_id = $parent_group->id;
+                    $password = request()->get('password');
+                    $user = User::where('uuid', $uuid)->first();
+                    $user->name = request()->get('name');
+                    $user->username = request()->get('username');
+                    $user->email = request()->get('email');
+                    $user->group_id = $group_id;
+                    $user->can_create_user = request()->get('can_create_user') == "on" ? 1 : 0;
+                    $user->can_create_group = request()->get('can_create_group') == "on" ? 1 : 0;
+                    if (request()->get('can_create_user') == "on")
+                        $user->allow('user');
+                    else
+                        $user->disallow('user');
+                    if (request()->get('can_create_group') == "on")
+                        $user->allow('group');
+                    else 
+                        $user->disallow('group');
+                    //validate password
+                    if (strlen($password) > 6){
+                        $user->password = Hash::make($password);
+                    }
+                    else if (strlen($password) >= 1){
+                        return redirect()->route('user.edit', $user->uuid)
+                            ->withErrors(['Mật khẩu phải có tối thiểu 6 ký tự'])
+                            ->withInput();
+                    }
+                    $user->save();
+
+                    return redirect()->route('user.edit', $user->uuid)->withSuccess('Sửa thông tin thành công');
+                } catch(Exception $e){
+        
+                }
         }
 
         return "Tính năng đang phát triển";
     }
 
     public function delete(){
-        $user_ids = request()->get('user_ids');
-        $user = Auth::user();
-        if (!$user->isAn('admin')){
+        if (Bouncer::cannot('user')){
             return "Tính năng đang phát triển";
         }
+        $user_ids = request()->get('user_ids');
+
         if (is_array($user_ids))
         {
             User::whereIn('uuid', $user_ids)->delete();
