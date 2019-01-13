@@ -9,15 +9,24 @@ use Auth;
 use Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Bouncer;
 
 class UserController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
-        if ($user->isAn('admin')){
-            $users = User::paginate(20);
-            $user_count = User::count();
+        if (Bouncer::can('user')){
+            if ($user->isAn('admin')){
+                $users = User::paginate(20);
+                $user_count = User::count();
+            }
+            else{
+                $group = $user->group;
+                $ids = $group->getIdsG();
+                $users = User::whereIn('group_id', $ids)->paginate(20);
+                $user_count = User::whereIn('group_id', $ids)->count();
+            }
 
             return view('users.index')
                 ->with('users',$users)
@@ -39,8 +48,15 @@ class UserController extends Controller
 
     public function create(){
         $user = Auth::user();
-        if ($user->isAn('admin')){
-            $groups = Group::all();
+        if (Bouncer::can('user')){
+            if ($user->isAn('admin')){
+                $groups = Group::all();
+            }
+            else{
+                $group = $user->group;
+                $ids = $group->getIdsG();
+                $groups = Group::whereIn('id', $ids)->get();
+            }
 
             return view('users.create')->with('groups', $groups);
         }
@@ -50,7 +66,7 @@ class UserController extends Controller
 
     public function store(){
         $user = Auth::user();
-        if ($user->isAn('admin')){
+        if (Bouncer::can('user')){
             $request = request()->all();
             if ($request['group'] === null)
                 unset($request['group']);
@@ -115,12 +131,19 @@ class UserController extends Controller
     }
 
     public function edit($uuid){
-        $user = Auth::user();
-        if ($user->isAn('admin')){
-            $groups = Group::all();
-            $user = User::where('uuid', $uuid)->first();
+        if (Bouncer::can('user')){
+            if ($user->isAn('admin')){
+                $groups = Group::all();
+                $user = User::where('uuid', $uuid)->first();
+            }
+            else{
+                $group = $user->group;
+                $ids = $group->getIdsG();
+                $groups = Group::whereIn('id', $ids)->get();
+                $user = User::where('uuid', $uuid)->first();
+            }
 
-            return view('users.edit')->with('groups', $groups)->with('user', $user)->withSuccess(session()->get( 'success' ));;
+            return view('users.edit')->with('groups', $groups)->with('user', $user)->withSuccess(session()->get( 'success' ));
         }
 
         return "Tính năng đang phát triển";

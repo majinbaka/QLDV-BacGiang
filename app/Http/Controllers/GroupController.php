@@ -15,21 +15,24 @@ class GroupController extends Controller
 {
     public function index(){
         $user = Auth::user();
-        if ($user->isAn('admin')){
-            $group_count = Group::count();
-            $groups = Group::paginate(20);
-            $groupsFilter = Group::where('level', 1)->get();
-
-            return view('groups.index', compact('group_count', 'groups', 'groupsFilter'))->withSuccess(session()->get( 'success' ));
-        }
-        else{
-            $group = $user->group;
-            $ids = $group->getIdsG();
-            $group_count = count($ids);
-            $groups = Group::whereIn('id', $ids)->paginate(20);
-            $groupsFilter = Group::where('level', $user->group->level + 1)->where('parent_id', $user->group->id)->get();
-
-            return view('groups.index', compact('group_count', 'groups', 'groupsFilter'))->withSuccess(session()->get( 'success' ));
+        if (Bouncer::can('group')){
+            if ($user->isAn('admin')){
+                $group_count = Group::count();
+                $groups = Group::paginate(20);
+                $groupsFilter = Group::where('level', 1)->get();
+    
+                return view('groups.index', compact('group_count', 'groups', 'groupsFilter'))->withSuccess(session()->get( 'success' ));
+            }
+            else{
+                $group = $user->group;
+                $ids = $group->getIdsG();
+                $ids = array_diff($group->getIdsG(), [$user->group->id]);
+                $group_count = count($ids);
+                $groups = Group::whereIn('id', $ids)->paginate(20);
+                $groupsFilter = Group::where('level', $user->group->level + 1)->where('parent_id', $user->group->id)->get();
+    
+                return view('groups.index', compact('group_count', 'groups', 'groupsFilter'))->withSuccess(session()->get( 'success' ));
+            }
         }
 
         return "Tính năng đang phát triển";
@@ -62,11 +65,23 @@ class GroupController extends Controller
 
     public function edit($uuid){
         $user = Auth::user();
-        if ($user->isAn('admin')){
-            $group = Group::where('uuid', $uuid)->first();
-            $groups = Group::where('uuid', "<>", $uuid)->where('parent_id', 0)->get();
+        if (Bouncer::can('group')){
+            if ($user->isAn('admin')){
+                $group = Group::where('uuid', $uuid)->first();
+                $groups = Group::where('uuid', "<>", $uuid)->where('parent_id', 0)->get();
+    
+                return view('groups.edit')->with('groups', $groups)->with('group', $group)->withSuccess(session()->get('success'));
+            }
+            else{
+                $user_group = $user->group_id;
+                $group = Group::where('uuid', $uuid)->first();
+                $has = $group->hasRelation($user_group);
+                if (!$has) return \redirect()->route('home')->withErrors(['Không có quyền truy cập đơn vị này']);
+                $ids = $group->getIdsG();
+                $groups = Group::where('uuid', "<>", $uuid)->where('parent_id', $user_group)->get();
 
-            return view('groups.edit')->with('groups', $groups)->with('group', $group)->withSuccess(session()->get('success'));
+                return view('groups.edit')->with('groups', $groups)->with('group', $group)->withSuccess(session()->get('success'));
+            }
         }
 
         return "Tính năng đang phát triển";
@@ -103,8 +118,10 @@ class GroupController extends Controller
             }
             else{
                 $user = Auth::user();
-                if (!$user->isAn('admin'))
+                if (!$user->isAn('admin')){
                     $parent_id = $user->group->id;
+                    $level = $user->group->level + 1;
+                }
             }
             
             $group = new Group;
@@ -121,7 +138,7 @@ class GroupController extends Controller
     }
 
     public function update($uuid){
-        if (Bouncer::cannot('group')){
+        if (Bouncer::can('group')){
             $group = Group::where('uuid', $uuid)->first();
             if (!$group){
                 return redirect()->route('group.index')
@@ -153,8 +170,10 @@ class GroupController extends Controller
                 }
                 else{
                     $user = Auth::user();
-                    if (!$user->isAn('admin'))
+                    if (!$user->isAn('admin')){
                         $parent_id = $user->group->id;
+                        $level = $user->group->level + 1;
+                    }
                 }
 
                 $group->name = request()->get('name');
@@ -174,16 +193,31 @@ class GroupController extends Controller
     public function delete(){
         $group_ids = request()->get('group_ids');
         $user = Auth::user();
-        if (!$user->isAn('admin')){
+        if (Bouncer::cannot('group')){
             return "Tính năng đang phát triển";
         }
         if (is_array($group_ids))
         {
-            $groups = Group::whereIn('uuid', $group_ids)->get();
-            foreach ($groups as $group) {
-                Group::where('parent_id', $group->id)->update(['parent_id' => 0]);
+            if ($user->isAn('admin')){
+                $groups = Group::whereIn('uuid', $group_ids)->get();
+                foreach ($groups as $group) {
+                    Group::where('parent_id', $group->id)->update(['parent_id' => 0]);
+                }
+                Group::whereIn('uuid', $group_ids)->delete();
             }
-            Group::whereIn('uuid', $group_ids)->delete();
+            else{
+                $group = $user->group;
+                $ids = $group->getIdsG();
+                $ids = Group::whereIn('id', $ids)->pluck('uuid')->toArray();
+                if (empty(array_diff($group_ids, $ids))){
+                    $groups = Group::whereIn('uuid', $group_ids)->get();
+                    foreach ($groups as $group) {
+                        Group::where('parent_id', $group->id)->update(['parent_id' => 0]);
+                    }
+                    Group::whereIn('uuid', $group_ids)->delete();
+                }
+            }
+
             return redirect()->route('group.index')->withSuccess('Xoá thành công');
         }
         else{

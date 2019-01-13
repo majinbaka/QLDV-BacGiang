@@ -3,7 +3,9 @@
 <span>QUẢN TRỊ</span>
 <ul class="main-list">
     <li><a href="{{route('user.index')}}">Người dùng</a></li>
-    <li><a href="{{route('manage.setting')}}">Thông tin cấu hình</a></li>
+    @if (Auth::user()->isAn('admin'))
+        <li><a href="{{route('manage.setting')}}">Thông tin cấu hình</a></li>
+    @endif
 </ul>
 @endsection
 @section('content')
@@ -25,12 +27,12 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
-                            @if($user->isAn('admin'))
+                            @if($user->isAn('admin') || $user->id == Auth::id())
                                 <td></td>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->username}}</td>
-                                <td>Quản lý toàn bộ các đơn vị</td>
+                                <td></td>
                             @else
                                 <td><input type="checkbox" name="user_ids[]" value="{{$user->uuid}}"></td>
                                 <td>{{$user->name}}</td>

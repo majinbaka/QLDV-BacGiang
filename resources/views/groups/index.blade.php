@@ -15,7 +15,12 @@
                 <input type="text" name="name" class="search-code" style="width:300px">
                 <label for="parent_id"> Đơn vị cấp trên</label>
                 <select name="parent_id" class="custom-select ">
-                    <option value="0">TỈNH ĐOÀN BẮC GIANG</option>
+                    @if (Auth::user()->isAn('admin'))
+                        <option value="0">TỈNH ĐOÀN BẮC GIANG</option>
+                    @else
+                        <option value="0">{{Auth::user()->group->name}}</option>
+                    @endif
+                    
                     @foreach($groupsFilter as $group)
                         <option value="{{$group->uuid}}">
                             --{{$group->name}}
