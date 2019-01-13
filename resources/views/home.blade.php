@@ -17,7 +17,11 @@
             <input type="text" name="fullname" class="search-fullname" @isset($fullname)value="{{$fullname}}"@endisset>
             <label> Đơn vị </label>
             <select name="group" class="custom-select ">
-                <option value="">TỈNH ĐOÀN BẮC GIANG</option>
+                @if (Auth::user()->isAn('admin'))
+                    <option value="0">TỈNH ĐOÀN BẮC GIANG</option>
+                @else
+                    <option value="0">{{Auth::user()->group->name}}</option>
+                @endif
                 @foreach($groups as $gr)
                     <option value="{{$gr->uuid}}" @isset($group)@if($gr->id == $group->id) selected @endif @endisset>
                         {{$gr->name}}
