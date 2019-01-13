@@ -50,8 +50,7 @@ class UserController extends Controller
                 'username' => 'required|regex:/^\S*$/u|unique:users,username',
                 'email' => 'required|email',
                 'password' => 'required|min:6',
-                'group' => 'exists:groups,uuid'
-
+                'group' => 'exists:groups,uuid',
             ],
             [
                 'name.required' => 'Chưa nhập tên người dùng',
@@ -85,6 +84,8 @@ class UserController extends Controller
                 $user->group_id = $group_id;
                 $user->password = Hash::make(request()->get('password'));
                 $user->uuid = Str::uuid();
+                $user->can_create_user = request()->get('can_create_user') == "on" ? 1 : 0;
+                $user->can_create_group = request()->get('can_create_group') == "on" ? 1 : 0;
                 $user->save();
 
                 return redirect()->route('user.index')->withSuccess('Tạo người dùng mới thành công');
@@ -156,6 +157,8 @@ class UserController extends Controller
                 $user->username = request()->get('username');
                 $user->email = request()->get('email');
                 $user->group_id = $group_id;
+                $user->can_create_user = request()->get('can_create_user') == "on" ? 1 : 0;
+                $user->can_create_group = request()->get('can_create_group') == "on" ? 1 : 0;
                 //validate password
                 if (strlen($password) > 6){
                     $user->password = Hash::make($password);

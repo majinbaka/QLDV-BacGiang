@@ -37,6 +37,16 @@
                 @endforeach
             </select>
         </div>
+        <br>
+        <div>
+            <label class="form-label" style="margin-right:40px;">Có thể tạo thêm đơn vị cấp dưới</label>
+            <input type="checkbox" name="can_create_group" @if($user->can_create_group == 1) checked @endif> 
+        </div>
+        <br>
+        <div>
+            <label class="form-label" style="margin-right:62px;">Có thể tạo thêm người dùng </label>
+            <input type="checkbox" name="can_create_user" @if($user->can_create_user == 1) checked @endif> 
+        </div>
         <hr style="margin:10px 0px;">
         <input type="submit" value="Lưu" class="btn">
     </form>

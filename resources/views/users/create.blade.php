@@ -37,6 +37,16 @@
                 @endforeach
             </select>
         </div>
+        <br>
+        <div>
+            <label class="form-label" style="margin-right:40px;">Có thể tạo thêm đơn vị cấp dưới</label>
+            <input type="checkbox" name="can_create_group" > 
+        </div>
+        <br>
+        <div>
+            <label class="form-label" style="margin-right:62px;">Có thể tạo thêm người dùng </label>
+            <input type="checkbox" name="can_create_user" > 
+        </div>
         <hr style="margin:10px 0px;">
         <input type="submit" value="Tạo" class="btn">
     </form>
