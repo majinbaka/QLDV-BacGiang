@@ -32,6 +32,7 @@ class Group extends Model
     }
 
     public function hasRelation($id){
+        if ($this->id == $id) return true;
         $t = $this->level;
         $g = Group::find($id);
         if ($g)

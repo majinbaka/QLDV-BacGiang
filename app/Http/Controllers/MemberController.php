@@ -21,32 +21,70 @@ use Carbon\Carbon;
 class MemberController extends Controller
 {
     public function search(){
-        $groups = Group::where('level', 1)->get();
-
+        $user = Auth::user();
         $code = request()->get('code');
         $fullname = request()->get('fullname');
-        $group = request()->get('group');
-        $members = Member::select(['code', 'fullname', 'group_id', 'position']);
+        $uuid = request()->get('group');
 
-        if ($code !== null)
-            $members = $members->where('code','like', '%'.$code.'%');
-        if ($fullname !== null)
-            $members = $members->where('fullname','like', '%'.$fullname.'%');
-        if ($group !== null){
-            $group = Group::where('uuid', $group)->first();
-            $members = $members->where('group_id', $group->id);
+        if ($user->isAn('admin')){
+            $groups = Group::where('level', 1)->get();
+            $members = Member::select(['code', 'fullname', 'group_id', 'position']);
+
+            if ($code !== null)
+                $members = $members->where('code','like', '%'.$code.'%');
+            if ($fullname !== null)
+                $members = $members->where('fullname','like', '%'.$fullname.'%');
+            if ($uuid !== null){
+                $group = Group::where('uuid', $uuid)->first();
+                $ids = $group->getIdsG();
+                $members = $members->whereIn('group_id', $ids);
+            }
+            $memberc = $members->count();
+            $members = $members->paginate(20);
+
+            return view('home')
+                ->with('code', $code)
+                ->with('fullname', $fullname)
+                ->with('group', $group)
+                ->with('members', $members)
+                ->with('groups', $groups)
+                ->with('memberc', $memberc)
+                ->withSuccess(session()->get( 'success' ));
         }
-        $memberc = $members->count();
-        $members = $members->paginate(20);
+        else{
+            $user_group = $user->group_id;
+            $group = Group::where('uuid', $uuid)->first();
+            if ($group){
+                $has = $group->hasRelation($user_group);
+                if (!$has)
+                    return \redirect()->route('home')->withErrors(['Không có quyền truy cập đơn vị này']);
+            }
+            else{
+                $group = $user->group;
+            }
+    
+            $ids = $group->getIdsG();
+            $groups = Group::where('level', $user->group->level + 1)->where('parent_id', $user->group->id)->get();
 
-        return view('home')
-            ->with('code', $code)
-            ->with('fullname', $fullname)
-            ->with('group', $group)
-            ->with('members', $members)
-            ->with('groups', $groups)
-            ->with('memberc', $memberc)
-            ->withSuccess(session()->get( 'success' ));
+            $members = Member::select(['code', 'fullname', 'group_id', 'position']);
+            if ($code !== null)
+                $members = $members->where('code','like', '%'.$code.'%');
+            if ($fullname !== null)
+                $members = $members->where('fullname','like', '%'.$fullname.'%');
+            $members = $members->whereIn('group_id', $ids);
+
+            $memberc = $members->count();
+            $members = $members->paginate(20);
+
+            return view('home')
+                ->with('code', $code)
+                ->with('fullname', $fullname)
+                ->with('group', $group)
+                ->with('members', $members)
+                ->with('groups', $groups)
+                ->with('memberc', $memberc)
+                ->withSuccess(session()->get( 'success' ));
+        }
     }
 
     public function create(){
