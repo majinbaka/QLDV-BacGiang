@@ -312,6 +312,32 @@ class MemberController extends Controller
             $member->is_dangvien = \request()->get('is_dangvien');
             $member->join_dang = Carbon::createFromFormat('d/m/Y', request()->get('join_dang'))->toDateString();
             $member->save();
+
+            //Attachment
+            if(request()->has('remove_attachment') ){
+                $attachments = request()->get('remove_attachment') ;
+                foreach ($attachments as $v) {
+                    $attachment = Attachment::where('member_id', $member->id)->where('id', $v)->first();
+                    Storage::delete($attachment->attachment_url);
+                    $attachment->delete();
+                }
+            }
+            if(request()->has('attachment') ){
+                $attachments = request()->file('attachment') ;
+                foreach ($attachments as $v) {
+                    $extension = $v->extension();
+                    $attachment = new Attachment;
+                    $attachment->name = $v->getClientOriginalName();
+                    $attachment->member_id = $member->id;
+                    $attachment->attachment_url = 'xxx';
+                    $attachment->save();
+                    $path = $v->storeAs(
+                        'public/attachment', $attachment->id.'.'.$extension
+                    );
+                    $attachment->attachment_url = $path;
+                    $attachment->save();
+                }
+            }
         } catch(Exception $e){
 
         }
@@ -322,10 +348,16 @@ class MemberController extends Controller
     public function delete(){
         $member_ids = request()->get('member_ids');
         $avatars = Member::whereIn('uuid', $member_ids)->pluck('avatar');
+        $ids = Member::whereIn('uuid', $member_ids)->pluck('id');
+        $attachments = Attachment::whereIn('member_id', $ids)->pluck('attachment_url');
         foreach($avatars as $a){
             Storage::delete($a);
         }
+        foreach($attachments as $a){
+            Storage::delete($a);
+        }
         Member::whereIn('uuid', $member_ids)->delete();
+        Attachment::whereIn('member_id', $ids)->delete();
 
         return \redirect()->back();
     }

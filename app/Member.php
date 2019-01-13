@@ -15,4 +15,10 @@ class Member extends Model
     {
         return $this->belongsTo('App\Position', 'position');
     }
+
+    public function attachments()
+    {
+        return $this->hasMany('App\Attachment');
+    }
+
 }

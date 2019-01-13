@@ -108,7 +108,11 @@
             <div class="title">File đính kèm</div>
             <div class='content'>
                 <div id="add_attachment" class="input-submit">Thêm</div>
-                <div id="attachlist"></div>
+                <div id="attachlist">
+                    @foreach ($member->attachments as $item)
+                        <span class="atle_{{$item->id}}">{{$item->name}}<span style="color:red;margin:0;cursor:pointer" onclick="removeEE(this,{{$item->id}})"> Xoá</span></span>
+                    @endforeach
+                </div>
             </div>
         </div>
 @endsection
@@ -159,6 +163,12 @@ function removeE(e, id){
     $('.at_'+id).remove();
     $('.atl_'+id).remove();
     $(e).remove();
+}
+function removeEE(e, id){
+    $('.atle_'+id).remove();
+    $(e).remove();
+    var elem = $("<input type='text' name='remove_attachment[]' value='"+id+"' style='display:none'>");
+    $('#form-create').append(elem);
 }
 </script>
 @endpush
