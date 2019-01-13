@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Member;
 use App\Group;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -25,10 +26,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $memberc = Member::count();
-        $groups = Group::where('level', 1)->get();
-        $members = Member::paginate(20);
+        $user = Auth::user();
+        if ($user->isAn('admin')){
+            $memberc = Member::count();
+            $groups = Group::where('level', 1)->get();
+            $members = Member::paginate(20);
 
-        return view('home', compact('memberc', 'members', 'groups'))->withSuccess(session()->get( 'success' ));;
+            return view('home', compact('memberc', 'members', 'groups'))->withSuccess(session()->get( 'success' ));
+        }
+        else{
+            $group = $user->group_id;
+            $memberc = Member::where('group_id', $group)->count();
+            $groups = Group::where('parent_id', $user->group_id)->where('level', $user->group->level + 1)->get();
+            $members = Member::where('group_id', $group)->paginate(20);
+
+            return view('home', compact('memberc', 'members', 'groups'))->withSuccess(session()->get( 'success' ));
+        }
+        
+
     }
 }
