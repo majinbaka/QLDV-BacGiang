@@ -28,7 +28,7 @@
                     <option @if($member->position == $p->id) selected @endif value="{{$p->id}}">{{$p->name}}</option>
                 @endforeach
             </select>
-            <label for="term"  style="margin-left:40px;margin-right:48px">Nhiệm kỳ</label>
+            <label for="term"  style="margin-left:40px;margin-right:45px">Nhiệm kỳ</label>
             <input type="text" name="term" style="width:68px;" value="{{$member->term}}">
             <label for="group_id" style="padding-left:38px;padding-right:46px">Đơn vị</label>
             <select name="group_id" style="width:275px">
@@ -66,52 +66,56 @@
             <input type="text" name="current_vilage" style="width:175px;margin-bottom:26px" value="{{$member->current_vilage}}">
 
             <hr style="margin-bottom:13px">
-            <label for="knowledge">Trình độ</label>
-            <select style="width:95px;margin:0px 39px;" name="knowledge">
+            <label for="knowledge" style="margin-right:39px">Trình độ</label>
+            <select style="width:95px;" name="knowledge">
                 @foreach ($knowledges as $k)
                     <option @if($member->knowledge == $k->id) selected @endif value="{{$k->id}}">{{$k->name}}</option>
                 @endforeach
             </select>
 
-            <label for="political">Chính trị</label>
-            <select  style="width:95px;margin-left:40px;margin-right:45px;margin-bottom:16px" name="political">
+            <label for="political" style="margin-left:39px;margin-right:40px;">Chính trị</label>
+            <select  style="width:95px;" name="political">
                 @foreach ($politicals as $p)
                     <option @if($member->political == $p->id) selected @endif value="{{$p->id}}">{{$p->name}}</option>
                 @endforeach
             </select>
-            <label for="it_level">Tin học</label>
-            <select style="width:95px;margin-left:46px;margin-right:45px" name="it_level">
+            <label for="it_level" style="margin-left:45px;margin-right:46px">Tin học</label>
+            <select style="width:95px;" name="it_level">
                 @foreach ($its as $p)
                     <option @if($member->it_level == $p->id) selected @endif value="{{$p->id}}">{{$p->name}}</option>
                 @endforeach
             </select>
-            <label for="english_level">Ngoại ngữ</label>
-            <select style="width:95px;margin-left:29px" name="english_level">
+            <label for="english_level" style="margin-left:45px;margin-right:29px">Ngoại ngữ</label>
+            <select style="width:95px;" name="english_level">
                 @foreach ($englishs as $p)
                     <option @if($member->english_level == $p->id) selected @endif value="{{$p->id}}">{{$p->name}}</option>
                 @endforeach
             </select>
+            <div style="margin-bottom:16px;"></div>
             <label for="is_dangvien" style="margin-right:29px">Đảng viên</label>
             <input @if($member->is_dangvien == 1) checked @endif type="radio" name="is_dangvien" value="1"><label style="margin-right:13px;margin-left:6px">Có</label>
             <input @if($member->is_dangvien == 0) checked @endif type="radio" name="is_dangvien" value="0"><label style="margin-left:6px;">Không</label>
-            <label for="join_dang" style="margin-left:29px;margin-right:12px">Ngày vào đảng</label>
+            <label for="join_dang" style="margin-left:40px;margin-right:12px">Ngày vào đảng</label>
             <input type="text" name="join_dang" placeholder="dd/mm/yyyy" value="{{Carbon\Carbon::createFromFormat('Y-m-d', $member->join_dang)->format('d/m/Y')}}">
             <hr style="margin-bottom:17px">
             <input type="file" name="avatar" id="avatar" style="display:none">
-            <input type="submit" value="Lưu">
+            <input type="submit" value="Lưu" class="input-submit">
             </form>
         </div>
     </div>
 
     <div class="attachment">
-        <div class="title">File đính kèm</div>
-        <div class='content'>
-            <input type="submit" value="Thêm" >
+            <div class="title">File đính kèm</div>
+            <div class='content'>
+                <div id="add_attachment" class="input-submit">Thêm</div>
+                <div id="attachlist"></div>
+            </div>
         </div>
-    </div>
 @endsection
 @push('script')
+<script src="{{ asset('js/selectstyle2.js') }}"></script>
 <script>
+    var at =1;
     $('.avatar-member').click(function(){
         $( "#avatar" ).trigger( "click" );
     });
@@ -132,5 +136,29 @@ if (input.files && input.files[0]) {
 $("#avatar").change(function() {
 readURL(this);
 });
+
+$('#add_attachment').click(function(){
+    var e = $("<input type='file' class='at_"+at+"' name='attachment[]' style='display:none' onchange='previewFile(this)'>");
+    $('#form-create').append(e);
+    e.trigger( "click" );
+    });
+
+    function previewFile(e){
+        var fullPath = e.value;
+        if (fullPath) {
+            var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+            var filename = fullPath.substring(startIndex);
+            if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                filename = filename.substring(1);
+            }
+            $('#attachlist').append('<span class="atl_'+at+'">'+filename+' <span style="color:red;margin:0;cursor:pointer" onclick="removeE(this,'+at+')">Huỷ</span></span>');
+            at++;
+        }
+    }
+function removeE(e, id){
+    $('.at_'+id).remove();
+    $('.atl_'+id).remove();
+    $(e).remove();
+}
 </script>
 @endpush
