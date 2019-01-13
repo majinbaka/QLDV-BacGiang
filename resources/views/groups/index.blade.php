@@ -81,9 +81,8 @@
     
     $checkboxes.change(function(){
         var countCheckedCheckboxes = $checkboxes.filter(':checked').length;
-        var url = "/group/" + this.value + "/edit";
         if (countCheckedCheckboxes === 1){
-            $("#edit-user").attr("href", url)
+            $("#edit-user").attr("href", "/group/" + $checkboxes.filter(':checked')[0].value+ "/edit")
             $('#edit-user').show();
         }
         else{
