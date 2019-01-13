@@ -35,10 +35,11 @@ class HomeController extends Controller
             return view('home', compact('memberc', 'members', 'groups'))->withSuccess(session()->get( 'success' ));
         }
         else{
-            $group = $user->group_id;
-            $memberc = Member::where('group_id', $group)->count();
+            $group = $user->group;
+            $ids = $group->getIdsG();
+            $memberc = Member::whereIn('group_id', $ids)->count();
             $groups = Group::where('parent_id', $user->group_id)->where('level', $user->group->level + 1)->get();
-            $members = Member::where('group_id', $group)->paginate(20);
+            $members = Member::whereIn('group_id', $ids)->paginate(20);
 
             return view('home', compact('memberc', 'members', 'groups'))->withSuccess(session()->get( 'success' ));
         }
