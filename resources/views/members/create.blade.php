@@ -18,7 +18,7 @@
             <label for="birthday" style="margin-left:40px;margin-right:25px">Ngày sinh</label>
             <input type="text" name="birthday" placeholder="dd/mm/yyyy" style="width:68px;">
             <label for="gender" style="margin-left:38px;margin-right:25px">Giới tính</label>
-            <select name="gender" style="width:81px;">
+            <select name="gender" style="width:81px;"  class="custom-select">
                 <option value="1">Nam</option>
                 <option value="0">Nữ</option>
             </select>
@@ -28,10 +28,10 @@
                     <option value="{{$p->id}}">{{$p->name}}</option>
                 @endforeach
             </select>
-            <label for="term"  style="margin-left:40px;margin-right:48px">Nhiệm kỳ</label>
+            <label for="term"  style="margin-left:40px;margin-right:45px">Nhiệm kỳ</label>
             <input type="text" name="term" style="width:68px;">
-            <label for="group_id" style="padding-left:38px;padding-right:46px">Đơn vị</label>
-            <select name="group_id" style="width:275px">
+            <label for="group_id" style="padding-left:40px;padding-right:44px">Đơn vị</label>
+            <select name="group_id" style="width:270px">
                 @foreach ($groups as $g)
                     <option value="{{$g->uuid}}">{{$g->name}}</option>
                 @endforeach
@@ -66,31 +66,33 @@
             <input type="text" name="current_vilage" style="width:175px;margin-bottom:26px">
 
             <hr style="margin-bottom:13px">
-            <label for="knowledge">Trình độ</label>
-            <select style="width:95px;margin:0px 39px;" name="knowledge">
+            <label for="knowledge" style="margin-right:39px">Trình độ</label>
+            <select style="width:95px;" name="knowledge">
                 @foreach ($knowledges as $k)
                     <option value="{{$k->id}}">{{$k->name}}</option>
                 @endforeach
             </select>
 
-            <label for="political">Chính trị</label>
-            <select  style="width:95px;margin-left:40px;margin-right:45px;margin-bottom:16px" name="political">
+            <label for="political" style="margin-left:39px;margin-right:40px;">Chính trị</label>
+            <select  style="width:95px" name="political">
                 @foreach ($politicals as $p)
                     <option value="{{$p->id}}">{{$p->name}}</option>
                 @endforeach
             </select>
-            <label for="it_level">Tin học</label>
-            <select style="width:95px;margin-left:46px;margin-right:45px" name="it_level">
+            <label for="it_level" style="margin-left:45px;margin-right:46px">Tin học</label>
+            <select style="width:95px" name="it_level">
                 @foreach ($its as $p)
                     <option value="{{$p->id}}">{{$p->name}}</option>
                 @endforeach
             </select>
-            <label for="english_level">Ngoại ngữ</label>
-            <select style="width:95px;margin-left:29px" name="english_level">
+            <label for="english_level" style="margin-left:45px;margin-right:29px">Ngoại ngữ</label>
+            <select style="width:95px" name="english_level">
                 @foreach ($englishs as $p)
                     <option value="{{$p->id}}">{{$p->name}}</option>
                 @endforeach
             </select>
+            <br>
+            <div style="margin-bottom:16px;"></div>
             <label for="is_dangvien" style="margin-right:29px">Đảng viên</label>
             <input type="radio" name="is_dangvien" value="1"><label style="margin-right:13px;margin-left:6px">Có</label>
             <input type="radio" name="is_dangvien" value="0"><label style="margin-left:6px;">Không</label>
@@ -98,7 +100,7 @@
             <input type="text" name="join_dang" placeholder="dd/mm/yyyy">
             <input type="file" name="avatar" id="avatar" style="display:none">
             <hr style="margin-bottom:17px">
-            <input type="submit" value="Lưu">
+            <input type="submit" value="Lưu" class="input-submit">
             </form>
         </div>
     </div>
@@ -106,12 +108,13 @@
     <div class="attachment">
         <div class="title">File đính kèm</div>
         <div class='content'>
-            <div id="add_attachment">Thêm</div>
+            <div id="add_attachment" class="input-submit">Thêm</div>
             <div id="attachlist"></div>
         </div>
     </div>
 @endsection
 @push('script')
+<script src="{{ asset('js/selectstyle2.js') }}"></script>
 <script>
     $('.avatar-member').click(function(){
         $( "#avatar" ).trigger( "click" );
@@ -151,10 +154,5 @@ $('#add_attachment').click(function(){
             $('#attachlist').append('<span>'+filename+'</span>');
         }
     }
-
-
-
-
-    
 </script>
 @endpush

@@ -178,6 +178,21 @@ body{
     margin-right: 14px;
 }
 
+.input-submit{
+        width: 51px;
+        height: 24px;
+        background-color: #006db7;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+}
+
+#add_attachment {
+    line-height: 24px;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 15px;
+}
 /* Content CRUD Area */
 
 .content-crud .title{
@@ -199,6 +214,51 @@ body{
     background-color: #eeeded;
     border-radius: 4px;
     border: 1px solid #e5e5e5;
+}
+
+
+/* Custom select */
+
+.s-hidden {
+    visibility:hidden;
+    padding-right:10px;
+}
+.select_s2 {
+    cursor:pointer;
+    display:inline-block;
+    position:relative;
+    color:black;
+    border:1px solid #ccc;
+    border-radius: 5px;
+    font-size: 12px;
+}
+.styledSelect_s2 {
+    position:absolute;
+    border-radius: 5px;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    background-color:#dddddd;
+    padding:0 10px;
+    font-weight:bold;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 20px;
+    margin-left: 0px;
+}
+.styledSelect_s2:after {
+    content:"";
+    width:0;
+    height:0;
+    border:5px solid transparent;
+    border-color:black transparent transparent transparent;
+    position:absolute;
+    top:9px;
+    right:6px;
+}
+.styledSelect_s2:active, .styledSelect_s2.active {
+    background-color:#dddddd;
 }
 
 /* Non Optimize */
@@ -575,7 +635,12 @@ footer{
     border-radius: 4px;
     border: 1px solid #e5e5e5;
     font-size: 12px;
-    height: 66px;
+    min-height: 66px;
+    padding-bottom: 10px;
+}
+#attachlist span{
+    margin: 10px 15px;
+    display: inline-block;
 }
 .content-body label{
     font-size: 12px;
