@@ -54,6 +54,7 @@
                 </tbody>
             </table>
         </form>
+        {{$groups->links()}}
     </div>
 @endsection
 @push('script')

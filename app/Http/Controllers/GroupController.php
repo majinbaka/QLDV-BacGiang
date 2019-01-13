@@ -16,7 +16,7 @@ class GroupController extends Controller
         $user = Auth::user();
         if ($user->isAn('admin')){
             $group_count = Group::count();
-            $groups = Group::all();
+            $groups = Group::paginate(20);
             $groupsFilter = Group::where('level', 1)->get();
 
             return view('groups.index', compact('group_count', 'groups', 'groupsFilter'))->withSuccess(session()->get( 'success' ));;
