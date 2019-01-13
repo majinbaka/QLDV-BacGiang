@@ -138,11 +138,6 @@ class MemberController extends Controller
     }
 
     public function store(){
-        $user = Auth::user();
-        if (!$user->isAn('admin')){
-            return "Tính năng đang phát triển";
-        }
-
         $validator = Validator::make(request()->all(), [
             'fullname' => 'required',
             'code' => 'required|unique:members,code',
@@ -272,10 +267,6 @@ class MemberController extends Controller
     }
     public function update($uuid){
         $user = Auth::user();
-        if (!$user->isAn('admin')){
-            return "Tính năng đang phát triển";
-        }
-
         $member = Member::where('uuid', $uuid)->first();
         if(!$member)
             return redirect()->route('home')

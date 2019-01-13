@@ -43,7 +43,5 @@ class HomeController extends Controller
 
             return view('home', compact('memberc', 'members', 'groups'))->withSuccess(session()->get( 'success' ));
         }
-        
-
     }
 }
