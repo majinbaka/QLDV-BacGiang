@@ -47,7 +47,11 @@ class initrolepermission extends Command
         ]);
 
         $home = Bouncer::ability()->firstOrCreate(['name' => 'home', 'title' => 'View Home']);
+        $group = Bouncer::ability()->firstOrCreate(['name' => 'group', 'title' => 'View Group']);
+        $user = Bouncer::ability()->firstOrCreate(['name' => 'user', 'title' => 'View User']);
 
         Bouncer::allow($admin)->to($home);
+        Bouncer::allow($admin)->to($group);
+        Bouncer::allow($admin)->to($user);
     }
 }

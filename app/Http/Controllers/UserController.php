@@ -24,6 +24,15 @@ class UserController extends Controller
                 ->with('user_count', $user_count)
                 ->withSuccess(session()->get( 'success' ));
         }
+        else{
+            $users = User::paginate(20);
+            $user_count = User::count();
+
+            return view('users.index')
+                ->with('users',$users)
+                ->with('user_count', $user_count)
+                ->withSuccess(session()->get( 'success' ));
+        }
         
         return "Tính năng đang phát triển";
     }
@@ -86,6 +95,14 @@ class UserController extends Controller
                 $user->uuid = Str::uuid();
                 $user->can_create_user = request()->get('can_create_user') == "on" ? 1 : 0;
                 $user->can_create_group = request()->get('can_create_group') == "on" ? 1 : 0;
+                if (request()->get('can_create_user') == "on")
+                    $user->allow('user');
+                else
+                    $user->disallow('user');
+                if (request()->get('can_create_group') == "on")
+                    $user->allow('group');
+                else 
+                    $user->disallow('group');
                 $user->save();
 
                 return redirect()->route('user.index')->withSuccess('Tạo người dùng mới thành công');
@@ -159,6 +176,14 @@ class UserController extends Controller
                 $user->group_id = $group_id;
                 $user->can_create_user = request()->get('can_create_user') == "on" ? 1 : 0;
                 $user->can_create_group = request()->get('can_create_group') == "on" ? 1 : 0;
+                if (request()->get('can_create_user') == "on")
+                    $user->allow('user');
+                else
+                    $user->disallow('user');
+                if (request()->get('can_create_group') == "on")
+                    $user->allow('group');
+                else 
+                    $user->disallow('group');
                 //validate password
                 if (strlen($password) > 6){
                     $user->password = Hash::make($password);

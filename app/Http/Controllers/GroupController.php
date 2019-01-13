@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Exception;
 use Validator;
 use Auth;
+use Bouncer;
 
 class GroupController extends Controller
 {
@@ -19,7 +20,16 @@ class GroupController extends Controller
             $groups = Group::paginate(20);
             $groupsFilter = Group::where('level', 1)->get();
 
-            return view('groups.index', compact('group_count', 'groups', 'groupsFilter'))->withSuccess(session()->get( 'success' ));;
+            return view('groups.index', compact('group_count', 'groups', 'groupsFilter'))->withSuccess(session()->get( 'success' ));
+        }
+        else{
+            $group = $user->group;
+            $ids = $group->getIdsG();
+            $group_count = count($ids);
+            $groups = Group::whereIn('id', $ids)->paginate(20);
+            $groupsFilter = Group::where('level', $user->group->level + 1)->where('parent_id', $user->group->id)->get();
+
+            return view('groups.index', compact('group_count', 'groups', 'groupsFilter'))->withSuccess(session()->get( 'success' ));
         }
 
         return "Tính năng đang phát triển";
@@ -63,8 +73,7 @@ class GroupController extends Controller
     }
 
     public function store(){
-        $user = Auth::user();
-        if (!$user->isAn('admin')){
+        if (Bouncer::cannot('group')){
             return "Tính năng đang phát triển";
         }
 
@@ -92,6 +101,11 @@ class GroupController extends Controller
                 $parent_id = $parent_group->id;
                 $level = $parent_group->level + 1;
             }
+            else{
+                $user = Auth::user();
+                if (!$user->isAn('admin'))
+                    $parent_id = $user->group->id;
+            }
             
             $group = new Group;
             $group->name = \request()->get('name');
@@ -107,8 +121,7 @@ class GroupController extends Controller
     }
 
     public function update($uuid){
-        $user = Auth::user();
-        if ($user->isAn('admin')){
+        if (Bouncer::cannot('group')){
             $group = Group::where('uuid', $uuid)->first();
             if (!$group){
                 return redirect()->route('group.index')
@@ -137,6 +150,11 @@ class GroupController extends Controller
                     $parent_group = Group::where('uuid', request()->get('parent_id'))->first();
                     $parent_id = $parent_group->id;
                     $level = $parent_group->level + 1;
+                }
+                else{
+                    $user = Auth::user();
+                    if (!$user->isAn('admin'))
+                        $parent_id = $user->group->id;
                 }
 
                 $group->name = request()->get('name');
