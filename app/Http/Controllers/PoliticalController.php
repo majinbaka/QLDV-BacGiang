@@ -41,7 +41,7 @@ class PoliticalController extends Controller
             'name' => 'required',
         ],
         [
-            'name.required' => 'Chưa nhập cấp độ ngoại ngữ',
+            'name.required' => 'Chưa nhập chính trị',
         ]
         );
 
@@ -68,14 +68,14 @@ class PoliticalController extends Controller
             $political = Political::find($id);
             if (!$political){
                 return redirect()->route('political.index')
-                    ->withErrors('trình độ ngoại ngữ này không tồn tại');
+                    ->withErrors('trình độ chính trị này không tồn tại');
             }
 
             $validator = Validator::make(request()->all(), [
                 'name' => 'required',
             ],
             [
-                'name.required' => 'Chưa nhập cấp độ ngoại ngữ',
+                'name.required' => 'Chưa nhập chính trị',
             ]);
     
             if ($validator->fails()) {

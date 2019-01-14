@@ -59,7 +59,7 @@ class ItController extends Controller
 
         }
 
-        return \redirect()->route('it.index');
+        return \redirect()->route('it.index')->withSuccess('Thêm trình độ tin học mới thánh công');
     }
 
     public function update($id){
@@ -68,14 +68,14 @@ class ItController extends Controller
             $it = ItLevel::find($id);
             if (!$it){
                 return redirect()->route('it.index')
-                    ->withErrors('trình độ ngoại ngữ này không tồn tại');
+                    ->withErrors('trình độ tin học này không tồn tại');
             }
 
             $validator = Validator::make(request()->all(), [
                 'name' => 'required',
             ],
             [
-                'name.required' => 'Chưa nhập cấp độ ngoại ngữ',
+                'name.required' => 'Chưa nhập cấp độ',
             ]);
     
             if ($validator->fails()) {

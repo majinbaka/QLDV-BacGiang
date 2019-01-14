@@ -33,7 +33,6 @@
         <div>
             <label class="form-label" style="margin-right:43px;">Đơn vị</label>
             <select name="group" class="custom-select form-select">
-                <option value=""></option>
                 @foreach ($groups as $group)
                     <option value="{{$group->uuid}}">{{$group->name}}</option>
                 @endforeach

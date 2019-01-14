@@ -41,7 +41,7 @@ class PositionController extends Controller
             'name' => 'required',
         ],
         [
-            'name.required' => 'Chưa nhập cấp độ ngoại ngữ',
+            'name.required' => 'Chưa nhập chức vụ',
         ]
         );
 
@@ -68,14 +68,14 @@ class PositionController extends Controller
             $position = Position::find($id);
             if (!$position){
                 return redirect()->route('position.index')
-                    ->withErrors('trình độ ngoại ngữ này không tồn tại');
+                    ->withErrors('chức vụ này không tồn tại');
             }
 
             $validator = Validator::make(request()->all(), [
                 'name' => 'required',
             ],
             [
-                'name.required' => 'Chưa nhập cấp độ ngoại ngữ',
+                'name.required' => 'Chưa nhập chức vụ',
             ]);
     
             if ($validator->fails()) {

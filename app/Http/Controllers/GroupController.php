@@ -134,7 +134,7 @@ class GroupController extends Controller
 
         }
 
-        return \redirect()->route('group.index');
+        return \redirect()->route('group.index')->withSuccess('Thêm đơn vị mới thánh công');
     }
 
     public function update($uuid){

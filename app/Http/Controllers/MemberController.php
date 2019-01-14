@@ -415,6 +415,6 @@ class MemberController extends Controller
         Member::whereIn('uuid', $member_ids)->delete();
         Attachment::whereIn('member_id', $ids)->delete();
 
-        return \redirect()->back();
+        return \redirect()->route('home')->withSuccess('Xoá thành công');
     }
 }

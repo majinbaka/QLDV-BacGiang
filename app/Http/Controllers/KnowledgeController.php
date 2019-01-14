@@ -41,7 +41,7 @@ class KnowledgeController extends Controller
             'name' => 'required',
         ],
         [
-            'name.required' => 'Chưa nhập cấp độ ngoại ngữ',
+            'name.required' => 'Chưa nhập trình độ ',
         ]
         );
 
@@ -59,7 +59,7 @@ class KnowledgeController extends Controller
 
         }
 
-        return \redirect()->route('knowledge.index');
+        return \redirect()->route('knowledge.index')->withSuccess('Thêm trình độ mới thánh công');
     }
 
     public function update($id){
@@ -68,14 +68,14 @@ class KnowledgeController extends Controller
             $knowledge = Knowledge::find($id);
             if (!$knowledge){
                 return redirect()->route('knowledge.index')
-                    ->withErrors('trình độ ngoại ngữ này không tồn tại');
+                    ->withErrors('trình độ này không tồn tại');
             }
 
             $validator = Validator::make(request()->all(), [
                 'name' => 'required',
             ],
             [
-                'name.required' => 'Chưa nhập cấp độ ngoại ngữ',
+                'name.required' => 'Chưa nhập trình độ ',
             ]);
     
             if ($validator->fails()) {
