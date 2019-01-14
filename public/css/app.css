@@ -376,7 +376,7 @@ img.notification-img:last-child {
     display: flex;
 }
 .left-bar {
-    width:255px;
+    width:333px;
     margin-left: 0px;
     color: #fff;
 }
@@ -525,7 +525,7 @@ footer{
     background-color:white;
     padding:0 10px;
     font-weight:bold;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 300;
     line-height: 24px;
     margin-left: 0px;

@@ -73,7 +73,7 @@ class UserController extends Controller
             $validator = Validator::make($request, [
                 'name' => 'required',
                 'username' => 'required|regex:/^\S*$/u|unique:users,username',
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users,email',
                 'password' => 'required|min:6',
                 'group' => 'exists:groups,uuid',
             ],
@@ -84,6 +84,7 @@ class UserController extends Controller
                 'username.unique' => 'Tên đăng nhập đã tồn tại',
                 'email.required' => 'Chưa nhập email',
                 'email.email' => 'Email chưa chính xác',
+                'email.unique' => 'Email đã tồn tại',
                 'password.required' => 'Chưa nhập mật khẩu',
                 'password.min' => 'Mật khẩu phải có tối thiểu 6 ký tự',
                 'group.exists' => 'Đơn vị được chọn chưa tồn tại',
