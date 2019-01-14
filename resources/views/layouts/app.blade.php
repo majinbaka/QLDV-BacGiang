@@ -56,7 +56,7 @@
                     <li @if(in_array(\Route::currentRouteName(), ["group.index","position.index","position.edit","political.index","political.edit","knowledge.index","knowledge.edit","it.index","it.edit","english.index","english.edit"])) class="active" @endif><a href="{{route('group.index')}}">DANH MỤC</a></li>
                     @endcan
                     @can ('user')
-                    <li @if(in_array(\Route::currentRouteName(), ["manage.index","user.index", "user.create"])) class="active" @endif><a href="{{route('manage.index')}}">QUẢN TRỊ</a></li>
+                    <li @if(in_array(\Route::currentRouteName(), ["manage.index","user.index", "user.create"])) class="active" @endif><a href="{{route('user.index')}}">QUẢN TRỊ</a></li>
                     @endcan
                 </ul>
             </div>
