@@ -3,9 +3,12 @@
     margin: 0 auto;
     padding: 0;
 }
+html{ height:100%; }
+body::after{ content:''; display:block; height:59px; }
 
 body{
-    height: 100%;
+    position: relative;
+    min-height: 100%;
     background-image: url(../images/bg.png);
     background-position: bottom right;
     background-size: 502px 600px;
@@ -487,7 +490,8 @@ a.addnew{
     margin-top: 7px;
 }
 
-footer{
+footer{ 
+    position:absolute; 
     margin-top:20px;
     height: 39px;
     text-align: center;
