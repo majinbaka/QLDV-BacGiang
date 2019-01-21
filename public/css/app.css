@@ -264,6 +264,11 @@ body{
     background-color:#dddddd;
 }
 
+/* homepage css */
+table.home-member-table tbody tr:hover{
+    background-color: #dddddd;
+    cursor: pointer;
+}
 /* Non Optimize */
 
 #content {

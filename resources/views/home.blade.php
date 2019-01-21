@@ -42,7 +42,7 @@
     Có tổng số <span style="color:#fc0202;font-weight:bold;line-height: 30px;">{{$memberc}}</span> đoàn viên
     <form id="member_form" method="POST">
         @csrf
-        <table>
+        <table class="home-member-table">
             <thead>
                 <td><input type="checkbox" id="checkAll"></td>
                 <td>MÃ ĐOÀN VIÊN</td>
@@ -54,8 +54,8 @@
                 @foreach ($members as $member)
                     <tr>
                         <td><input type="checkbox" name="member_ids[]" value="{{$member->uuid}}"></td>
-                        <td>{{$member->code}}</td>
-                        <td>{{$member->fullname}}</td>
+                        <td onclick="window.location.href = '{{route('member.edit', $member->uuid)}}'">{{$member->code}}</td>
+                        <td onclick="window.location.href = '{{route('member.edit', $member->uuid)}}'">{{$member->fullname}}</td>
                         <td>{{$member->group->name}}</td>
                         <td>{{$member->positionr->name}}</td>
                     </tr>

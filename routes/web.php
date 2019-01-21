@@ -47,6 +47,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('position/{id}', 'PositionController@update')->name('position.update');
     Route::delete('position/delete', 'PositionController@delete')->name('position.delete');
 
+    Route::get('nation', 'NationController@index')->name('nation.index');
+    Route::get('nation/{id}/edit', 'NationController@edit')->name('nation.edit');
+    Route::post('nation', 'NationController@store')->name('nation.store');
+    Route::post('nation/{id}', 'NationController@update')->name('nation.update');
+    Route::delete('nation/delete', 'NationController@delete')->name('nation.delete');
+
+    Route::get('religion', 'ReligionController@index')->name('religion.index');
+    Route::get('religion/{id}/edit', 'ReligionController@edit')->name('religion.edit');
+    Route::post('religion', 'ReligionController@store')->name('religion.store');
+    Route::post('religion/{id}', 'ReligionController@update')->name('religion.update');
+    Route::delete('religion/delete', 'ReligionController@delete')->name('religion.delete');
+
     //Group
     Route::get('group', 'GroupController@index')->name('group.index');
     Route::get('group/create', 'GroupController@create')->name('group.create');

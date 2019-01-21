@@ -42,7 +42,10 @@
             <label for="religion" style="margin-left:41px;margin-right:33px">Tôn giáo</label>
             <input type="text" name="religion" style="width:55px" value="{{$member->religion}}">
             <label for="relation" style="margin-left:50px;margin-right:33px">Tình trạng hôn nhân</label>
-            <input type="text" name="relation" style="width:55px" value="{{$member->relation}}">
+            <select name="relation" style="width:81px;">
+                <option value="1" @if($member->relation == 1) selected @endif>Có</option>
+                <option value="0" @if($member->relation == 0) selected @endif>Không</option>
+            </select>
             <label for="join_date" style="margin-left:43px;margin-right:29px">Ngày vào đoàn</label>
             <input type="text" name="join_date" style="width:75px" placeholder="dd/mm/yyyy" value="{{Carbon\Carbon::createFromFormat('Y-m-d', $member->join_date)->format('d/m/Y')}}"><br>
             <label style="padding-right:32px">Quê quán</label>

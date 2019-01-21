@@ -36,8 +36,10 @@ class MemberController extends Controller
                 $members = $members->where('fullname','like', '%'.$fullname.'%');
             if ($uuid !== null){
                 $group = Group::where('uuid', $uuid)->first();
-                $ids = $group->getIdsG();
-                $members = $members->whereIn('group_id', $ids);
+                if ($group !== null){
+                    $ids = $group->getIdsG();
+                    $members = $members->whereIn('group_id', $ids);
+                }
             }
             $memberc = $members->count();
             $members = $members->paginate(20);

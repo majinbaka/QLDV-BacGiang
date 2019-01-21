@@ -42,7 +42,10 @@
             <label for="religion" style="margin-left:41px;margin-right:33px">Tôn giáo</label>
             <input type="text" name="religion" style="width:55px">
             <label for="relation" style="margin-left:50px;margin-right:33px">Tình trạng hôn nhân</label>
-            <input type="text" name="relation" style="width:55px">
+            <select name="relation" style="width:81px;"  class="custom-select">
+                <option value="1">Có</option>
+                <option value="0">Không</option>
+            </select>
             <label for="join_date" style="margin-left:43px;margin-right:29px">Ngày vào đoàn</label>
             <input type="text" name="join_date" style="width:75px" placeholder="dd/mm/yyyy"><br>
             <label style="padding-right:32px">Quê quán</label>
