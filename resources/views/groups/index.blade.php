@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @section('left-bar')
-    @include('layouts.danhmuc')
+<span>DANH MỤC</span>
+<ul class="main-list">
+    <li><a href="{{route('group.index')}}">BỘ MÁY TỔ CHỨC</a></li>
+</ul>
 @endsection
 @section('content')
 <div class="search-area">
