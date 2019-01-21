@@ -12,6 +12,8 @@ use App\Knowledge;
 use App\Political;
 use App\Position;
 use App\Attachment;
+use App\Nation;
+use App\Religion;
 use Auth;
 use Exception;
 use Validator;
@@ -96,18 +98,20 @@ class MemberController extends Controller
         $knowledges = Knowledge::all();
         $politicals = Political::all();
         $positions = Position::all();
+        $nations = Nation::all();
+        $religions = Religion::all();
 
         if ($user->isAn('admin')){
             $groups = Group::all();
 
-            return view('members.create', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups'));
+            return view('members.create', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'nations', 'religions'));
         }else
         {
             $group = $user->group;
             $ids = $group->getIdsG();
             $groups = Group::whereIn('id', $ids)->get();
 
-            return view('members.create', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups'));
+            return view('members.create', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'nations', 'religions'));
         }
     }
 
@@ -119,10 +123,13 @@ class MemberController extends Controller
         $knowledges = Knowledge::all();
         $politicals = Political::all();
         $positions = Position::all();
+        $nations = Nation::all();
+        $religions = Religion::all();
+
         if ($user->isAn('admin')){
             $groups = Group::all();
 
-            return view('members.edit', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'member'))
+            return view('members.edit', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'member', 'nations', 'religions'))
         ->withSuccess(session()->get( 'success' ));
         }else
         {
@@ -133,7 +140,7 @@ class MemberController extends Controller
             }
             $groups = Group::whereIn('id', $ids)->get();
 
-            return view('members.edit', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'member'))
+            return view('members.edit', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'member', 'nations', 'religions'))
         ->withSuccess(session()->get( 'success' ));
         }
         

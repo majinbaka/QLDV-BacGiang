@@ -38,9 +38,17 @@
             </select>
             <hr style="margin-top:9px;margin-bottom:14px">
             <label for="nation" style="margin-right:41px">Dân tộc</label>
-            <input type="text" name="nation" style="width:55px;margin-bottom: 27px;">
+            <select style="width:150px;" name="nation">
+                @foreach ($nations as $p)
+                    <option value="{{$p->id}}">{{$p->name}}</option>
+                @endforeach
+            </select>
             <label for="religion" style="margin-left:41px;margin-right:33px">Tôn giáo</label>
-            <input type="text" name="religion" style="width:55px">
+            <select style="width:150px;" name="religion">
+                @foreach ($religions as $p)
+                    <option value="{{$p->id}}">{{$p->name}}</option>
+                @endforeach
+            </select>
             <label for="relation" style="margin-left:50px;margin-right:33px">Tình trạng hôn nhân</label>
             <select name="relation" style="width:81px;"  class="custom-select">
                 <option value="1">Có</option>
