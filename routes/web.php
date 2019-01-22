@@ -15,7 +15,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('manage', 'ManageController@index')->name('manage.index');
     Route::get('manage/setting', 'ManageController@setting')->name('manage.setting');
     Route::post('manage/setting', 'ManageController@updateSetting')->name('manage.update');
-
+    Route::get("/page", function(){
+        return View::make("layouts.danhmuc");
+    });
     //CRUD MEMBER INFO SELECT
     Route::get('english', 'EnglishController@index')->name('english.index');
     Route::get('english/{id}/edit', 'EnglishController@edit')->name('english.edit');

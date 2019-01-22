@@ -50,10 +50,10 @@
                 <ul>
                     <li @if(in_array(\Route::currentRouteName(), ["home","member.search", "member.create", "member.edit", "group.show"])) class="active" @endif><a href="{{route('home')}}">HỒ SƠ ĐOÀN VIÊN</a></li>
                     @can ('home')
-                    <li @if(in_array(\Route::currentRouteName(), ["hom1e","memb1er.search"])) class="active" @endif><a href="{{route('manage.setting')}}">BÁO CÁO THỐNG KÊ</a></li>
+                    <li @if(in_array(\Route::currentRouteName(), ["hom1e","member.search"])) class="active" @endif><a href="{{route('manage.setting')}}">BÁO CÁO THỐNG KÊ</a></li>
                     @endcan
                     @can ('group')
-                    <li @if(in_array(\Route::currentRouteName(), ["group.index","memb1er.search"])) class="active" @endif><a href="{{route('group.index')}}">BỘ MÁY TỔ CHỨC</a></li>
+                    <li @if(in_array(\Route::currentRouteName(), ["group.index","member.search"])) class="active" @endif><a href="{{route('group.index')}}">BỘ MÁY TỔ CHỨC</a></li>
                     <li @if(in_array(\Route::currentRouteName(), ["position.index","position.edit","political.index","political.edit","knowledge.index","knowledge.edit","it.index","it.edit","english.index","english.edit"])) class="active" @endif><a href="{{route('group.index')}}">DANH MỤC</a></li>
                     @endcan
                     @can ('user')
