@@ -15,9 +15,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('manage', 'ManageController@index')->name('manage.index');
     Route::get('manage/setting', 'ManageController@setting')->name('manage.setting');
     Route::post('manage/setting', 'ManageController@updateSetting')->name('manage.update');
-    Route::get("/page", function(){
-        return View::make("layouts.danhmuc");
-    });
     //CRUD MEMBER INFO SELECT
     Route::get('english', 'EnglishController@index')->name('english.index');
     Route::get('english/{id}/edit', 'EnglishController@edit')->name('english.edit');
@@ -61,6 +58,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('religion/{id}', 'ReligionController@update')->name('religion.update');
     Route::delete('religion/delete', 'ReligionController@delete')->name('religion.delete');
 
+    Route::get('blockmember', 'BlockMemberController@index')->name('blockmember.index');
+    Route::get('blockmember/{id}/edit', 'BlockMemberController@edit')->name('blockmember.edit');
+    Route::post('blockmember', 'BlockMemberController@store')->name('blockmember.store');
+    Route::post('blockmember/{id}', 'BlockMemberController@update')->name('blockmember.update');
+    Route::delete('blockmember/delete', 'BlockMemberController@delete')->name('blockmember.delete');
     //Group
     Route::get('group', 'GroupController@index')->name('group.index');
     Route::get('group/create', 'GroupController@create')->name('group.create');

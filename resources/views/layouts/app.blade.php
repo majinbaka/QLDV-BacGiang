@@ -14,6 +14,12 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,500&amp;subset=vietnamese" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {{--<link href="{{ asset('css/style.css') }}" rel="stylesheet">--}}
+    {{--<link href="{{ asset('css/prism.css') }}" rel="stylesheet">--}}
+    <link href="{{ asset('css/chosen.css') }}" rel="stylesheet">
+    <script src="{{asset('js/chosen.jquery.min.js')}}"></script>
+    <script src="{{asset('js/prism.js')}}"></script>
+    <script src="{{asset('js/init.js')}}"></script>
 </head>
 <body>
     <div id="app">
@@ -54,7 +60,7 @@
                     @endcan
                     @can ('group')
                     <li @if(in_array(\Route::currentRouteName(), ["group.index","member.search"])) class="active" @endif><a href="{{route('group.index')}}">BỘ MÁY TỔ CHỨC</a></li>
-                    <li @if(in_array(\Route::currentRouteName(), ["position.index","position.edit","political.index","political.edit","knowledge.index","knowledge.edit","it.index","it.edit","english.index","english.edit"])) class="active" @endif><a href="{{route('group.index')}}">DANH MỤC</a></li>
+                    <li @if(in_array(\Route::currentRouteName(), ["position.index","position.edit","political.index","political.edit","knowledge.index","knowledge.edit","it.index","it.edit","english.index","english.edit","blockmember.index","blockmember.edit"])) class="active" @endif><a href="{{route('position.index')}}">DANH MỤC</a></li>
                     @endcan
                     @can ('user')
                     <li @if(in_array(\Route::currentRouteName(), ["manage.index","user.index", "user.create"])) class="active" @endif><a href="{{route('user.index')}}">QUẢN TRỊ</a></li>

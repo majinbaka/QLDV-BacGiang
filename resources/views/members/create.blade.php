@@ -11,106 +11,161 @@
         <div class="content-body">
             <form method="POST" action="{{route('member.store')}}" id="form-create" enctype="multipart/form-data">
                 @csrf
-            <label for="fullname" style="padding-right:33px">Họ và tên</label>
-            <input type="text" name="fullname" style="width:140px;">
-            <label for="code" style="margin-left:38px;margin-right:25px">Mã đoàn viên</label>
-            <input type="text" name="code" style="width:68px;">
-            <label for="birthday" style="margin-left:40px;margin-right:25px">Ngày sinh</label>
-            <input type="text" name="birthday" placeholder="dd/mm/yyyy" style="width:68px;">
-            <label for="gender" style="margin-left:38px;margin-right:25px">Giới tính</label>
-            <select name="gender" style="width:81px;"  class="custom-select">
+            <label class="form-label " for="fullname">Họ và tên</label>
+            <input type="text"  name="fullname" class="form-input input-large {{ $errors->has('fullname') ? 'has-error' : ''}}" value="{{ old('fullname') }}">
+            <label class="form-label" for="code" >Mã đoàn viên</label>
+            <input type="text" name="code" class="form-input input-medium {{ $errors->has('code') ? 'has-error' : ''}}" value="{{ old('code') }}">
+            <label class="form-label" for="birthday" >Ngày sinh</label>
+            <input type="text" name="birthday" placeholder="dd/mm/yyyy" class="form-input input-medium {{ $errors->has('birthday') ? 'has-error' : ''}}" value="{{ old('birthday') }}">
+            <label class="form-label" for="gender">Giới tính</label>
+            <select name="gender"  class="custom-select input-medium form-select {{ $errors->has('gender') ? 'has-error' : ''}}">
                 <option value="1">Nam</option>
                 <option value="0">Nữ</option>
             </select>
-            <label for="position"  style="padding-right:40px">Chức vụ</label>
-            <select style="width:150px;" name="position">
+            <label class="form-label" for="position" >Chức vụ</label>
+            <select class="input-large form-select {{ $errors->has('position') ? 'has-error' : ''}}" name="position">
                 @foreach ($positions as $p)
                     <option value="{{$p->id}}">{{$p->name}}</option>
                 @endforeach
             </select>
-            <label for="term"  style="margin-left:40px;margin-right:45px">Nhiệm kỳ</label>
-            <input type="text" name="term" style="width:68px;">
-            <label for="group_id" style="padding-left:40px;padding-right:44px">Đơn vị</label>
-            <select name="group_id" style="width:270px">
-                @foreach ($groups as $g)
-                    <option value="{{$g->uuid}}">{{$g->name}}</option>
-                @endforeach
-            </select>
-            <hr style="margin-top:9px;margin-bottom:14px">
-            <label for="nation" style="margin-right:41px">Dân tộc</label>
-            <select style="width:150px;" name="nation">
+            <label class="form-label" for="term" style="margin-right: 21px">Nhiệm kỳ</label>
+            <input type="text" name="term" class="input-medium form-input {{ $errors->has('term') ? 'has-error' : ''}}" value="{{ old('term') }}">
+            <div class="row">
+                <label class="form-label" for="group_id" >Đơn vị</label>
+                <select name="group_id" id="group_id" class="input-x-large form-select {{ $errors->has('group_id') ? 'has-error' : ''}}">
+                    @foreach ($groups as $g)
+                        <option value="{{$g->uuid}}">{{$g->name}}</option>
+                    @endforeach
+                </select>
+                <label class="form-label" for="block_member_id" >Khối đối tượng</label>
+                <select class="input-large form-select ml-0 block-members {{ $errors->has('block_member_id') ? 'has-error' : ''}}" name="block_member_id">
+                    @foreach ($blockMembers as $p)
+                        <option value="{{$p->id}}">{{$p->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <hr class="divider mt-10 mb-15">
+            <label class="form-label" for="nation">Dân tộc</label>
+            <select class="input-medium form-select width-75 {{ $errors->has('nation') ? 'has-error' : ''}}" name="nation">
                 @foreach ($nations as $p)
                     <option value="{{$p->id}}">{{$p->name}}</option>
                 @endforeach
             </select>
-            <label for="religion" style="margin-left:41px;margin-right:33px">Tôn giáo</label>
-            <select style="width:150px;" name="religion">
+            <label class="form-label" for="religion" style="padding-right: 20px">Tôn giáo</label>
+            <select class="form-select input-medium width-75 {{ $errors->has('religion') ? 'has-error' : ''}}" name="religion">
                 @foreach ($religions as $p)
                     <option value="{{$p->id}}">{{$p->name}}</option>
                 @endforeach
             </select>
-            <label for="relation" style="margin-left:50px;margin-right:33px">Tình trạng hôn nhân</label>
-            <select name="relation" style="width:81px;"  class="custom-select">
+            <label class="form-label" for="relation" style="padding-right: 20px">Tình trạng hôn nhân</label>
+            <select name="relation"  class="custom-select form-select input-medium width-75 {{ $errors->has('relation') ? 'has-error' : ''}}">
                 <option value="1">Có</option>
                 <option value="0">Không</option>
             </select>
-            <label for="join_date" style="margin-left:43px;margin-right:29px">Ngày vào đoàn</label>
-            <input type="text" name="join_date" style="width:75px" placeholder="dd/mm/yyyy"><br>
-            <label style="padding-right:32px">Quê quán</label>
+            <label class="form-label" for="join_date" >Ngày vào đoàn</label>
+            <input type="text" value="{{ old('join_date') }}" name="join_date" class="form-input input-medium join-date {{ $errors->has('join_date') ? 'has-error' : ''}}" placeholder="dd/mm/yyyy">
+            <div class="mt-10 mb-15"></div>
+            <label class="form-label">Quê quán</label>
             <label for="city" class="mini-label">Tỉnh/ Thành phố</label>
-            <input type="text" name="city" style="margin-right:40px;width:144px;margin-bottom:23px">
+            @php
+                $cities = config('address.city');
+                $districts = config('address.district');
+                $communes = config('address.commune');
+            @endphp
+            <select name="city" id="city" class="form-select input-x-medium special {{ $errors->has('city') ? 'has-error' : ''}}">
+                <option value="0">Chọn...</option>
+                @foreach($cities as $key => $value)
+                    <option value="{{$value}}" data-key="{{$key}}">{{$value}}</option>
+                @endforeach
+            </select>
             <label for="district" class="mini-label">Quận/ Huyện</label>
-            <input type="text" name="district" style="margin-right:40px;width:144px">
+            <select name="district" id="district" class="form-select input-x-medium special {{ $errors->has('district') ? 'has-error' : ''}}">
+                <option value="0">Chọn...</option>
+                @foreach($districts as $key => $value)
+                    @foreach($value as $k => $v)
+                        <option value="{{$v}}" data-key="{{$k}}" data-city="{{$key}}">{{$v}}</option>
+                    @endforeach
+                @endforeach
+            </select>
             <label for="commune" class="mini-label">Xã/ Phường</label>
-            <input type="text" name="commune" style="margin-right:40px;width:144px">
+            <select name="commune" id="commune" class="form-select input-x-medium special {{ $errors->has('commune') ? 'has-error' : ''}}">
+                <option value="0">Chọn...</option>
+                @foreach($communes as $key => $value)
+                    @foreach($value as $k => $v)
+                        @foreach($v as $i => $j)
+                            <option value="{{$j}}" data-key="{{$i}}" data-city="{{$key}}" data-district="{{$k}}">{{$j}}</option>
+                        @endforeach
+                    @endforeach
+                @endforeach
+            </select>
             <label for="vilage" class="mini-label">Quê quán</label>
-            <input type="text" name="vilage" style="width:175px">
-
-            <label style="padding-right:7px">Nơi ở hiện nay</label>
+            <input type="text" value="{{ old('vilage') }}" name="vilage" class="form-input input-x-large special {{ $errors->has('vilage') ? 'has-error' : ''}}">
+            <div class="mt-10 mb-15"></div>
+            <label class="form-label" style="padding-right: 10px">Nơi ở hiện nay</label>
             <label for="current_city" class="mini-label">Tỉnh/ Thành phố</label>
-            <input type="text" name="current_city" style="margin-right:40px;width:144px">
+            <select name="current_city" id="current_city" class="form-select input-x-medium special {{ $errors->has('current_city') ? 'has-error' : ''}}">
+                <option value="0">Chọn...</option>
+                @foreach($cities as $key => $value)
+                    <option value="{{$value}}" data-key="{{$key}}">{{$value}}</option>
+                @endforeach
+            </select>
             <label for="current_district" class="mini-label">Quận/ Huyện</label>
-            <input type="text" name="current_district" style="margin-right:40px;width:144px">
+            <select name="current_district" id="current_district" class="form-select input-x-medium special {{ $errors->has('current_district') ? 'has-error' : ''}}">
+                <option value="0">Chọn...</option>
+                @foreach($districts as $key => $value)
+                    @foreach($value as $k => $v)
+                        <option value="{{$v}}" data-key="{{$k}}" data-city="{{$key}}">{{$v}}</option>
+                    @endforeach
+                @endforeach
+            </select>
             <label for="current_commune" class="mini-label">Xã/ Phường</label>
-            <input type="text" name="current_commune" style="margin-right:40px;width:144px">
+            <select name="current_commune" id="current_commune" class="form-select input-x-medium special {{ $errors->has('current_commune') ? 'has-error' : ''}}">
+                <option value="0">Chọn...</option>
+                @foreach($communes as $key => $value)
+                    @foreach($value as $k => $v)
+                        @foreach($v as $i => $j)
+                            <option value="{{$j}}" data-key="{{$i}}" data-city="{{$key}}" data-district="{{$k}}">{{$j}}</option>
+                        @endforeach
+                    @endforeach
+                @endforeach
+            </select>
             <label for="current_vilage" class="mini-label">Quê quán</label>
-            <input type="text" name="current_vilage" style="width:175px;margin-bottom:26px">
+            <input type="text" value="{{ old('current_vilage') }}" name="current_vilage" class="form-input input-x-large special {{ $errors->has('current_vilage') ? 'has-error' : ''}}">
 
-            <hr style="margin-bottom:13px">
-            <label for="knowledge" style="margin-right:39px">Trình độ</label>
-            <select style="width:95px;" name="knowledge">
+            <hr class="divider">
+            <label class="form-label" for="knowledge" style="padding-right: 40px">Trình độ</label>
+            <select class="form-select input-x-medium {{ $errors->has('knowledge') ? 'has-error' : ''}}" name="knowledge">
                 @foreach ($knowledges as $k)
                     <option value="{{$k->id}}">{{$k->name}}</option>
                 @endforeach
             </select>
 
-            <label for="political" style="margin-left:39px;margin-right:40px;">Chính trị</label>
-            <select  style="width:95px" name="political">
+            <label class="form-label" for="political">Chính trị</label>
+            <select  class="form-select input-x-medium {{ $errors->has('political') ? 'has-error' : ''}}" name="political">
                 @foreach ($politicals as $p)
                     <option value="{{$p->id}}">{{$p->name}}</option>
                 @endforeach
             </select>
-            <label for="it_level" style="margin-left:45px;margin-right:46px">Tin học</label>
-            <select style="width:95px" name="it_level">
+            <label class="form-label" for="it_level">Tin học</label>
+            <select class="form-select input-x-medium {{ $errors->has('it_level') ? 'has-error' : ''}}" name="it_level">
                 @foreach ($its as $p)
                     <option value="{{$p->id}}">{{$p->name}}</option>
                 @endforeach
             </select>
-            <label for="english_level" style="margin-left:45px;margin-right:29px">Ngoại ngữ</label>
-            <select style="width:95px" name="english_level">
+            <label class="form-label" for="english_level">Ngoại ngữ</label>
+            <select class="form-select input-x-medium last-item {{ $errors->has('english_level') ? 'has-error' : ''}}" name="english_level">
                 @foreach ($englishs as $p)
                     <option value="{{$p->id}}">{{$p->name}}</option>
                 @endforeach
             </select>
-            <br>
-            <div style="margin-bottom:16px;"></div>
-            <label for="is_dangvien" style="margin-right:29px">Đảng viên</label>
-            <input type="radio" name="is_dangvien" value="1"><label style="margin-right:13px;margin-left:6px">Có</label>
-            <input type="radio" name="is_dangvien" value="0"><label style="margin-left:6px;">Không</label>
-            <label for="join_dang" style="margin-left:29px;margin-right:12px">Ngày vào đảng</label>
-            <input type="text" name="join_dang" placeholder="dd/mm/yyyy">
+                <div class="mt-10"></div>
+            <label class="form-label" for="is_dangvien">Đảng viên</label>
+            <input type="radio" class="{{ $errors->has('is_dangvien') ? 'has-error' : ''}}" name="is_dangvien" value="1"><label style="margin-right:13px;margin-left:6px">Có</label>
+            <input type="radio" class="{{ $errors->has('is_dangvien') ? 'has-error' : ''}}" name="is_dangvien" value="0"><label style="margin-left:6px;">Không</label>
+            <label class="form-label" for="join_dang" style="margin-left: 30px">Ngày vào đảng</label>
+            <input type="text" value="{{ old('join_dang') }}" name="join_dang" class="form-input input-x-medium {{ $errors->has('join_dang') ? 'has-error' : ''}}" placeholder="dd/mm/yyyy">
             <input type="file" name="avatar" id="avatar" style="display:none">
-            <hr style="margin-bottom:17px">
+            <hr class="divider mt-10 mb-15">
             <input type="submit" value="Lưu" class="input-submit">
             </form>
         </div>
@@ -125,7 +180,7 @@
     </div>
 @endsection
 @push('script')
-<script src="{{ asset('js/selectstyle2.js') }}"></script>
+{{--<script src="{{ asset('js/selectstyle2.js') }}"></script>--}}
 <script>
     var at =1;
     $('.avatar-member').click(function(){
@@ -172,5 +227,67 @@ function removeE(e, id){
     $('.atl_'+id).remove();
     $(e).remove();
 }
+$(document).on('change','#city',function () {
+    var v = $(this).val();
+    if(v != 0){
+        var c = $(this).find(':selected').attr('data-key');
+        $('#district option').hide();
+        $('#district option[data-city="'+c+'"]').show();
+        $('#district option[value="0"]').show();
+        $('#district').val(0);
+        $('#commune option').hide();
+        $('#commune option[data-city="'+c+'"]').show();
+        $('#commune option[value="0"]').show();
+        $('#commune').val(0);
+    } else{
+        $('#district option').show();
+        $('#commune option').show();
+    }
+});
+$(document).on('change','#district',function () {
+    var v = $(this).val();
+    if(v!=0){
+        var d = $(this).find(':selected').attr('data-key');
+        var c = $(this).find(':selected').attr('data-city');
+        $('#commune option').hide();
+        $('#commune option[data-city="'+c+'"][data-district="'+d+'"]').show();
+        $('#commune option[value="0"]').show();
+        $('#commune').val(0);
+    } else{
+        $('#commune option').show();
+    }
+});
+
+$(document).on('change','#current_city',function () {
+    var v = $(this).val();
+    if(v != 0){
+        var c = $(this).find(':selected').attr('data-key');
+        $('#current_district option').hide();
+        $('#current_district option[data-city="'+c+'"]').show();
+        $('#current_district option[value="0"]').show();
+        $('#current_district').val(0);
+        $('#current_commune option').hide();
+        $('#current_commune option[data-city="'+c+'"]').show();
+        $('#current_commune option[value="0"]').show();
+        $('#current_commune').val(0);
+    } else{
+        $('#current_district option').show();
+        $('#current_commune option').show();
+    }
+});
+$(document).on('change','#current_district',function () {
+    var v = $(this).val();
+    if(v!=0){
+        var d = $(this).find(':selected').attr('data-key');
+        var c = $(this).find(':selected').attr('data-city');
+        $('#current_commune option').hide();
+        $('#current_commune option[data-city="'+c+'"][data-district="'+d+'"]').show();
+        $('#current_commune option[value="0"]').show();
+        $('#current_commune').val(0);
+    } else{
+        $('#current_commune option').show();
+    }
+});
+$("#group_id").chosen();
 </script>
 @endpush

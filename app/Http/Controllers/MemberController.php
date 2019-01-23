@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BlockMember;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Member;
@@ -30,7 +31,7 @@ class MemberController extends Controller
 
         if ($user->isAn('admin')){
             $groups = Group::where('level', 1)->get();
-            $members = Member::select(['code', 'fullname', 'group_id', 'position']);
+            $members = Member::select(['code', 'fullname', 'group_id', 'position','uuid']);
 
             if ($code !== null)
                 $members = $members->where('code','like', '%'.$code.'%');
@@ -70,7 +71,7 @@ class MemberController extends Controller
             $ids = $group->getIdsG();
             $groups = Group::where('level', $user->group->level + 1)->where('parent_id', $user->group->id)->get();
 
-            $members = Member::select(['code', 'fullname', 'group_id', 'position']);
+            $members = Member::select(['code', 'fullname', 'group_id', 'position','uuid']);
             if ($code !== null)
                 $members = $members->where('code','like', '%'.$code.'%');
             if ($fullname !== null)
@@ -100,18 +101,18 @@ class MemberController extends Controller
         $positions = Position::all();
         $nations = Nation::all();
         $religions = Religion::all();
-
+        $blockMembers = BlockMember::all();
         if ($user->isAn('admin')){
             $groups = Group::all();
 
-            return view('members.create', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'nations', 'religions'));
+            return view('members.create', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'nations', 'religions','blockMembers'));
         }else
         {
             $group = $user->group;
             $ids = $group->getIdsG();
             $groups = Group::whereIn('id', $ids)->get();
 
-            return view('members.create', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'nations', 'religions'));
+            return view('members.create', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'nations', 'religions','blockMembers'));
         }
     }
 
@@ -125,11 +126,11 @@ class MemberController extends Controller
         $positions = Position::all();
         $nations = Nation::all();
         $religions = Religion::all();
-
+        $blockMembers = BlockMember::all();
         if ($user->isAn('admin')){
             $groups = Group::all();
 
-            return view('members.edit', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'member', 'nations', 'religions'))
+            return view('members.edit', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'member', 'nations', 'religions','blockMembers'))
         ->withSuccess(session()->get( 'success' ));
         }else
         {
@@ -140,7 +141,7 @@ class MemberController extends Controller
             }
             $groups = Group::whereIn('id', $ids)->get();
 
-            return view('members.edit', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'member', 'nations', 'religions'))
+            return view('members.edit', compact('its', 'englishs', 'knowledges', 'politicals', 'positions', 'groups', 'member', 'nations', 'religions','blockMembers'))
         ->withSuccess(session()->get( 'success' ));
         }
         
@@ -149,7 +150,7 @@ class MemberController extends Controller
     public function store(){
         $validator = Validator::make(request()->all(), [
             'fullname' => 'required',
-            'code' => 'required|unique:members,code',
+            'code' => 'required|digits:7|unique:members,code',
             'birthday' => 'required|date_format:d/m/Y',
             'gender' => 'digits_between:1,2',
             'position' => 'exists:positions,id',
@@ -169,11 +170,13 @@ class MemberController extends Controller
             'is_dangvien' => 'digits_between:0,1',
             'join_dang' => 'required|date_format:d/m/Y',
             'avatar' => 'image',
+            'block_member_id'=>'exists:block_members,id'
         ],
         [
             'fullname.required' => 'Chưa nhập họ và tên đoàn viên',
             'code.required' => 'Chưa điền mã đoàn viên',
             'code.unique' => 'Mã đoàn viên đã tồn tại',
+            'code.digits' => 'Mã đoàn viên phải gồm 7 chữ số',
             'birthday.required' => 'Chưa nhập ngày sinh',
             'birthday.date_format' => 'Ngày sinh định dạng không hợp lệ',
             'gender.digits_between' => 'Giới tính không xác định',
@@ -195,7 +198,8 @@ class MemberController extends Controller
             'is_dangvien.digits_between' => 'không xác định được có phải là đảng viên hay không',
             'join_dang.required' => 'Chưa điền ngày vào đảng',
             'join_dang.date_format' => 'Ngày vào đảng chưa đúng định dạng',
-            'avatar.image' => 'Ảnh đại diện chưa đúng định dạng'
+            'avatar.image' => 'Ảnh đại diện chưa đúng định dạng',
+            'block_member_id.exists' => 'Khối đối tượng đoàn viên không hợp lệ',
         ]
         );
 
@@ -239,6 +243,7 @@ class MemberController extends Controller
             $member->english_level = \request()->get('english_level');
             $member->is_dangvien = \request()->get('is_dangvien');
             $member->join_dang = Carbon::createFromFormat('d/m/Y', request()->get('join_dang'))->toDateString();
+            $member->block_member_id = \request()->get('block_member_id');
             $member->save();
 
             if (request()->has('avatar'))
@@ -282,7 +287,7 @@ class MemberController extends Controller
                 ->withErrors('Đoàn viên không tồn tại');
         $validator = Validator::make(request()->all(), [
             'fullname' => 'required',
-            'code' => 'required|unique:members,code,'.$member->id,
+            'code' => 'required|digits:7|unique:members,code,'.$member->id,
             'birthday' => 'required|date_format:d/m/Y',
             'gender' => 'digits_between:1,2',
             'position' => 'exists:positions,id',
@@ -302,11 +307,13 @@ class MemberController extends Controller
             'is_dangvien' => 'digits_between:0,1',
             'join_dang' => 'required|date_format:d/m/Y',
             'avatar' => 'image',
+            'block_member_id' => 'exists:block_members,id',
         ],
         [
             'fullname.required' => 'Chưa nhập họ và tên đoàn viên',
             'code.required' => 'Chưa điền mã đoàn viên',
             'code.unique' => 'Mã đoàn viên đã tồn tại',
+            'code.digits' => 'Mã đoàn viên phải gồm 7 chữ số',
             'birthday.required' => 'Chưa nhập ngày sinh',
             'birthday.date_format' => 'Ngày sinh định dạng không hợp lệ',
             'gender.digits_between' => 'Giới tính không xác định',
@@ -328,7 +335,8 @@ class MemberController extends Controller
             'is_dangvien.digits_between' => 'không xác định được có phải là đảng viên hay không',
             'join_dang.required' => 'Chưa điền ngày vào đảng',
             'join_dang.date_format' => 'Ngày vào đảng chưa đúng định dạng',
-            'avatar.image' => 'Ảnh đại diện chưa đúng định dạng'
+            'avatar.image' => 'Ảnh đại diện chưa đúng định dạng',
+            'block_member_id.exists' => 'Khối đối tượng đoàn viên không hợp lệ',
         ]
         );
 
@@ -376,6 +384,7 @@ class MemberController extends Controller
             $member->english_level = \request()->get('english_level');
             $member->is_dangvien = \request()->get('is_dangvien');
             $member->join_dang = Carbon::createFromFormat('d/m/Y', request()->get('join_dang'))->toDateString();
+            $member->block_member_id = \request()->get('block_member_id');
             $member->save();
 
             //Attachment

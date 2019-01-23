@@ -59,7 +59,7 @@ class PositionController extends Controller
 
         }
 
-        return \redirect()->route('position.index');
+        return \redirect()->route('position.index')->withSuccess('Thêm chức vụ mới thành công');
     }
 
     public function update($id){

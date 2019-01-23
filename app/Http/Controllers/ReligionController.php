@@ -59,7 +59,7 @@ class ReligionController extends Controller
 
         }
 
-        return \redirect()->route('religion.index')->withSuccess('Thêm trình độ tin học mới thánh công');
+        return \redirect()->route('religion.index')->withSuccess('Thêm tôn giáo mới thành công');
     }
 
     public function update($id){

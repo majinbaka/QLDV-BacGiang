@@ -59,7 +59,7 @@ class NationController extends Controller
 
         }
 
-        return \redirect()->route('nation.index')->withSuccess('Thêm trình độ tin học mới thánh công');
+        return \redirect()->route('nation.index')->withSuccess('Thêm trình độ tin học mới thành công');
     }
 
     public function update($id){

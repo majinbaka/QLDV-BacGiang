@@ -59,7 +59,7 @@ class PoliticalController extends Controller
 
         }
 
-        return \redirect()->route('political.index');
+        return \redirect()->route('political.index')->withSuccess('Thêm trình độ chính trị mới thành công');
     }
 
     public function update($id){

@@ -67,7 +67,7 @@
 </div>
 @endsection
 @push('script')
-<script src="{{ asset('js/select.js') }}"></script>
+{{--<script src="{{ asset('js/select.js') }}"></script>--}}
 <script>
     $("#removeItems").click(function(e) {
         var confirma = confirm("Bạn chắc chắn muốn xoá ? ");

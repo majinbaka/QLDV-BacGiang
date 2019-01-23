@@ -21,4 +21,8 @@ class Member extends Model
         return $this->hasMany('App\Attachment');
     }
 
+    public function blockMember(){
+        return $this->belongsTo('App\BlockMember','block_member_id');
+    }
+
 }

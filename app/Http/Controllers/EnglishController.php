@@ -59,7 +59,7 @@ class EnglishController extends Controller
 
         }
 
-        return \redirect()->route('english.index')->withSuccess('Thêm trình độ ngoại ngữ mới thánh công');
+        return \redirect()->route('english.index')->withSuccess('Thêm trình độ ngoại ngữ mới thành công');
     }
 
     public function update($id){
