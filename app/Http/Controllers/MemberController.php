@@ -342,8 +342,8 @@ class MemberController extends Controller
 
         if ($validator->fails()) {
             return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+                ->withInput()
+                ->withErrors($validator);
         }
 
         try{
