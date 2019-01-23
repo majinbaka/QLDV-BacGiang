@@ -212,7 +212,7 @@ class MemberController extends Controller
         try{
             $parent_group = Group::where('uuid', request()->get('group_id'))->first();
             if(!$parent_group){
-                return redirect()->route('member.create')->withErrors(['Đơn vị không tồn tại']);
+                return redirect()->route('member.create')->withErrors(['Đơn vị không tồn tại'])->withInput();
             }
             $group_id = $parent_group->id;
 
@@ -341,7 +341,7 @@ class MemberController extends Controller
         );
 
         if ($validator->fails()) {
-            return redirect('member/'.$member->uuid.'/edit')
+            return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
