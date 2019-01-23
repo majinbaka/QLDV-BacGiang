@@ -15,7 +15,7 @@ class member extends Seeder
         $first = ['Nguyễn', 'Vũ', 'Đinh', 'Doãn'];
         $last = ['Anh', 'Long', 'Linh', 'Dung'];
         $middle = ['Việt', 'Minh', 'Hoàng', 'Thị', 'Văn'];
-        for ($i =0; $i < 80000; $i++) {
+        for ($i =0; $i < 100; $i++) {
             DB::table('members')->insert([
             'uuid' => str_random(10).$i,
             'avatar' => str_random(10).$i,
