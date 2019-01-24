@@ -308,7 +308,7 @@ table.home-member-table tbody tr:hover{
 }
 #content .search-area .content-area select{
     margin-left: 15px;
-    width: 250px;
+    width: 450px;
     margin-right: 30px;
     height: 24px;
     border-radius: 5px;
@@ -316,6 +316,7 @@ table.home-member-table tbody tr:hover{
 #content .search-area .content-area{
     padding-left: 15px;
     padding-top: 15px;
+    margin-bottom: 15px;
 }
 
   
@@ -325,9 +326,7 @@ table.home-member-table tbody tr:hover{
     background-color: #006db7;
     color: #fff;
     border-radius: 5px;
-    margin-left: 0px;
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin: 0 auto;
 }
 
 #content .search-area input[type="text"].search-code {
@@ -339,7 +338,7 @@ table.home-member-table tbody tr:hover{
 }
 
 #content .search-area input[type="text"].search-fullname {
-    width: 203px;
+    width: 173px;
     height: 24px;
     border-radius: 5px;
     padding-left: 5px;
@@ -829,4 +828,13 @@ footer{
 }
 .has-error{
     border-color: #ff0000 !important;
+}
+#content .search-area input.chosen-search-input{
+    margin: 1px 0px;
+}
+#content .search-area .chosen-container{
+    margin-right: 15px;
+}
+.user-content .chosen-container{
+    margin-left: 15px;
 }

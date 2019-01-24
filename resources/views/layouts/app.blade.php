@@ -17,7 +17,7 @@
     {{--<link href="{{ asset('css/style.css') }}" rel="stylesheet">--}}
     {{--<link href="{{ asset('css/prism.css') }}" rel="stylesheet">--}}
     <link href="{{ asset('css/chosen.css') }}" rel="stylesheet">
-    <script src="{{asset('js/chosen.jquery.min.js')}}"></script>
+    <script src="{{asset('js/chosen.jquery.js')}}"></script>
     <script src="{{asset('js/prism.js')}}"></script>
     <script src="{{asset('js/init.js')}}"></script>
 </head>

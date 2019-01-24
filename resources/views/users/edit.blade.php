@@ -30,9 +30,9 @@
             <label class="form-label" style="margin-right:61px;">Email</label>
             <input type="email" name="email" class="form-input" value="{{$user->email}}">
         </div>
-        <div>
+        <div class="user-content">
             <label class="form-label" style="margin-right:43px;">Đơn vị</label>
-            <select name="group" class="custom-select form-select">
+            <select name="group" class="custom-select form-select" id="group_id">
                 <option value=""></option>
                 @foreach ($groups as $group)
                     <option value="{{$group->uuid}}" @if($group->id == $user->group_id) selected @endif>{{$group->name}}</option>
@@ -56,5 +56,8 @@
 </div>
 @endsection
 @push('script')
-<script src="{{ asset('js/select.js') }}"></script>
+{{--<script src="{{ asset('js/select.js') }}"></script>--}}
+<script>
+    $("#group_id").chosen({"width":"200px","enable_escape_special_char":true});
+</script>
 @endpush

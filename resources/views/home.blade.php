@@ -16,7 +16,7 @@
             <label> Họ tên</label>
             <input type="text" name="fullname" class="search-fullname" @isset($fullname)value="{{$fullname}}"@endisset>
             <label> Đơn vị </label>
-            <select name="group" class="custom-select " style="margin-right:10px;width: 165px;">
+            <select name="group" id="group_id" class="custom-select " style="margin-right:10px;width: 165px;">
                 @if (Auth::user()->isAn('admin'))
                     <option value="0">TỈNH ĐOÀN BẮC GIANG</option>
                 @else
@@ -94,5 +94,6 @@
             $('#edit-user').hide();
         }
     });
+    $("#group_id").chosen({"width":"200px","enable_escape_special_char":true});
 </script>
 @endpush

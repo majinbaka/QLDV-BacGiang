@@ -17,7 +17,7 @@
                 <label>Tên đơn vị</label>
                 <input type="text" name="name" class="search-code" style="width:300px">
                 <label for="parent_id"> Đơn vị cấp trên</label>
-                <select name="parent_id" class="custom-select ">
+                <select name="parent_id" class="custom-select" id="parent_id">
                     @if (Auth::user()->isAn('admin'))
                         <option value="0">TỈNH ĐOÀN BẮC GIANG</option>
                     @else
@@ -66,7 +66,7 @@
     </div>
 @endsection
 @push('script')
-<script src="{{ asset('js/select.js') }}"></script>
+{{--<script src="{{ asset('js/select.js') }}"></script>--}}
 <script>
     $("#removeItems").click(function(e) {
         var confirma = confirm("Bạn chắc chắn muốn xoá ? ");
@@ -92,5 +92,6 @@
             $('#edit-user').hide();
         }
     });
+    $("#parent_id").chosen({"width":"200px","enable_escape_special_char":true});
 </script>
 @endpush
