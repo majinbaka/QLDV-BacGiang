@@ -83,4 +83,8 @@ Route::middleware(['auth'])->group(function () {
     //user profile
     Route::get('profile', 'Auth\ProfileController@changePassword')->name('profile.edit');
     Route::post('profile', 'Auth\ProfileController@updatePassword')->name('profile.update');
+
+    //report
+    Route::get('report', 'ReportController@index')->name('report.index');
+    Route::get('report/search', 'ReportController@search')->name('report.search');
 });

@@ -838,3 +838,25 @@ footer{
 .user-content .chosen-container{
     margin-left: 15px;
 }
+
+#content .report-form .content-area select{
+    width: 145px;
+}
+#content .report-form .content-area input{
+    width: 77px;
+}
+#content .report-form .content-area .input-x-large{
+    width: 145px;
+}
+.mt-30 {
+    margin-top: 30px;
+}
+.width-200{
+    width: 200px !important;
+}
+.btn-large{
+    width: 150px;
+}
+.btn-info{
+    background: #00a508;
+}
