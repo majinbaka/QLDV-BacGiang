@@ -86,5 +86,5 @@ Route::middleware(['auth'])->group(function () {
 
     //report
     Route::get('report', 'ReportController@index')->name('report.index');
-    Route::get('report/search', 'ReportController@search')->name('report.search');
+    Route::get('report/word', 'ReportController@exportToWord')->name('report.word');
 });

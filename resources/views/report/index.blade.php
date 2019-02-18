@@ -21,21 +21,23 @@
                 <div class="row">
                     <label class="form-label" for="child_group_id" style="padding-right: 40px" >Đơn vị</label>
                     <select name="child_group_id" id="child_group_id" class="width-200 form-select" style="margin-left: 45px">
-                        <option value="0">Chọn...</option>
+                        <option value="">Chọn...</option>
                         @foreach($groups as $group)
                             <option value="{{$group->id}}">{{$group->name}}</option>
                         @endforeach
                     </select>
                     <label class="form-label" for="position" >Chức vụ</label>
-                    <select class="width-200 form-select" name="position">
+                    <select class="width-200 form-select" name="position" id="position">
+                        <option value="">Chọn...</option>
                         @foreach ($positions as $p)
                             <option value="{{$p->id}}">{{$p->name}}</option>
                         @endforeach
                     </select>
                     <label class="form-label" for="term" style="margin-right: 22px;margin-left: 10px;">Nhiệm kỳ</label>
-                    <input type="text" name="term" class="input-x-large form-input" value="{{ old('term') }}">
+                    <input type="text" name="term" id="term" class="input-x-large form-input" value="{{ old('term') }}">
                     <label class="form-label" for="gender">Giới tính</label>
-                    <select name="gender"  class="form-select {{ $errors->has('gender') ? 'has-error' : ''}}">
+                    <select name="gender" id="gender" class="form-select {{ $errors->has('gender') ? 'has-error' : ''}}">
+                        <option value="">Chọn...</option>
                         <option value="1">Nam</option>
                         <option value="0">Nữ</option>
                     </select>
@@ -43,26 +45,28 @@
                 <div class="mt-10 mb-15"></div>
                 <div class="row">
                     <label class="form-label" style="padding-right: 15px">Ngày sinh</label>
-                    <label for="birtday_from" class="mini-label">Từ ngày</label>
-                    <input type="text" placeholder="dd/mm/yyyy" name="birtday_from">
-                    <label for="birtday_to" class="mini-label">Tới ngày</label>
-                    <input type="text" placeholder="dd/mm/yyyy" name="birtday_to">
+                    <label for="birthday_from" class="mini-label">Từ ngày</label>
+                    <input type="text" placeholder="dd/mm/yyyy" name="birthday_from" id="birthday_from">
+                    <label for="birthday_to" class="mini-label">Tới ngày</label>
+                    <input type="text" placeholder="dd/mm/yyyy" name="birthday_to" id="birthday_to">
 
                     <label class="form-label" style="padding-right: 10px">Ngày vào đoàn</label>
                     <label for="join_date_from" class="mini-label">Từ ngày</label>
-                    <input type="text" placeholder="dd/mm/yyyy" name="join_date_from">
-                    <label for="birtday_to" class="mini-label">Tới ngày</label>
-                    <input type="join_date_to" placeholder="dd/mm/yyyy" name="join_date_to">
+                    <input type="text" placeholder="dd/mm/yyyy" name="join_date_from" id="join_date_from">
+                    <label for="birthday_to" class="mini-label">Tới ngày</label>
+                    <input type="text" placeholder="dd/mm/yyyy" name="join_date_to" id="join_date_to">
 
                     <label class="form-label" for="knowledge" style="padding-right: 21px;padding-left: 16px">Trình độ</label>
-                    <select class="form-select {{ $errors->has('knowledge') ? 'has-error' : ''}}" name="knowledge">
+                    <select class="form-select" name="knowledge" id="knowledge">
+                        <option value="">Chọn...</option>
                         @foreach ($knowledges as $k)
                             <option value="{{$k->id}}">{{$k->name}}</option>
                         @endforeach
                     </select>
 
                     <label class="form-label" for="political">Chính trị</label>
-                    <select  class="form-select {{ $errors->has('political') ? 'has-error' : ''}}" name="political">
+                    <select  class="form-select " name="political" id="political">
+                        <option value="">Chọn...</option>
                         @foreach ($politicals as $p)
                             <option value="{{$p->id}}">{{$p->name}}</option>
                         @endforeach
@@ -85,19 +89,22 @@
                     </select>
 
                     <label class="form-label" for="nation">Dân tộc</label>
-                    <select class="input-medium form-select" name="nation">
+                    <select class="input-medium form-select" name="nation" id="nation">
+                        <option value="">Chọn...</option>
                         @foreach ($nations as $p)
                             <option value="{{$p->id}}">{{$p->name}}</option>
                         @endforeach
                     </select>
                     <label class="form-label" for="religion" >Tôn giáo</label>
-                    <select class="form-select" name="religion">
+                    <select class="form-select" name="religion" id="religion">
+                        <option value="">Chọn...</option>
                         @foreach ($religions as $p)
                             <option value="{{$p->id}}">{{$p->name}}</option>
                         @endforeach
                     </select>
                     <label class="form-label" for="relation" style="padding-right: 10px">Tình trạng hôn nhân</label>
-                    <select name="relation"  class="custom-select form-select">
+                    <select name="relation" id="relation" class="custom-select form-select">
+                        <option value="">Chọn...</option>
                         <option value="1">Có</option>
                         <option value="0">Không</option>
                     </select>
@@ -123,6 +130,48 @@
     $(document).on('change','#group_id',function () {
         var groupId = $("#group_id").val();
         $("#child_group_id").val(groupId);
+    });
+    $(document).on('click','.btn-word',function (e) {
+        e.preventDefault();
+        var report_name = $("#report_name").val();
+        var child_group_id = $("#child_group_id").val();
+        var position = $("#position").val();
+        var term = $("#term").val();
+        var gender = $("#gender").val();
+        var birthday_from = $("#birthday_from").val();
+        var birthday_to = $("#birthday_to").val();
+        var join_date_from = $("#join_date_from").val();
+        var join_date_to = $("#join_date_to").val();
+        var knowledge = $("#knowledge").val();
+        var political = $("#political").val();
+        var current_district = $("#current_district").val();
+        var nation = $("#nation").val();
+        var religion = $("#religion").val();
+        var relation = $("#relation").val();
+        $.ajax({
+            url: '/report/word',
+            type: 'get',
+            data:{
+                report_name:report_name,
+                child_group_id:child_group_id,
+                position:position,
+                term:term,
+                gender:gender,
+                birthday_from:birthday_from,
+                birthday_to:birthday_to,
+                join_date_from:join_date_from,
+                join_date_to:join_date_to,
+                knowledge:knowledge,
+                political:political,
+                current_district:current_district,
+                nation:nation,
+                religion:religion,
+                relation:relation
+            },
+            success: function(data) {
+                 window.location = '/Appdividend.docx';
+            }
+        })
     });
 </script>
 @endpush

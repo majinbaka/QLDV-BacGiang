@@ -56,7 +56,7 @@
                 <ul>
                     <li @if(in_array(\Route::currentRouteName(), ["home","member.search", "member.create", "member.edit", "group.show"])) class="active" @endif><a href="{{route('home')}}">HỒ SƠ ĐOÀN VIÊN</a></li>
                     @can ('home')
-                    <li @if(in_array(\Route::currentRouteName(), ["home","report.index"])) class="active" @endif><a href="{{route('report.index')}}">BÁO CÁO THỐNG KÊ</a></li>
+                    <li @if(in_array(\Route::currentRouteName(), ["report.index"])) class="active" @endif><a href="{{route('report.index')}}">BÁO CÁO THỐNG KÊ</a></li>
                     @endcan
                     @can ('group')
                     <li @if(in_array(\Route::currentRouteName(), ["group.index"])) class="active" @endif><a href="{{route('group.index')}}">BỘ MÁY TỔ CHỨC</a></li>
