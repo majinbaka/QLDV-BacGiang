@@ -2,13 +2,9 @@
 @section('content')
     <div class="row">
         <label class="form-label" style="margin-right:40px;">Tên tổ chức</label>
-        <select name="group_id" id="group_id">
-            @foreach($groups as $group)
-                <option value="{{$group->id}}">{{$group->name}}</option>
-            @endforeach
-        </select>
-        <label class="form-label" style="margin-right:40px;">Tên báo cáo</label>
-        <input type="text" name="report_name" id="report_name" style="width: 400px">
+        <input type="text" name="group_name" id="group_name" style="width: 433px;height:25px;border: 1px solid #cccccc;border-radius: 3px">
+        <label class="form-label" style="margin-right:40px;margin-left:40px">Tên báo cáo</label>
+        <input type="text" name="report_name" id="report_name" style="width: 433px;height:25px;border: 1px solid #cccccc;border-radius: 3px">
     </div>
     <div class="mt-10 mb-15"></div>
     <div class="search-area report-form">
@@ -120,7 +116,6 @@
 @endsection
 @push('script')
 <script type="text/javascript">
-    $("#group_id").chosen();
     $("#child_group_id").chosen();
     $(document).ready(function () {
         $(".left-bar").remove();
@@ -169,7 +164,50 @@
                 relation:relation
             },
             success: function(data) {
-                 window.location = '/Appdividend.docx';
+                 window.location = '/export/word/'+data+'.doc';
+            }
+        })
+    });
+
+    $(document).on('click','.btn-excel',function (e) {
+        e.preventDefault();
+        var report_name = $("#report_name").val();
+        var child_group_id = $("#child_group_id").val();
+        var position = $("#position").val();
+        var term = $("#term").val();
+        var gender = $("#gender").val();
+        var birthday_from = $("#birthday_from").val();
+        var birthday_to = $("#birthday_to").val();
+        var join_date_from = $("#join_date_from").val();
+        var join_date_to = $("#join_date_to").val();
+        var knowledge = $("#knowledge").val();
+        var political = $("#political").val();
+        var current_district = $("#current_district").val();
+        var nation = $("#nation").val();
+        var religion = $("#religion").val();
+        var relation = $("#relation").val();
+        $.ajax({
+            url: '/report/excel',
+            type: 'get',
+            data:{
+                report_name:report_name,
+                child_group_id:child_group_id,
+                position:position,
+                term:term,
+                gender:gender,
+                birthday_from:birthday_from,
+                birthday_to:birthday_to,
+                join_date_from:join_date_from,
+                join_date_to:join_date_to,
+                knowledge:knowledge,
+                political:political,
+                current_district:current_district,
+                nation:nation,
+                religion:religion,
+                relation:relation
+            },
+            success: function(data) {
+                window.location = '/export/excel/'+data+'.xls';
             }
         })
     });
