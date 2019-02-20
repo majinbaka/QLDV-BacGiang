@@ -13,7 +13,8 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "phpoffice/phpword": "^0.16.0",
-        "silber/bouncer": "v1.0.0-rc.4"
+        "silber/bouncer": "v1.0.0-rc.4",
+        "maatwebsite/excel": "~2.1.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

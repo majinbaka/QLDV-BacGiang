@@ -53,9 +53,31 @@
 
         <footer>
             <div class="container">
-            Copyright &copy; Tỉnh Đoàn Bắc Giang<br>
-            Hỗ trợ kỹ thuật 0964.232.988<br>
-            Email: ducdq@bacgiang.gov.vn<br>
+                @php
+                    $copyright = \App\Setting::where('setting_key','=','copyright')->first();
+                    if(!$copyright){
+                        $copyrightVal = 'Tỉnh Đoàn Bắc Giang';
+                    } else{
+                        $copyrightVal = $copyright->setting_value;
+                    }
+
+                $phone = \App\Setting::where('setting_key','=','phone')->first();
+                    if(!$phone){
+                        $phoneVal = '0964.232.988';
+                    } else{
+                        $phoneVal = $phone->setting_value;
+                    }
+
+                $email = \App\Setting::where('setting_key','=','email')->first();
+                    if(!$email){
+                        $emailVal = 'ducdq@bacgiang.gov.vn';
+                    } else{
+                        $emailVal = $email->setting_value;
+                    }
+                @endphp
+            Copyright &copy; {{$copyrightVal}}<br>
+            Hỗ trợ kỹ thuật: {{$phoneVal}}<br>
+            Email: {{$emailVal}}<br>
             </div>
         </footer>
     </div>

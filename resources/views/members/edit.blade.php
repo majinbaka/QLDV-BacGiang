@@ -160,6 +160,12 @@
                     @endforeach
                 </select>
                 <div class="mt-10"></div>
+                <label class="form-label" for="english_level" style="margin-right:5px">Học vấn</label>
+                <select style="margin-right: 18px;" class="form-select input-x-medium last-item {{ $errors->has('education_level') ? 'has-error' : ''}}" name="education_level">
+                    @for($i=1;$i<13;$i++)
+                        <option value="{{$i}}" @if($i==$member->education_level) selected @endif>{{$i}}/12</option>
+                    @endfor
+                </select>
                 <label class="form-label" for="is_dangvien">Đảng viên</label>
                 <input type="radio" class="{{ $errors->has('is_dangvien') ? 'has-error' : ''}}" @if(old('is_dangvien', $member->is_dangvien ) == 1) checked @endif name="is_dangvien" value="1"><label style="margin-right:13px;margin-left:6px">Có</label>
                 <input type="radio" class="{{ $errors->has('is_dangvien') ? 'has-error' : ''}}" @if(old('is_dangvien', $member->is_dangvien ) == 0) checked @endif  name="is_dangvien" value="0"><label style="margin-left:6px;">Không</label>

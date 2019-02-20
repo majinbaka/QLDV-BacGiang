@@ -197,7 +197,8 @@ class MemberController extends Controller
             'is_dangvien' => 'digits_between:0,1',
             'join_dang' => 'required|date_format:d/m/Y',
             'avatar' => 'image',
-            'block_member_id'=>'exists:block_members,id'
+            'block_member_id'=>'exists:block_members,id',
+            'education_level' => 'required'
         ],
         [
             'fullname.required' => 'Chưa nhập họ và tên đoàn viên',
@@ -227,6 +228,7 @@ class MemberController extends Controller
             'join_dang.date_format' => 'Ngày vào đảng chưa đúng định dạng',
             'avatar.image' => 'Ảnh đại diện chưa đúng định dạng',
             'block_member_id.exists' => 'Khối đối tượng đoàn viên không hợp lệ',
+            'education_level.required' => 'Chưa chọn trình độ học vấn',
         ]
         );
 
@@ -272,6 +274,7 @@ class MemberController extends Controller
             $member->is_dangvien = \request()->get('is_dangvien');
             $member->join_dang = Carbon::createFromFormat('d/m/Y', request()->get('join_dang'))->toDateString();
             $member->block_member_id = \request()->get('block_member_id');
+            $member->education_level = \request()->get('education_level');
             $member->save();
 
             if (request()->has('avatar'))
@@ -336,6 +339,7 @@ class MemberController extends Controller
             'join_dang' => 'required|date_format:d/m/Y',
             'avatar' => 'image',
             'block_member_id' => 'exists:block_members,id',
+            'education_level' => 'required'
         ],
         [
             'fullname.required' => 'Chưa nhập họ và tên đoàn viên',
@@ -365,6 +369,7 @@ class MemberController extends Controller
             'join_dang.date_format' => 'Ngày vào đảng chưa đúng định dạng',
             'avatar.image' => 'Ảnh đại diện chưa đúng định dạng',
             'block_member_id.exists' => 'Khối đối tượng đoàn viên không hợp lệ',
+            'education_level.required' => 'Chưa chọn trình độ học vấn',
         ]
         );
 
@@ -414,6 +419,7 @@ class MemberController extends Controller
             $member->is_dangvien = \request()->get('is_dangvien');
             $member->join_dang = Carbon::createFromFormat('d/m/Y', request()->get('join_dang'))->toDateString();
             $member->block_member_id = \request()->get('block_member_id');
+            $member->education_level = \request()->get('education_level');
             $member->save();
 
             //Attachment

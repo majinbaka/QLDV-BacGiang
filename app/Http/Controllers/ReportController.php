@@ -11,13 +11,22 @@ use App\Position;
 use App\Religion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-//use Maatwebsite\Excel\Excel;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
     public function index(){
-        $groups = Group::all();
+        $user = Auth::user();
+        if ($user->isAn('admin')){
+            $groups = Group::all();
+        } else{
+            $group = $user->group;
+            $ids = $group->getIdsG();
+            $groups = Group::whereIn('id', $ids)->get();
+        }
+
         $positions = Position::all();
         $knowledges = Knowledge::all();
         $politicals = Political::all();
@@ -43,7 +52,7 @@ class ReportController extends Controller
         $relation = $request->get("relation");
 
         $query = Member::select(DB::raw('members.fullname as fullname,members.gender as gender, members.birthday as birthday, nations.name as nation, religions.name as religion, 
-                                                knowledges.name as knowledge, positions.name as position, groups.name as group_name,members.group_id as group_id'))
+                                                knowledges.name as knowledge, positions.name as position, groups.name as group_name,members.group_id as group_id,members.education_level as education_level'))
                         ->leftJoin('nations','members.nation','=','nations.id')
                         ->leftJoin('religions','members.religion','=','religions.id')
                         ->leftJoin('knowledges','members.knowledge','=','knowledges.id')
@@ -108,19 +117,19 @@ class ReportController extends Controller
         //header
         $tableTop = $section->addTable();
         $tableTop->addRow();
-        $tableTop->addCell('6000')->addText('TỈNH ĐOÀN BẮC GIANG',array('size'=>14,'name'=>'Time New Roman'),$cellHCentered);
-        $tableTop->addCell('8000')->addText('ĐOÀN THANH NIÊN CỘNG SẢN HỒ CHÍ MINH',array('size'=>14,'bold'=>true,'name'=>'Time New Roman','underline'=>\PhpOffice\PhpWord\Style\Font::UNDERLINE_SINGLE),$cellHCentered);
+        $tableTop->addCell('6000')->addText('TỈNH ĐOÀN BẮC GIANG',array('size'=>14,'name'=>'Times New Roman'),$cellHCentered);
+        $tableTop->addCell('8000')->addText('ĐOÀN THANH NIÊN CỘNG SẢN HỒ CHÍ MINH',array('size'=>14,'bold'=>true,'name'=>'Times New Roman','underline'=>\PhpOffice\PhpWord\Style\Font::UNDERLINE_SINGLE),$cellHCentered);
 
         $tableTop->addRow();
-        $tableTop->addCell('6000')->addText('BCH ĐOÀN '.$group_name,array('size'=>14,'color'=>'ff0000','name'=>'Time New Roman'),$cellHCentered);
+        $tableTop->addCell('6000')->addText('BCH ĐOÀN '.strtoupper($group_name),array('size'=>14,'color'=>'ff0000','name'=>'Times New Roman'),$cellHCentered);
         $tableTop->addCell('8000')->addText('');
 
         $tableTop->addRow();
-        $tableTop->addCell('6000')->addText('***',array('size'=>14,'bold'=>true,'name'=>'Time New Roman'),$cellHCentered);
+        $tableTop->addCell('6000')->addText('***',array('size'=>14,'bold'=>true,'name'=>'Times New Roman'),$cellHCentered);
         $tableTop->addCell('8000')->addText('');
 
-        $header = array('size' => 14, 'bold' => true,'name'=>'Time New Roman');
-        $header1 = array('size' => 14, 'bold' => true,'color'=>'ff0000','name'=>'Time New Roman');
+        $header = array('size' => 14, 'bold' => true,'name'=>'Times New Roman');
+        $header1 = array('size' => 14, 'bold' => true,'color'=>'ff0000','name'=>'Times New Roman');
         $section->addText('THỐNG KÊ', $header,$cellHCentered);
         $section->addText('Danh sách đoàn viên được kết nạp năm ', $header1,$cellHCentered);
         $section->addText('----------------', null,$cellHCentered);
@@ -136,8 +145,8 @@ class ReportController extends Controller
         $spanTableStyleName = 'Colspan Rowspan';
         $phpWord->addTableStyle($spanTableStyleName, $fancyTableStyle);
         $table = $section->addTable($spanTableStyleName);
-        $rowTitleFontStyle = array('size' => 12, 'bold' => true,'name'=>'Time New Roman');
-        $rowSubTitleFontStyle = array('size'=>12, 'bold'=>true, 'italic'=>true,'name'=>'Time New Roman');
+        $rowTitleFontStyle = array('size' => 12, 'bold' => true,'name'=>'Times New Roman');
+        $rowSubTitleFontStyle = array('size'=>12, 'bold'=>true, 'italic'=>true,'name'=>'Times New Roman');
         $table->addRow();
         $table->addCell(2500, $cellRowSpan)->addText('Số thứ tự', $rowTitleFontStyle, $cellHCentered);
         $table->addCell(4000, $cellRowSpan)->addText('Họ tên', $rowTitleFontStyle, $cellHCentered);
@@ -165,30 +174,30 @@ class ReportController extends Controller
         $table->addCell(null, $cellRowContinue);
         $table->addCell(null, $cellRowContinue);
         $i = 0;
-        $cellFontStyle = array('size'=>12,'name'=>'Time New Roman');
+        $cellFontStyle = array('size'=>12,'name'=>'Times New Roman','valign'=>'center');
         foreach ($data as $item) {
             $i++;
             $table->addRow();
-            $table->addCell(2000,$cellVCentered)->addText($i,$cellFontStyle);
+            $table->addCell(2000,$cellVCentered)->addText($i.'.',$cellFontStyle,$cellHCentered);
             $table->addCell(4000,$cellVCentered)->addText($item->fullname,$cellFontStyle);
             $birthday = Carbon::createFromFormat('Y-m-d',$item->birthday);
             if($item->gender == 1){
-                $table->addCell(2500,$cellVCentered)->addText($birthday->format('d/m/Y'),$cellFontStyle);
-                $table->addCell(2500,$cellVCentered)->addText('',$cellFontStyle);
+                $table->addCell(2500,$cellVCentered)->addText($birthday->format('d/m/Y'),$cellFontStyle,$cellHCentered);
+                $table->addCell(2500,$cellVCentered)->addText('',$cellFontStyle,$cellHCentered);
             } else{
-                $table->addCell(2500,$cellVCentered)->addText('',$cellFontStyle);
-                $table->addCell(2500,$cellVCentered)->addText($birthday->format('d/m/Y'),$cellFontStyle);
+                $table->addCell(2500,$cellVCentered)->addText('',$cellFontStyle,$cellHCentered);
+                $table->addCell(2500,$cellVCentered)->addText($birthday->format('d/m/Y'),$cellFontStyle,$cellHCentered);
             }
-            $table->addCell(1000,$cellVCentered)->addText($item->nation,$cellFontStyle);
-            $table->addCell(1000,$cellVCentered)->addText($item->religion,$cellFontStyle);
-            $table->addCell(1000,$cellVCentered)->addText('',$cellFontStyle);
-            $table->addCell(1000,$cellVCentered)->addText($item->knowledge,$cellFontStyle);
-            $table->addCell(6000,$cellVCentered)->addText($item->position,$cellFontStyle);
-            $table->addCell(6000,$cellVCentered)->addText($item->group_name,$cellFontStyle);
-            $table->addCell(6000,$cellVCentered)->addText($item->group_name,$cellFontStyle);
+            $table->addCell(1000,$cellVCentered)->addText($item->nation,$cellFontStyle,$cellHCentered);
+            $table->addCell(1000,$cellVCentered)->addText($item->religion,$cellFontStyle,$cellHCentered);
+            $table->addCell(1000,$cellVCentered)->addText($item->education_level.'/12',$cellFontStyle,$cellHCentered);
+            $table->addCell(1000,$cellVCentered)->addText($item->knowledge,$cellFontStyle,$cellHCentered);
+            $table->addCell(6000,$cellVCentered)->addText($item->position,$cellFontStyle,$cellHCentered);
+            $table->addCell(6000,$cellVCentered)->addText($item->group_name,$cellFontStyle,$cellHCentered);
+            $table->addCell(6000,$cellVCentered)->addText($item->group_name,$cellFontStyle,$cellHCentered);
         }
         $section->addText('');
-        $section->addText('* Tổng số đoàn viên ưu tú được kết nạp Đảng/tổng số đảng viên mới kết nạp trong toàn Đảng bộ : '.$i.'/173 (Đạt tỷ lệ 80,3%)');
+        $section->addText('* Tổng số đoàn viên ưu tú được kết nạp Đảng/tổng số đảng viên mới kết nạp trong toàn Đảng bộ : '.$i.'/ (Đạt tỷ lệ    %)');
         $tableBot = $section->addTable();
         $tableBot->addRow();
         $tableBot->addCell('6000')->addText('XÁC NHẬN BAN TỔ CHỨC HUYỆN ỦY',$header,$cellHCentered);
@@ -203,14 +212,20 @@ class ReportController extends Controller
         return $report_name;
     }
 
-//    public function exportToExcel(Request $request){
-//        $report_name = $request->get("report_name");
-//        Excel::create($report_name, function ($excel) use ($request) {
-//            $excel->sheet('Sheet 1', function ($sheet) use ($request){
-//                $data = $this->getData($request);
-//                $group_name = $request->get("group_name");
-//                $sheet->loadView('export.index')->with(['result'=>$data,'group_name'=>$group_name]);
-//            })->store('xls',public_path());
-//        });
-//    }
+    public function exportToExcel(Request $request){
+        $report_name = $request->get("report_name");
+        Excel::create($report_name, function ($excel) use ($request) {
+            $excel->sheet('Sheet 1', function ($sheet) use ($request){
+                $data = $this->getData($request);
+                $group_name = $request->get("group_name");
+                $sheet->loadView('export.index')->with(['result'=>$data,'group_name'=>$group_name]);
+                $sheet->setFontFamily('Times New Roman');
+                $sheet->cells('A1:G3', function($cells) {
+
+                    $cells->setFontSize(14);
+
+                });
+            })->store('xlsx',public_path('export/excel/'));
+        });
+    }
 }

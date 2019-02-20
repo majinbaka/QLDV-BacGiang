@@ -55,9 +55,9 @@
             <div class="container">
                 <ul>
                     <li @if(in_array(\Route::currentRouteName(), ["home","member.search", "member.create", "member.edit", "group.show"])) class="active" @endif><a href="{{route('home')}}">HỒ SƠ ĐOÀN VIÊN</a></li>
-                    @can ('home')
+                    {{--@can ('home')--}}
                     <li @if(in_array(\Route::currentRouteName(), ["report.index"])) class="active" @endif><a href="{{route('report.index')}}">BÁO CÁO THỐNG KÊ</a></li>
-                    @endcan
+                    {{--@endcan--}}
                     @can ('group')
                     <li @if(in_array(\Route::currentRouteName(), ["group.index"])) class="active" @endif><a href="{{route('group.index')}}">BỘ MÁY TỔ CHỨC</a></li>
                     <li @if(in_array(\Route::currentRouteName(), ["position.index","position.edit","political.index","political.edit","knowledge.index","knowledge.edit","it.index","it.edit","english.index","english.edit","blockmember.index","blockmember.edit"])) class="active" @endif><a href="{{route('position.index')}}">DANH MỤC</a></li>
@@ -78,7 +78,15 @@
             </div>
         </div>
         <footer>
-            Copyright &copy; Tỉnh Đoàn Bắc Giang<br>
+            @php
+                $copyright = \App\Setting::where('setting_key','=','copyright')->first();
+                if(!$copyright){
+                    $copyrightVal = 'Tỉnh Đoàn Bắc Giang';
+                } else{
+                    $copyrightVal = $copyright->setting_value;
+                }
+            @endphp
+            Copyright &copy; {{$copyrightVal}}<br>
         </footer>
         @stack('script')
     </div>

@@ -2,9 +2,9 @@
 @section('content')
     <div class="row">
         <label class="form-label" style="margin-right:40px;">Tên tổ chức</label>
-        <input type="text" name="group_name" id="group_name" style="width: 433px;height:25px;border: 1px solid #cccccc;border-radius: 3px">
+        <input type="text" name="group_name" id="group_name" style="width: 433px;height:25px;border: 1px solid #cccccc;border-radius: 3px" required>
         <label class="form-label" style="margin-right:40px;margin-left:40px">Tên báo cáo</label>
-        <input type="text" name="report_name" id="report_name" style="width: 433px;height:25px;border: 1px solid #cccccc;border-radius: 3px">
+        <input type="text" name="report_name" id="report_name" style="width: 433px;height:25px;border: 1px solid #cccccc;border-radius: 3px" required>
     </div>
     <div class="mt-10 mb-15"></div>
     <div class="search-area report-form">
@@ -143,6 +143,15 @@
         var nation = $("#nation").val();
         var religion = $("#religion").val();
         var relation = $("#relation").val();
+        var group_name = $("#group_name").val();
+        if(!group_name){
+            alert('Vui lòng nhập tên tổ chức');
+            return false;
+        }
+        if(!report_name){
+            alert('Vui lòng nhập tên báo cáo');
+            return false
+        }
         $.ajax({
             url: '/report/word',
             type: 'get',
@@ -161,7 +170,8 @@
                 current_district:current_district,
                 nation:nation,
                 religion:religion,
-                relation:relation
+                relation:relation,
+                group_name:group_name
             },
             success: function(data) {
                  window.location = '/export/word/'+data+'.doc';
@@ -186,6 +196,15 @@
         var nation = $("#nation").val();
         var religion = $("#religion").val();
         var relation = $("#relation").val();
+        var group_name = $("#group_name").val();
+        if(!group_name){
+            alert('Vui lòng nhập tên tổ chức');
+            return false;
+        }
+        if(!report_name){
+            alert('Vui lòng nhập tên báo cáo');
+            return false
+        }
         $.ajax({
             url: '/report/excel',
             type: 'get',
@@ -204,10 +223,11 @@
                 current_district:current_district,
                 nation:nation,
                 religion:religion,
-                relation:relation
+                relation:relation,
+                group_name:group_name
             },
             success: function(data) {
-                window.location = '/export/excel/'+data+'.xls';
+                window.location = '/export/excel/'+report_name+'.xlsx';
             }
         })
     });
