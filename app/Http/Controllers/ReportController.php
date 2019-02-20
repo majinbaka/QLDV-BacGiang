@@ -104,7 +104,7 @@ class ReportController extends Controller
             $query->where('members.relation','=',$relation);
         }
         $members = $query->orderBy('parent_id','DESC')->orderBy('level','ASC')->get();
-        $data = $this->groupData($members);
+//        $data = $this->groupData($members);
         return $members;
     }
 
