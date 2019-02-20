@@ -24,15 +24,24 @@ class ManageController extends Controller
     {
         $email = Setting::where('setting_key','=','email')->first();
         if(!$email){
-            $email = '';
+            $email = new Setting;
+            $email->setting_key = 'email';
+            $email->setting_value = '';
+            $email->save();
         }
         $phone = Setting::where('setting_key','=','phone')->first();
         if(!$phone){
-            $phone = '';
+            $phone = new Setting;
+            $phone->setting_key = 'phone';
+            $phone->setting_value = '';
+            $phone->save();
         }
         $copyright = Setting::where('setting_key','=','copyright')->first();
         if(!$copyright){
-            $copyright = '';
+            $copyright = new Setting;
+            $copyright->setting_key = 'copyright';
+            $copyright->setting_value = '';
+            $copyright->save();
         }
         return view('manage.setting',compact('email','phone','copyright'))->withSuccess(session()->get( 'success' ));
     }
