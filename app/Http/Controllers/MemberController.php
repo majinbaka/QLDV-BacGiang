@@ -195,7 +195,7 @@ class MemberController extends Controller
             'it_level' => 'exists:it_levels,id',
             'english_level' => 'exists:english_levels,id',
             'is_dangvien' => 'digits_between:0,1',
-            'join_dang' => 'required|date_format:d/m/Y',
+            'join_dang' => 'date_format:d/m/Y|nullable',
             'avatar' => 'image',
             'block_member_id'=>'exists:block_members,id',
             'education_level' => 'required'
@@ -224,7 +224,6 @@ class MemberController extends Controller
             'it_level.exists' => 'Tin học chưa chính xác',
             'english_level.exists' => 'Ngoại ngữ chưa chính xác',
             'is_dangvien.digits_between' => 'không xác định được có phải là đảng viên hay không',
-            'join_dang.required' => 'Chưa điền ngày vào đảng',
             'join_dang.date_format' => 'Ngày vào đảng chưa đúng định dạng',
             'avatar.image' => 'Ảnh đại diện chưa đúng định dạng',
             'block_member_id.exists' => 'Khối đối tượng đoàn viên không hợp lệ',
@@ -275,6 +274,15 @@ class MemberController extends Controller
             $member->join_dang = Carbon::createFromFormat('d/m/Y', request()->get('join_dang'))->toDateString();
             $member->block_member_id = \request()->get('block_member_id');
             $member->education_level = \request()->get('education_level');
+
+            $member->position_text = Position::find(request()->get('position'))->name;
+            $member->knowledge_text = Knowledge::find(request()->get('knowledge'))->name;
+            $member->political_text = Political::find(request()->get('knowledge'))->name;
+            $member->it_text = ItLevel::find(request()->get('it_level'))->name;
+            $member->english_text = EnglishLevel::find(request()->get('english_level'))->name;
+            $member->nation_text = Nation::find(request()->get('knowledge'))->name;
+            $member->religion_text = Religion::find(request()->get('knowledge'))->name;
+            $member->blockmember_text = BlockMember::find(request()->get('block_member_id'))->name;
             $member->save();
 
             if (request()->has('avatar'))
@@ -336,7 +344,7 @@ class MemberController extends Controller
             'it_level' => 'exists:it_levels,id',
             'english_level' => 'exists:english_levels,id',
             'is_dangvien' => 'digits_between:0,1',
-            'join_dang' => 'required|date_format:d/m/Y',
+            'join_dang' => 'date_format:d/m/Y|nullable',
             'avatar' => 'image',
             'block_member_id' => 'exists:block_members,id',
             'education_level' => 'required'
@@ -365,7 +373,6 @@ class MemberController extends Controller
             'it_level.exists' => 'Tin học chưa chính xác',
             'english_level.exists' => 'Ngoại ngữ chưa chính xác',
             'is_dangvien.digits_between' => 'không xác định được có phải là đảng viên hay không',
-            'join_dang.required' => 'Chưa điền ngày vào đảng',
             'join_dang.date_format' => 'Ngày vào đảng chưa đúng định dạng',
             'avatar.image' => 'Ảnh đại diện chưa đúng định dạng',
             'block_member_id.exists' => 'Khối đối tượng đoàn viên không hợp lệ',
@@ -420,6 +427,14 @@ class MemberController extends Controller
             $member->join_dang = Carbon::createFromFormat('d/m/Y', request()->get('join_dang'))->toDateString();
             $member->block_member_id = \request()->get('block_member_id');
             $member->education_level = \request()->get('education_level');
+            $member->position_text = Position::find(request()->get('position'))->name;
+            $member->knowledge_text = Knowledge::find(request()->get('knowledge'))->name;
+            $member->political_text = Political::find(request()->get('knowledge'))->name;
+            $member->it_text = ItLevel::find(request()->get('it_level'))->name;
+            $member->english_text = EnglishLevel::find(request()->get('english_level'))->name;
+            $member->nation_text = Nation::find(request()->get('knowledge'))->name;
+            $member->religion_text = Religion::find(request()->get('knowledge'))->name;
+            $member->blockmember_text = BlockMember::find(request()->get('block_member_id'))->name;
             $member->save();
 
             //Attachment
