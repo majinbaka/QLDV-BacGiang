@@ -56,30 +56,45 @@
                     </tr>
                     </thead>
                     <tbody style="border: 1px solid #000000;">
-                    @php $i = 0; @endphp
-                    @foreach($result as $item)
-                        @php
-                            $i++;
-                            $birthday = Carbon\Carbon::createFromFormat('Y-m-d',$item->birthday);
-                        @endphp
-                        <tr>
-                            <td scope="col" style="border: 1px solid #000000;font-size: 12;text-align: center; vertical-align: middle;">{{$i}}</td>
-                            <td scope="col" style="border: 1px solid #000000;font-size: 12; vertical-align: middle;">{{$item->fullname}}</td>
-                            @if($item->gender == 1)
-                                <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$birthday->format('d/m/Y')}}</td>
-                                <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;"></td>
-                            @else
-                                <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;"></td>
-                                <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$birthday->format('d/m/Y')}}</td>
-                            @endif
-                            <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->nation}}</td>
-                            <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->religion}}</td>
-                            <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->education_level}}/12</td>
-                            <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->knowledge}}</td>
-                            <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->position}}</td>
-                            <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->group_name}}</td>
-                            <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->group_name}}</td>
-                        </tr>
+                    @php
+                        $i = 0;
+                        $groups = \App\Group::all();
+                        $listGroup = [];
+                        foreach ($groups as $group){
+                            $listGroup[$group->id] = $group->name;
+                        }
+                    @endphp
+                    @foreach($result as $key => $value)
+                        @foreach($value as $k => $v)
+                            @php $h = 0; $j = count($v);@endphp
+                            @foreach($v as $item)
+                                @php
+                                    $i++;
+                                    $h++;
+                                    $birthday = Carbon\Carbon::createFromFormat('Y-m-d',$item['birthday']);
+                                @endphp
+                                <tr>
+                                    <td scope="col" style="border: 1px solid #000000;font-size: 12;text-align: center; vertical-align: middle;">{{$i}}</td>
+                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; vertical-align: middle;">{{$item['fullname']}}</td>
+                                    @if($item['gender'] == 1)
+                                        <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$birthday->format('d/m/Y')}}</td>
+                                        <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;"></td>
+                                    @else
+                                        <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;"></td>
+                                        <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$birthday->format('d/m/Y')}}</td>
+                                    @endif
+                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item['nation']}}</td>
+                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item['religion']}}</td>
+                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item['education_level']}}/12</td>
+                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item['knowledge']}}</td>
+                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item['position']}}</td>
+                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item['group_name']}}</td>
+                                    @if($h == 1)
+                                        <td scope="col" rowspan="{{$j}}" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{(isset($listGroup[$key]))?$listGroup[$key]:''}}</td>
+                                    @endif
+                                </tr>
+                            @endforeach
+                        @endforeach
                     @endforeach
                     </tbody>
                     <tfoot>

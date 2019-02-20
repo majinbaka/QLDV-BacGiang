@@ -52,14 +52,17 @@ class ReportController extends Controller
         $relation = $request->get("relation");
 
         $query = Member::select(DB::raw('members.fullname as fullname,members.gender as gender, members.birthday as birthday, nations.name as nation, religions.name as religion, 
-                                                knowledges.name as knowledge, positions.name as position, groups.name as group_name,members.group_id as group_id,members.education_level as education_level'))
+                                                knowledges.name as knowledge, positions.name as position, groups.name as group_name,members.group_id as group_id,members.education_level as education_level,
+                                                groups.parent_id as parent_id'))
                         ->leftJoin('nations','members.nation','=','nations.id')
                         ->leftJoin('religions','members.religion','=','religions.id')
                         ->leftJoin('knowledges','members.knowledge','=','knowledges.id')
                         ->leftJoin('positions','members.position','=','positions.id')
                         ->leftJoin('groups','members.group_id','=','groups.id');
         if($group_id){
-            $query->where('members.group_id','=',$group_id);
+            $group = Group::where('id',$group_id)->first();
+            $ids = $group->getIdsG();
+            $query->whereIn('members.group_id',$ids);
         }
         if($position){
             $query->where('members.position','=',$position);
@@ -101,12 +104,33 @@ class ReportController extends Controller
             $query->where('members.relation','=',$relation);
         }
         $members = $query->get();
-        return $members;
+        $data = $this->groupData($members);
+        return $data;
     }
 
+    private function groupData($members){
+        $result = array();
+        foreach ($members as $member){
+            if(array_key_exists($member->parent_id,$result)){
+                if(array_key_exists($member->group_id,$result[$member->parent_id])){
+                    $result[$member->parent_id][$member->group_id][]= $member->toArray();
+                } else{
+                    $result[$member->parent_id][$member->group_id] = [$member->toArray()];
+                }
+            } else{
+                $result[$member->parent_id] = [$member->group_id => [$member->toArray()]];
+            }
+        }
+        return $result;
+    }
     public function exportToWord(Request $request)
     {
         $data = $this->getData($request);
+        $groups = Group::all();
+        $listGroup = [];
+        foreach ($groups as $group){
+            $listGroup[$group->id] = $group->name;
+        }
         $report_name = $request->get("report_name");
         $group_name = $request->get("group_name");
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
@@ -175,26 +199,37 @@ class ReportController extends Controller
         $table->addCell(null, $cellRowContinue);
         $i = 0;
         $cellFontStyle = array('size'=>12,'name'=>'Times New Roman','valign'=>'center');
-        foreach ($data as $item) {
-            $i++;
-            $table->addRow();
-            $table->addCell(2000,$cellVCentered)->addText($i.'.',$cellFontStyle,$cellHCentered);
-            $table->addCell(4000,$cellVCentered)->addText($item->fullname,$cellFontStyle);
-            $birthday = Carbon::createFromFormat('Y-m-d',$item->birthday);
-            if($item->gender == 1){
-                $table->addCell(2500,$cellVCentered)->addText($birthday->format('d/m/Y'),$cellFontStyle,$cellHCentered);
-                $table->addCell(2500,$cellVCentered)->addText('',$cellFontStyle,$cellHCentered);
-            } else{
-                $table->addCell(2500,$cellVCentered)->addText('',$cellFontStyle,$cellHCentered);
-                $table->addCell(2500,$cellVCentered)->addText($birthday->format('d/m/Y'),$cellFontStyle,$cellHCentered);
+        foreach ($data as $key => $value) {
+            foreach ($value as $k => $v){
+                $h = 0;
+                foreach ($v as $item){
+                    $i++;
+                    $h++;
+                    $table->addRow();
+                    $table->addCell(2000,$cellVCentered)->addText($i.'.',$cellFontStyle,$cellHCentered);
+                    $table->addCell(4000,$cellVCentered)->addText($item['fullname'],$cellFontStyle);
+                    $birthday = Carbon::createFromFormat('Y-m-d',$item['birthday']);
+                    if($item['gender'] == 1){
+                        $table->addCell(2500,$cellVCentered)->addText($birthday->format('d/m/Y'),$cellFontStyle,$cellHCentered);
+                        $table->addCell(2500,$cellVCentered)->addText('',$cellFontStyle,$cellHCentered);
+                    } else{
+                        $table->addCell(2500,$cellVCentered)->addText('',$cellFontStyle,$cellHCentered);
+                        $table->addCell(2500,$cellVCentered)->addText($birthday->format('d/m/Y'),$cellFontStyle,$cellHCentered);
+                    }
+                    $table->addCell(1000,$cellVCentered)->addText($item['nation'],$cellFontStyle,$cellHCentered);
+                    $table->addCell(1000,$cellVCentered)->addText($item['religion'],$cellFontStyle,$cellHCentered);
+                    $table->addCell(1000,$cellVCentered)->addText($item['education_level'].'/12',$cellFontStyle,$cellHCentered);
+                    $table->addCell(1000,$cellVCentered)->addText($item['knowledge'],$cellFontStyle,$cellHCentered);
+                    $table->addCell(6000,$cellVCentered)->addText($item['position'],$cellFontStyle,$cellHCentered);
+                    $table->addCell(6000,$cellVCentered)->addText($item['group_name'],$cellFontStyle,$cellHCentered);
+                    if($h == 1){
+                        $table->addCell(6000,$cellRowSpan)->addText((isset($listGroup[$key])?$listGroup[$key]:''),$cellFontStyle,$cellHCentered);
+                    } else{
+                        $table->addCell(null, $cellRowContinue);
+                    }
+
+                }
             }
-            $table->addCell(1000,$cellVCentered)->addText($item->nation,$cellFontStyle,$cellHCentered);
-            $table->addCell(1000,$cellVCentered)->addText($item->religion,$cellFontStyle,$cellHCentered);
-            $table->addCell(1000,$cellVCentered)->addText($item->education_level.'/12',$cellFontStyle,$cellHCentered);
-            $table->addCell(1000,$cellVCentered)->addText($item->knowledge,$cellFontStyle,$cellHCentered);
-            $table->addCell(6000,$cellVCentered)->addText($item->position,$cellFontStyle,$cellHCentered);
-            $table->addCell(6000,$cellVCentered)->addText($item->group_name,$cellFontStyle,$cellHCentered);
-            $table->addCell(6000,$cellVCentered)->addText($item->group_name,$cellFontStyle,$cellHCentered);
         }
         $section->addText('');
         $section->addText('* Tổng số đoàn viên ưu tú được kết nạp Đảng/tổng số đảng viên mới kết nạp trong toàn Đảng bộ : '.$i.'/ (Đạt tỷ lệ    %)');
