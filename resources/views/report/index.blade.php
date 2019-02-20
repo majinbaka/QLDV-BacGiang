@@ -40,17 +40,17 @@
                 </div>
                 <div class="mt-10 mb-15"></div>
                 <div class="row">
-                    <label class="form-label" style="padding-right: 15px">Ngày sinh</label>
+                    <label class="form-label" style="padding-right: 22px">Ngày sinh</label>
                     <label for="birthday_from" class="mini-label">Từ ngày</label>
-                    <input type="text" placeholder="dd/mm/yyyy" name="birthday_from" id="birthday_from">
+                    <input type="text" placeholder="dd/mm/yyyy" name="birthday_from" id="birthday_from" class="form-input input-medium " style="width:74px;margin-left:0px;">
                     <label for="birthday_to" class="mini-label">Tới ngày</label>
-                    <input type="text" placeholder="dd/mm/yyyy" name="birthday_to" id="birthday_to">
+                    <input type="text" placeholder="dd/mm/yyyy" name="birthday_to" id="birthday_to" class="form-input input-medium " style="width:74px;margin-left:0px;">
 
                     <label class="form-label" style="padding-right: 10px">Ngày vào đoàn</label>
                     <label for="join_date_from" class="mini-label">Từ ngày</label>
-                    <input type="text" placeholder="dd/mm/yyyy" name="join_date_from" id="join_date_from">
+                    <input type="text" placeholder="dd/mm/yyyy" name="join_date_from" id="join_date_from" class="form-input input-medium " style="width:74px;margin-left:0px;">
                     <label for="birthday_to" class="mini-label">Tới ngày</label>
-                    <input type="text" placeholder="dd/mm/yyyy" name="join_date_to" id="join_date_to">
+                    <input type="text" placeholder="dd/mm/yyyy" name="join_date_to" id="join_date_to" class="form-input input-medium " style="width:74px;margin-left:0px;">
 
                     <label class="form-label" for="knowledge" style="padding-right: 21px;padding-left: 16px">Trình độ</label>
                     <select class="form-select" name="knowledge" id="knowledge">
@@ -73,9 +73,9 @@
                     $districts = config('address.district');
                 @endphp
                 <div class="row">
-                    <label class="form-label" style="padding-right: 15px">Quê quán</label>
+                    <label class="form-label" style="padding-right: 24px">Quê quán</label>
                     <label for="current_district" class="mini-label">Huyện/ Thành phố</label>
-                    <select name="current_district" id="current_district" class="form-select width-200 special">
+                    <select name="current_district" id="current_district" class="form-select width-200 special" style="margin-left:0px">
                         <option value="0">Chọn...</option>
                         @foreach($districts as $key => $value)
                             @foreach($value as $k => $v)
