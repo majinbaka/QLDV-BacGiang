@@ -53,7 +53,7 @@ class ReportController extends Controller
 
         $query = Member::select(DB::raw('members.fullname as fullname,members.gender as gender, members.birthday as birthday, nations.name as nation, religions.name as religion, 
                                                 knowledges.name as knowledge, positions.name as position, groups.name as group_name,members.group_id as group_id,members.education_level as education_level,
-                                                groups.parent_id as parent_id'))
+                                                groups.parent_id as parent_id,groups.level as level'))
                         ->leftJoin('nations','members.nation','=','nations.id')
                         ->leftJoin('religions','members.religion','=','religions.id')
                         ->leftJoin('knowledges','members.knowledge','=','knowledges.id')
@@ -103,9 +103,9 @@ class ReportController extends Controller
         if($relation){
             $query->where('members.relation','=',$relation);
         }
-        $members = $query->get();
+        $members = $query->orderBy('parent_id','DESC')->orderBy('level','ASC')->get();
         $data = $this->groupData($members);
-        return $data;
+        return $members;
     }
 
     private function groupData($members){
@@ -199,36 +199,66 @@ class ReportController extends Controller
         $table->addCell(null, $cellRowContinue);
         $i = 0;
         $cellFontStyle = array('size'=>12,'name'=>'Times New Roman','valign'=>'center');
-        foreach ($data as $key => $value) {
-            foreach ($value as $k => $v){
-                $h = 0;
-                foreach ($v as $item){
+        foreach ($listGroup as $key => $value){
+            $h = 0;
+            $j = 0;
+            foreach ($data as $k => $item){
+                if($item->parent_id == $key){
                     $i++;
                     $h++;
                     $table->addRow();
                     $table->addCell(2000,$cellVCentered)->addText($i.'.',$cellFontStyle,$cellHCentered);
-                    $table->addCell(4000,$cellVCentered)->addText($item['fullname'],$cellFontStyle);
-                    $birthday = Carbon::createFromFormat('Y-m-d',$item['birthday']);
-                    if($item['gender'] == 1){
+                    $table->addCell(4000,$cellVCentered)->addText($item->fullname,$cellFontStyle);
+                    $birthday = Carbon::createFromFormat('Y-m-d',$item->birthday);
+                    if($item->gender == 1){
                         $table->addCell(2500,$cellVCentered)->addText($birthday->format('d/m/Y'),$cellFontStyle,$cellHCentered);
                         $table->addCell(2500,$cellVCentered)->addText('',$cellFontStyle,$cellHCentered);
                     } else{
                         $table->addCell(2500,$cellVCentered)->addText('',$cellFontStyle,$cellHCentered);
                         $table->addCell(2500,$cellVCentered)->addText($birthday->format('d/m/Y'),$cellFontStyle,$cellHCentered);
                     }
-                    $table->addCell(1000,$cellVCentered)->addText($item['nation'],$cellFontStyle,$cellHCentered);
-                    $table->addCell(1000,$cellVCentered)->addText($item['religion'],$cellFontStyle,$cellHCentered);
-                    $table->addCell(1000,$cellVCentered)->addText($item['education_level'].'/12',$cellFontStyle,$cellHCentered);
-                    $table->addCell(1000,$cellVCentered)->addText($item['knowledge'],$cellFontStyle,$cellHCentered);
-                    $table->addCell(6000,$cellVCentered)->addText($item['position'],$cellFontStyle,$cellHCentered);
-                    $table->addCell(6000,$cellVCentered)->addText($item['group_name'],$cellFontStyle,$cellHCentered);
+                    $table->addCell(1000,$cellVCentered)->addText($item->nation,$cellFontStyle,$cellHCentered);
+                    $table->addCell(1000,$cellVCentered)->addText($item->religion,$cellFontStyle,$cellHCentered);
+                    $table->addCell(1000,$cellVCentered)->addText($item->education_level.'/12',$cellFontStyle,$cellHCentered);
+                    $table->addCell(1000,$cellVCentered)->addText($item->knowledge,$cellFontStyle,$cellHCentered);
+                    $table->addCell(6000,$cellVCentered)->addText($item->position,$cellFontStyle,$cellHCentered);
+                    $table->addCell(6000,$cellVCentered)->addText($item->group_name,$cellFontStyle,$cellHCentered);
                     if($h == 1){
-                        $table->addCell(6000,$cellRowSpan)->addText((isset($listGroup[$key])?$listGroup[$key]:''),$cellFontStyle,$cellHCentered);
+                        $table->addCell(6000,$cellRowSpan)->addText($value,$cellFontStyle,$cellHCentered);
                     } else{
                         $table->addCell(null, $cellRowContinue);
                     }
-
+                    unset($data[$k]);
+                } else {
+                    if ($item->parent_id == 0){
+                        $i++;
+                        $j++;
+                        $table->addRow();
+                        $table->addCell(2000,$cellVCentered)->addText($i.'.',$cellFontStyle,$cellHCentered);
+                        $table->addCell(4000,$cellVCentered)->addText($item->fullname,$cellFontStyle);
+                        $birthday = Carbon::createFromFormat('Y-m-d',$item->birthday);
+                        if($item->gender == 1){
+                            $table->addCell(2500,$cellVCentered)->addText($birthday->format('d/m/Y'),$cellFontStyle,$cellHCentered);
+                            $table->addCell(2500,$cellVCentered)->addText('',$cellFontStyle,$cellHCentered);
+                        } else{
+                            $table->addCell(2500,$cellVCentered)->addText('',$cellFontStyle,$cellHCentered);
+                            $table->addCell(2500,$cellVCentered)->addText($birthday->format('d/m/Y'),$cellFontStyle,$cellHCentered);
+                        }
+                        $table->addCell(1000,$cellVCentered)->addText($item->nation,$cellFontStyle,$cellHCentered);
+                        $table->addCell(1000,$cellVCentered)->addText($item->religion,$cellFontStyle,$cellHCentered);
+                        $table->addCell(1000,$cellVCentered)->addText($item->education_level.'/12',$cellFontStyle,$cellHCentered);
+                        $table->addCell(1000,$cellVCentered)->addText($item->knowledge,$cellFontStyle,$cellHCentered);
+                        $table->addCell(6000,$cellVCentered)->addText($item->position,$cellFontStyle,$cellHCentered);
+                        $table->addCell(6000,$cellVCentered)->addText($item->group_name,$cellFontStyle,$cellHCentered);
+                        if($j == 1){
+                            $table->addCell(6000,$cellRowSpan)->addText('',$cellFontStyle,$cellHCentered);
+                        } else{
+                            $table->addCell(null, $cellRowContinue);
+                        }
+                        unset($data[$k]);
+                    }
                 }
+
             }
         }
         $section->addText('');

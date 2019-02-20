@@ -55,7 +55,7 @@
                         <th scope="col" style="border: 1px solid #000000"></th>
                     </tr>
                     </thead>
-                    <tbody style="border: 1px solid #000000;">
+                    <tbody>
                     @php
                         $i = 0;
                         $groups = \App\Group::all();
@@ -63,11 +63,25 @@
                         foreach ($groups as $group){
                             $listGroup[$group->id] = $group->name;
                         }
+                        $data = array();
+                        $count_level_1 = 0;
                     @endphp
-                    @foreach($result as $key => $value)
-                        @foreach($value as $k => $v)
-                            @php $h = 0; $j = count($v);@endphp
-                            @foreach($v as $item)
+                    @foreach ($listGroup as $key => $value){
+                        @php
+                            $data[$key] = 0;
+                            $h = 0;
+                            $j = 0;
+                        @endphp
+                        @foreach ($result as $k => $item){
+                            @if($item->parent_id == $key)
+                                @php $data[$key] +=1; @endphp
+                            @endif
+                        @if($item->parent_id == 0)
+                            @php $count_level_1 +=1; @endphp
+                        @endif
+                        @endforeach
+                        @foreach ($result as $k => $item){
+                            @if($item->parent_id == $key)
                                 @php
                                     $i++;
                                     $h++;
@@ -75,25 +89,55 @@
                                 @endphp
                                 <tr>
                                     <td scope="col" style="border: 1px solid #000000;font-size: 12;text-align: center; vertical-align: middle;">{{$i}}</td>
-                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; vertical-align: middle;">{{$item['fullname']}}</td>
-                                    @if($item['gender'] == 1)
+                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; vertical-align: middle;">{{$item->fullname}}</td>
+                                    @if($item->gender == 1)
                                         <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$birthday->format('d/m/Y')}}</td>
                                         <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;"></td>
                                     @else
                                         <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;"></td>
                                         <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$birthday->format('d/m/Y')}}</td>
                                     @endif
-                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item['nation']}}</td>
-                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item['religion']}}</td>
-                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item['education_level']}}/12</td>
-                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item['knowledge']}}</td>
-                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item['position']}}</td>
-                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item['group_name']}}</td>
+                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->nation}}</td>
+                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->religion}}</td>
+                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->education_level}}/12</td>
+                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->knowledge}}</td>
+                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->position}}</td>
+                                    <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->group_name}}</td>
                                     @if($h == 1)
-                                        <td scope="col" rowspan="{{$j}}" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{(isset($listGroup[$key]))?$listGroup[$key]:''}}</td>
+                                        <td scope="col" rowspan="{{$data[$key]}}" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$value}}</td>
                                     @endif
                                 </tr>
-                            @endforeach
+                                @php unset($result[$k]) @endphp
+                            @else
+                                @if($item->parent_id == 0)
+                                    @php
+                                        $i++;
+                                        $j++;
+                                        $birthday = Carbon\Carbon::createFromFormat('Y-m-d',$item['birthday']);
+                                    @endphp
+                                    <tr>
+                                        <td scope="col" style="border: 1px solid #000000;font-size: 12;text-align: center; vertical-align: middle;">{{$i}}</td>
+                                        <td scope="col" style="border: 1px solid #000000;font-size: 12; vertical-align: middle;">{{$item->fullname}}</td>
+                                        @if($item->gender == 1)
+                                            <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$birthday->format('d/m/Y')}}</td>
+                                            <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;"></td>
+                                        @else
+                                            <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;"></td>
+                                            <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$birthday->format('d/m/Y')}}</td>
+                                        @endif
+                                        <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->nation}}</td>
+                                        <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->religion}}</td>
+                                        <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->education_level}}/12</td>
+                                        <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->knowledge}}</td>
+                                        <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->position}}</td>
+                                        <td scope="col" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;">{{$item->group_name}}</td>
+                                        @if($j == 1)
+                                            <td scope="col" rowspan="{{$count_level_1}}" style="border: 1px solid #000000;font-size: 12; text-align: center; vertical-align: middle;"></td>
+                                        @endif
+                                    </tr>
+                                    @php unset($result[$k]) @endphp
+                                @endif
+                            @endif
                         @endforeach
                     @endforeach
                     </tbody>
