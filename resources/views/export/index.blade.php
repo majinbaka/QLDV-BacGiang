@@ -58,11 +58,10 @@
                     <tbody>
                     @php
                         $i = 0;
-                        $ids = $ids;
                         if($ids == ''){
                             $groups = \App\Group::all();
                         } else{
-                            $groups = \App\Group::whereIn('id',$ids);
+                            $groups = \App\Group::whereIn('id',$ids)->get();
                         }
 
                         $listGroup = [];
@@ -72,13 +71,13 @@
                         $data = array();
                         $count_level_1 = 0;
                     @endphp
-                    @foreach ($listGroup as $key => $value){
+                    @foreach ($listGroup as $key => $value)
                         @php
                             $data[$key] = 0;
                             $h = 0;
                             $j = 0;
                         @endphp
-                        @foreach ($result as $k => $item){
+                        @foreach ($result as $k => $item)
                             @if($item->parent_id == $key)
                                 @php $data[$key] +=1; @endphp
                             @endif
@@ -86,7 +85,7 @@
                             @php $count_level_1 +=1; @endphp
                         @endif
                         @endforeach
-                        @foreach ($result as $k => $item){
+                        @foreach ($result as $k => $item)
                             @if($item->parent_id == $key)
                                 @php
                                     $i++;
