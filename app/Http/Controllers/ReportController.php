@@ -63,6 +63,8 @@ class ReportController extends Controller
             $group = Group::where('id',$group_id)->first();
             $ids = $group->getIdsG();
             $query->whereIn('members.group_id',$ids);
+        } else{
+            $ids = '';
         }
         if($position){
             $query->where('members.position','=',$position);
@@ -105,7 +107,11 @@ class ReportController extends Controller
         }
         $members = $query->orderBy('parent_id','DESC')->orderBy('level','ASC')->get();
 //        $data = $this->groupData($members);
-        return $members;
+        $data = [
+            'members'=>$members,
+            'group_ids'=>$ids
+        ];
+        return $data;
     }
 
     private function groupData($members){
@@ -126,7 +132,14 @@ class ReportController extends Controller
     public function exportToWord(Request $request)
     {
         $data = $this->getData($request);
-        $groups = Group::all();
+        $members = $data['members'];
+        $ids = $data['group_ids'];
+        if($ids == ''){
+            $groups = Group::all();
+        } else{
+            $groups = Group::whereIn('id',$ids)->get();
+        }
+
         $listGroup = [];
         foreach ($groups as $group){
             $listGroup[$group->id] = $group->name;
@@ -202,7 +215,7 @@ class ReportController extends Controller
         foreach ($listGroup as $key => $value){
             $h = 0;
             $j = 0;
-            foreach ($data as $k => $item){
+            foreach ($members as $k => $item){
                 if($item->parent_id == $key){
                     $i++;
                     $h++;
@@ -228,7 +241,7 @@ class ReportController extends Controller
                     } else{
                         $table->addCell(null, $cellRowContinue);
                     }
-                    unset($data[$k]);
+                    unset($members[$k]);
                 } else {
                     if ($item->parent_id == 0){
                         $i++;
@@ -255,7 +268,7 @@ class ReportController extends Controller
                         } else{
                             $table->addCell(null, $cellRowContinue);
                         }
-                        unset($data[$k]);
+                        unset($members[$k]);
                     }
                 }
 
@@ -282,8 +295,9 @@ class ReportController extends Controller
         Excel::create($report_name, function ($excel) use ($request) {
             $excel->sheet('Sheet 1', function ($sheet) use ($request){
                 $data = $this->getData($request);
+
                 $group_name = $request->get("group_name");
-                $sheet->loadView('export.index')->with(['result'=>$data,'group_name'=>$group_name]);
+                $sheet->loadView('export.index')->with(['result'=>$data['members'],'group_name'=>$group_name,'ids'=>$data['group_ids']]);
                 $sheet->setFontFamily('Times New Roman');
                 $sheet->cells('A1:G3', function($cells) {
 

@@ -58,7 +58,13 @@
                     <tbody>
                     @php
                         $i = 0;
-                        $groups = \App\Group::all();
+                        $ids = $ids;
+                        if($ids == ''){
+                            $groups = \App\Group::all();
+                        } else{
+                            $groups = \App\Group::whereIn('id',$ids);
+                        }
+
                         $listGroup = [];
                         foreach ($groups as $group){
                             $listGroup[$group->id] = $group->name;
