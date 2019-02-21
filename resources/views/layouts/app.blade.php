@@ -20,6 +20,8 @@
     <script src="{{asset('js/chosen.jquery.js')}}"></script>
     <script src="{{asset('js/prism.js')}}"></script>
     <script src="{{asset('js/init.js')}}"></script>
+    <script src="{{asset('js/html-docx.js')}}"></script>
+    <script src="{{asset('js/FileSaver.js')}}"></script>
 </head>
 <body>
     <div id="app">

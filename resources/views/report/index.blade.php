@@ -177,7 +177,8 @@
             },
             success: function(data) {
                 $("#loading").hide();
-                 window.location = '/export/word/'+data+'.doc';
+                var converted = htmlDocx.asBlob(data);
+                saveAs(converted, report_name + '.doc');
             },
             error:function () {
                 $("#loading").hide();

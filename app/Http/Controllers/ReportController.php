@@ -131,7 +131,7 @@ class ReportController extends Controller
     public function exportToWord(Request $request)
     {
         $data = $this->getData($request);
-        $members = $data['members'];
+        $result = $data['members'];
         $ids = $data['group_ids'];
         if($ids == ''){
             $groups = Group::all();
@@ -145,6 +145,7 @@ class ReportController extends Controller
         }
         $report_name = $request->get("report_name");
         $group_name = $request->get("group_name");
+        return view('export.word',compact('result','ids','report_name','group_name'));
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $section = $phpWord->addSection(array('orientation'=>'landscape'));
 
