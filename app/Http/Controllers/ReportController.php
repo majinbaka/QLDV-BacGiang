@@ -157,7 +157,7 @@ class ReportController extends Controller
         $tableTop->addCell('8000')->addText('ĐOÀN THANH NIÊN CỘNG SẢN HỒ CHÍ MINH',array('size'=>14,'bold'=>true,'name'=>'Times New Roman','underline'=>\PhpOffice\PhpWord\Style\Font::UNDERLINE_SINGLE),$cellHCentered);
 
         $tableTop->addRow();
-        $tableTop->addCell('6000')->addText('BCH ĐOÀN '.strtoupper($group_name),array('size'=>14,'color'=>'ff0000','name'=>'Times New Roman'),$cellHCentered);
+        $tableTop->addCell('6000')->addText(strtoupper($group_name),array('size'=>14,'color'=>'ff0000','name'=>'Times New Roman'),$cellHCentered);
         $tableTop->addCell('8000')->addText('');
 
         $tableTop->addRow();
@@ -167,7 +167,7 @@ class ReportController extends Controller
         $header = array('size' => 14, 'bold' => true,'name'=>'Times New Roman');
         $header1 = array('size' => 14, 'bold' => true,'color'=>'ff0000','name'=>'Times New Roman');
         $section->addText('THỐNG KÊ', $header,$cellHCentered);
-        $section->addText('Danh sách đoàn viên được kết nạp năm ', $header1,$cellHCentered);
+        $section->addText($report_name, $header1,$cellHCentered);
         $section->addText('----------------', null,$cellHCentered);
         $section->addText('', null,$cellHCentered);
 
