@@ -113,7 +113,7 @@
             </form>
         </div>
     </div>
-    <div id="loading"><img src="{{asset('images/giphy.gif')}}"></div>
+    <!-- <div id="loading"><img src="{{asset('images/giphy.gif')}}"></div> -->
 @endsection
 @push('script')
 <script type="text/javascript">
