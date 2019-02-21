@@ -178,6 +178,10 @@
             success: function(data) {
                 $("#loading").hide();
                  window.location = '/export/word/'+data+'.doc';
+            },
+            error:function () {
+                $("#loading").hide();
+                alert('Có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại sau.');
             }
         })
     });
@@ -232,7 +236,11 @@
             },
             success: function(data) {
                 $("#loading").hide();
-                window.location = '/export/excel/'+report_name+'.xlsx';
+                window.location = '/export/excel/' + report_name + '.xlsx';
+            },
+            error:function () {
+                $("#loading").hide();
+                alert('Có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại sau.');
             }
         })
     });
