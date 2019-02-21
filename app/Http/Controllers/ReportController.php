@@ -51,13 +51,12 @@ class ReportController extends Controller
         $religion = $request->get("religion");
         $relation = $request->get("relation");
 
-        $query = Member::select(DB::raw('members.fullname as fullname,members.gender as gender, members.birthday as birthday, nations.name as nation, religions.name as religion, 
-                                                knowledges.name as knowledge, positions.name as position, groups.name as group_name,members.group_id as group_id,members.education_level as education_level,
+        $query = Member::select(DB::raw('members.fullname as fullname,members.gender as gender, members.birthday as birthday, 
+                                                members.nation_text as nation, members.position_text as position,
+                                                members.knowledge_text as knowledge, members.political_text as political,
+                                                members.religion_text as religion,
+                                                groups.name as group_name,members.group_id as group_id,members.education_level as education_level,
                                                 groups.parent_id as parent_id,groups.level as level'))
-                        ->leftJoin('nations','members.nation','=','nations.id')
-                        ->leftJoin('religions','members.religion','=','religions.id')
-                        ->leftJoin('knowledges','members.knowledge','=','knowledges.id')
-                        ->leftJoin('positions','members.position','=','positions.id')
                         ->leftJoin('groups','members.group_id','=','groups.id');
         if($group_id){
             $group = Group::where('id',$group_id)->first();
@@ -193,7 +192,7 @@ class ReportController extends Controller
         $table->addCell(1000, $cellRowSpan)->addText('Dân tộc', $rowTitleFontStyle, $cellHCentered);
         $table->addCell(1000, $cellRowSpan)->addText('Tôn giáo', $rowTitleFontStyle, $cellHCentered);
         $table->addCell(1000, $cellRowSpan)->addText('Học vấn', $rowTitleFontStyle, $cellHCentered);
-        $table->addCell(1000, $cellRowSpan)->addText('Chuyên môn', $rowTitleFontStyle, $cellHCentered);
+        $table->addCell(2000, $cellRowSpan)->addText('Chuyên môn', $rowTitleFontStyle, $cellHCentered);
         $table->addCell(6000, $cellRowSpan)->addText('Chức vụ, nghề nghiệp', $rowTitleFontStyle, $cellHCentered);
         $table->addCell(6000, $cellRowSpan)->addText('Chi bộ', $rowTitleFontStyle, $cellHCentered);
         $table->addCell(6000, $cellRowSpan)->addText('Đảng bộ', $rowTitleFontStyle, $cellHCentered);
@@ -233,7 +232,7 @@ class ReportController extends Controller
                     $table->addCell(1000,$cellVCentered)->addText($item->nation,$cellFontStyle,$cellHCentered);
                     $table->addCell(1000,$cellVCentered)->addText($item->religion,$cellFontStyle,$cellHCentered);
                     $table->addCell(1000,$cellVCentered)->addText($item->education_level.'/12',$cellFontStyle,$cellHCentered);
-                    $table->addCell(1000,$cellVCentered)->addText($item->knowledge,$cellFontStyle,$cellHCentered);
+                    $table->addCell(2000,$cellVCentered)->addText($item->knowledge,$cellFontStyle,$cellHCentered);
                     $table->addCell(6000,$cellVCentered)->addText($item->position,$cellFontStyle,$cellHCentered);
                     $table->addCell(6000,$cellVCentered)->addText($item->group_name,$cellFontStyle,$cellHCentered);
                     if($h == 1){
@@ -260,7 +259,7 @@ class ReportController extends Controller
                         $table->addCell(1000,$cellVCentered)->addText($item->nation,$cellFontStyle,$cellHCentered);
                         $table->addCell(1000,$cellVCentered)->addText($item->religion,$cellFontStyle,$cellHCentered);
                         $table->addCell(1000,$cellVCentered)->addText($item->education_level.'/12',$cellFontStyle,$cellHCentered);
-                        $table->addCell(1000,$cellVCentered)->addText($item->knowledge,$cellFontStyle,$cellHCentered);
+                        $table->addCell(2000,$cellVCentered)->addText($item->knowledge,$cellFontStyle,$cellHCentered);
                         $table->addCell(6000,$cellVCentered)->addText($item->position,$cellFontStyle,$cellHCentered);
                         $table->addCell(6000,$cellVCentered)->addText($item->group_name,$cellFontStyle,$cellHCentered);
                         if($j == 1){

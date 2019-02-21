@@ -113,6 +113,7 @@
             </form>
         </div>
     </div>
+    <div id="loading"><img src="{{asset('images/giphy.gif')}}"></div>
 @endsection
 @push('script')
 <script type="text/javascript">
@@ -152,6 +153,7 @@
             alert('Vui lòng nhập tên báo cáo');
             return false
         }
+        $("#loading").show();
         $.ajax({
             url: '/report/word',
             type: 'get',
@@ -174,6 +176,7 @@
                 group_name:group_name
             },
             success: function(data) {
+                $("#loading").hide();
                  window.location = '/export/word/'+data+'.doc';
             }
         })
@@ -205,6 +208,7 @@
             alert('Vui lòng nhập tên báo cáo');
             return false
         }
+        $("#loading").show();
         $.ajax({
             url: '/report/excel',
             type: 'get',
@@ -227,6 +231,7 @@
                 group_name:group_name
             },
             success: function(data) {
+                $("#loading").hide();
                 window.location = '/export/excel/'+report_name+'.xlsx';
             }
         })
