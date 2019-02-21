@@ -57,7 +57,7 @@ class ReportController extends Controller
                                                 members.religion_text as religion,
                                                 groups.name as group_name,members.group_id as group_id,members.education_level as education_level,
                                                 groups.parent_id as parent_id,groups.level as level'))
-                        ->leftJoin('groups','members.group_id','=','groups.id');
+            ->leftJoin('groups','members.group_id','=','groups.id');
         if($group_id){
             $group = Group::where('id',$group_id)->first();
             $ids = $group->getIdsG();
@@ -215,9 +215,19 @@ class ReportController extends Controller
             $h = 0;
             $j = 0;
             foreach ($members as $k => $item){
+                $chk = false;
                 if($item->parent_id == $key){
+                    $chk = true;
                     $i++;
                     $h++;
+                } else {
+                    if ($item->parent_id == 0){
+                        $chk = true;
+                        $i++;
+                        $j++;
+                    }
+                }
+                if($chk){
                     $table->addRow();
                     $table->addCell(2000,$cellVCentered)->addText($i.'.',$cellFontStyle,$cellHCentered);
                     $table->addCell(4000,$cellVCentered)->addText($item->fullname,$cellFontStyle);
@@ -237,40 +247,13 @@ class ReportController extends Controller
                     $table->addCell(6000,$cellVCentered)->addText($item->group_name,$cellFontStyle,$cellHCentered);
                     if($h == 1){
                         $table->addCell(6000,$cellRowSpan)->addText($value,$cellFontStyle,$cellHCentered);
-                    } else{
-                        $table->addCell(null, $cellRowContinue);
                     }
+                    if($j == 1){
+                        $table->addCell(6000,$cellRowSpan)->addText('',$cellFontStyle,$cellHCentered);
+                    }
+                    $table->addCell(null, $cellRowContinue);
                     unset($members[$k]);
-                } else {
-                    if ($item->parent_id == 0){
-                        $i++;
-                        $j++;
-                        $table->addRow();
-                        $table->addCell(2000,$cellVCentered)->addText($i.'.',$cellFontStyle,$cellHCentered);
-                        $table->addCell(4000,$cellVCentered)->addText($item->fullname,$cellFontStyle);
-                        $birthday = Carbon::createFromFormat('Y-m-d',$item->birthday);
-                        if($item->gender == 1){
-                            $table->addCell(2500,$cellVCentered)->addText($birthday->format('d/m/Y'),$cellFontStyle,$cellHCentered);
-                            $table->addCell(2500,$cellVCentered)->addText('',$cellFontStyle,$cellHCentered);
-                        } else{
-                            $table->addCell(2500,$cellVCentered)->addText('',$cellFontStyle,$cellHCentered);
-                            $table->addCell(2500,$cellVCentered)->addText($birthday->format('d/m/Y'),$cellFontStyle,$cellHCentered);
-                        }
-                        $table->addCell(1000,$cellVCentered)->addText($item->nation,$cellFontStyle,$cellHCentered);
-                        $table->addCell(1000,$cellVCentered)->addText($item->religion,$cellFontStyle,$cellHCentered);
-                        $table->addCell(1000,$cellVCentered)->addText($item->education_level.'/12',$cellFontStyle,$cellHCentered);
-                        $table->addCell(2000,$cellVCentered)->addText($item->knowledge,$cellFontStyle,$cellHCentered);
-                        $table->addCell(6000,$cellVCentered)->addText($item->position,$cellFontStyle,$cellHCentered);
-                        $table->addCell(6000,$cellVCentered)->addText($item->group_name,$cellFontStyle,$cellHCentered);
-                        if($j == 1){
-                            $table->addCell(6000,$cellRowSpan)->addText('',$cellFontStyle,$cellHCentered);
-                        } else{
-                            $table->addCell(null, $cellRowContinue);
-                        }
-                        unset($members[$k]);
-                    }
                 }
-
             }
         }
         $section->addText('');

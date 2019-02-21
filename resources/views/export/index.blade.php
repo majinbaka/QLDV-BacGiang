@@ -90,7 +90,7 @@
                                 @php
                                     $i++;
                                     $h++;
-                                    $birthday = Carbon\Carbon::createFromFormat('Y-m-d',$item['birthday']);
+                                    $birthday = Carbon\Carbon::createFromFormat('Y-m-d',$item->birthday);
                                 @endphp
                                 <tr>
                                     <td scope="col" style="border: 1px solid #000000;font-size: 12;text-align: center; vertical-align: middle;">{{$i}}</td>
@@ -118,7 +118,7 @@
                                     @php
                                         $i++;
                                         $j++;
-                                        $birthday = Carbon\Carbon::createFromFormat('Y-m-d',$item['birthday']);
+                                        $birthday = Carbon\Carbon::createFromFormat('Y-m-d',$item->birthday);
                                     @endphp
                                     <tr>
                                         <td scope="col" style="border: 1px solid #000000;font-size: 12;text-align: center; vertical-align: middle;">{{$i}}</td>
