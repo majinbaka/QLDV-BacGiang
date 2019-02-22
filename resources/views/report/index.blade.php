@@ -177,7 +177,7 @@
             },
             success: function(data) {
                 $("#loading").hide();
-                var converted = htmlDocx.asBlob(data);
+                var converted = htmlDocx.asBlob(data,{orientation: 'landscape', margins: {left: 720,right:720}});
                 saveAs(converted, report_name + '.doc');
             },
             error:function () {
