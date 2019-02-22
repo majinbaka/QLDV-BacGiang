@@ -145,6 +145,6 @@ class ReportController extends Controller
         $ids = $data['group_ids'];
         $report_name = $request->get("report_name");
         $group_name = $request->get("group_name");
-        return view('export.index',compact('result','ids','report_name','group_name'));
+        return view('export.excel',compact('result','ids','report_name','group_name'));
     }
 }
