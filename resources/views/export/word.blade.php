@@ -201,7 +201,7 @@
                     <tr>
                         <th scope="col" colspan="5" style=" font-weight: bold;"><p>XÁC NHẬN BAN TỔ CHÚC HUYỆN ỦY</p></th>
                         <th scope="col" colspan="1"></th>
-                        <th scope="col" colspan="5" style="; "><p>TM. BAN THƯỜNG VỤ HUYỆN ĐOÀN</p></th>
+                        <th scope="col" colspan="5"><p>TM. BAN THƯỜNG VỤ HUYỆN ĐOÀN</p></th>
                     </tr>
                     <tr>
                         <th scope="col" colspan="5" ></th>
