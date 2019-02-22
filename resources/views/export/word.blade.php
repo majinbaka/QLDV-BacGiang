@@ -73,7 +73,7 @@
                         <th scope="col" colspan="5"><p>ĐOÀN THANH NIÊN CỘNG SẢN HỒ CHÍ MINH</p></th>
                     </tr>
                     <tr>
-                        <th scope="col" colspan="5" style="color: #ff0000"><p>BCH ĐOÀN {{strtoupper($group_name)}}</p></th>
+                        <th scope="col" colspan="5"><p>BCH ĐOÀN {{strtoupper($group_name)}}</p></th>
                         <th scope="col" colspan="1"></th>
                         <th scope="col" colspan="5" ></th>
                     </tr>
@@ -84,7 +84,7 @@
                     </tr>
                 </table>
                 <p style="font-size: 14px">THỐNG KÊ</p>
-                <p style="color: #ff0000;font-size: 14pt">Danh sách đoàn viên được kết nạp năm</p>
+                <p style="font-size: 14pt">{{$report_name}}</p>
                 <p >---------------</p>
                 <table class="table table-bordered" width="100%">
                     <thead>

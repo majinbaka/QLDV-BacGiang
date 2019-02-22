@@ -113,7 +113,7 @@
             </form>
         </div>
     </div>
-    <!-- <div id="loading"><img src="{{asset('images/giphy.gif')}}"></div> -->
+    <div id="loading"><img src="{{asset('images/giphy.gif')}}"></div>
 @endsection
 @push('script')
 <script type="text/javascript">
@@ -176,9 +176,9 @@
                 group_name:group_name
             },
             success: function(data) {
-                $("#loading").hide();
                 var converted = htmlDocx.asBlob(data,{orientation: 'landscape', margins: {left: 720,right:720}});
                 saveAs(converted, report_name + '.doc');
+                $("#loading").hide();
             },
             error:function () {
                 $("#loading").hide();
@@ -236,9 +236,9 @@
                 group_name:group_name
             },
             success: function(data) {
-                $("#loading").hide();
                 var blob = new Blob([data], {type: "text/plain;charset=utf-8"});
                 saveAs(blob, report_name + '.xls');
+                $("#loading").hide();
             },
             error:function () {
                 $("#loading").hide();
