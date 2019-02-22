@@ -105,11 +105,11 @@ class ReportController extends Controller
             $query->where('members.relation','=',$relation);
         }
         $members = $query->orderBy('parent_id','DESC')->orderBy('level','ASC')->get();
-//        $data = $this->groupData($members);
-        $data = [
-            'members'=>$members,
-            'group_ids'=>$ids
-        ];
+        $data = $this->groupData($members);
+//        $data = [
+//            'members'=>$members,
+//            'group_ids'=>$ids
+//        ];
         return $data;
     }
 
@@ -131,20 +131,20 @@ class ReportController extends Controller
     public function exportToWord(Request $request)
     {
         $data = $this->getData($request);
-        $result = $data['members'];
-        $ids = $data['group_ids'];
+        $result = $data;
+//        $ids = $data['group_ids'];
         $report_name = $request->get("report_name");
         $group_name = $request->get("group_name");
-        return view('export.word',compact('result','ids','report_name','group_name'));
+        return view('export.word',compact('result','report_name','group_name'));
 
     }
 
     public function exportToExcel(Request $request){
         $data = $this->getData($request);
-        $result = $data['members'];
-        $ids = $data['group_ids'];
+        $result = $data;
+//        $ids = $data['group_ids'];
         $report_name = $request->get("report_name");
         $group_name = $request->get("group_name");
-        return view('export.excel',compact('result','ids','report_name','group_name'));
+        return view('export.excel',compact('result','report_name','group_name'));
     }
 }

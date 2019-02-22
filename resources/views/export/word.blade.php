@@ -108,90 +108,50 @@
                     <tbody>
                     @php
                         $i = 0;
-                        if($ids == ''){
-                            $groups = \App\Group::all();
-                        } else{
-                            $groups = \App\Group::whereIn('id',$ids)->get();
-                        }
-                        $listGroup = [];
-                        foreach ($groups as $group){
-                            $listGroup[$group->id] = $group->name;
-                        }
                         $data = array();
                         $count_level_1 = 0;
                     @endphp
-                    @foreach ($listGroup as $key => $value)
+                    @foreach($result as $parent_id => $members)
                         @php
-                            $data[$key] = 0;
-                            $h = 0;
-                            $j = 0;
+                            $parent = \App\Group::whereId($parent_id)->first();
+                            if($parent){
+                                $parent_name = $parent->name;
+                            } else{
+                                $parent_name = '';
+                            }
                         @endphp
-                        @foreach ($result as $k => $item)
-                            @if($item->parent_id == $key)
-                                @php $data[$key] +=1; @endphp
-                            @endif
-                            @if($item->parent_id == 0)
-                                @php $count_level_1 +=1; @endphp
-                            @endif
-                        @endforeach
-                        @foreach ($result as $k => $item)
-                            @if($item->parent_id == $key)
+                        @foreach($members as $group_id => $items)
+                            @php
+                                $k = 0;
+                                $count = count($items);
+                            @endphp
+                            @foreach($items as $item)
                                 @php
                                     $i++;
-                                    $h++;
-                                    $birthday = Carbon\Carbon::createFromFormat('Y-m-d',$item->birthday);
+                                    $k++;
+                                    $birthday = Carbon\Carbon::createFromFormat('Y-m-d',$item['birthday']);
                                 @endphp
                                 <tr>
                                     <td scope="col" style="border: 1px solid #000000; border-collapse: collapse; "><p>{{$i}}.</p></td>
-                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  vertical-align: middle;"><p style="text-align: left">{{$item->fullname}}</p></td>
-                                    @if($item->gender == 1)
+                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  vertical-align: middle;"><p style="text-align: left">{{$item['fullname']}}</p></td>
+                                    @if($item['gender'] == 1)
                                         <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$birthday->format('d/m/Y')}}</p></td>
                                         <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "></td>
                                     @else
                                         <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "></td>
                                         <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$birthday->format('d/m/Y')}}</p></td>
                                     @endif
-                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item->nation}}</p></td>
-                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item->religion}}</p></td>
-                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item->education_level}}/12</p></td>
-                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item->knowledge}}</p></td>
-                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item->position}}</p></td>
-                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item->group_name}}</p></td>
-                                    @if($h == 1)
-                                        <td scope="col" rowspan="{{$data[$key]}}" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$value}}</p></td>
+                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item['nation']}}</p></td>
+                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item['religion']}}</p></td>
+                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item['education_level']}}/12</p></td>
+                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item['knowledge']}}</p></td>
+                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item['position']}}</p></td>
+                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item['group_name']}}</p></td>
+                                    @if($k == 1)
+                                        <td scope="col" rowspan="{{$count}}" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$parent_name}}</p></td>
                                     @endif
                                 </tr>
-                                @php unset($result[$k]) @endphp
-                            @else
-                                @if($item->parent_id == 0)
-                                    @php
-                                        $i++;
-                                        $j++;
-                                        $birthday = Carbon\Carbon::createFromFormat('Y-m-d',$item->birthday);
-                                    @endphp
-                                    <tr>
-                                        <td scope="col" style="border: 1px solid #000000; border-collapse: collapse; "><p>{{$i}}.</p></td>
-                                        <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  vertical-align: middle;"><p style="text-align: left">{{$item->fullname}}</p></td>
-                                        @if($item->gender == 1)
-                                            <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$birthday->format('d/m/Y')}}</p></td>
-                                            <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "></td>
-                                        @else
-                                            <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "></td>
-                                            <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$birthday->format('d/m/Y')}}</p></td>
-                                        @endif
-                                        <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item->nation}}</p></td>
-                                        <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item->religion}}</p></td>
-                                        <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item->education_level}}/12</p></td>
-                                        <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item->knowledge}}</p></td>
-                                        <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item->position}}</p></td>
-                                        <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p>{{$item->group_name}}</p></td>
-                                        @if($j == 1)
-                                            <td scope="col" rowspan="{{$count_level_1}}" style="border: 1px solid #000000; border-collapse: collapse;  "></td>
-                                        @endif
-                                    </tr>
-                                    @php unset($result[$k]) @endphp
-                                @endif
-                            @endif
+                            @endforeach
                         @endforeach
                     @endforeach
                     </tbody>
@@ -207,7 +167,7 @@
                         <th scope="col" colspan="5" ></th>
                         <th scope="col" colspan="1"></th>
                         <th scope="col" colspan="5" ><p>PHÓ BÍ THƯ PHỤ TRÁCH</p></th>
-
+                    </tr>
                 </table>
             </div>
         </div>
