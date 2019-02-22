@@ -158,6 +158,7 @@
                         <th scope="col" colspan="5" ></th>
                         <th scope="col" colspan="1"></th>
                         <th scope="col" colspan="5" ><p style="font-size: 14pt">PHÓ BÍ THƯ PHỤ TRÁCH</p></th>
+                    </tr>
                 </table>
             </div>
         </div>
