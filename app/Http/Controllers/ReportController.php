@@ -129,7 +129,7 @@ class ReportController extends Controller
             $contents = $view->render();
             $fileName = $report_name;
             if($n == $page - 1 ){
-                $fileName .= ' - end';
+                $fileName .= ' - '.$n.' - end';
             } else{
                 $fileName .= ' - '.($n + 1);
             }
