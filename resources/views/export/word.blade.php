@@ -107,7 +107,6 @@
                     </thead>
                     <tbody>
                     @php
-                        $i = 0;
                         $data = array();
                         $count_level_1 = 0;
                     @endphp

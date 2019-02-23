@@ -36,7 +36,7 @@
                 </table>
                 <p style="font-size: 14pt">THỐNG KÊ</p>
                 <p style="font-size: 14pt">{{$report_name}}</p>
-                <p >---------------</p>
+                <p>---------------</p>
                 <table class="table table-bordered" width="100%">
                     <thead>
                     <tr>
@@ -58,7 +58,6 @@
                     </thead>
                     <tbody>
                     @php
-                        $i = 0;
                         $data = array();
                         $count_level_1 = 0;
                     @endphp
@@ -94,7 +93,7 @@
                                     @endif
                                     <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p style="font-size: 12pt">{{$item['nation']}}</p></td>
                                     <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p style="font-size: 12pt">{{$item['religion']}}</p></td>
-                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p style="font-size: 12pt">'{{$item['education_level']}}/12</p></td>
+                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p style="font-size: 12pt">.{{$item['education_level']}} / 12</p></td>
                                     <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p style="font-size: 12pt">{{$item['knowledge']}}</p></td>
                                     <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p style="font-size: 12pt">{{$item['position']}}</p></td>
                                     <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p style="font-size: 12pt">{{$item['group_name']}}</p></td>

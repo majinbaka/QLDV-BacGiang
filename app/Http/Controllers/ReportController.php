@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
@@ -35,7 +36,7 @@ class ReportController extends Controller
         return view('report.index',compact('groups','positions','knowledges','politicals','nations','religions'));
     }
 
-    private function getData($request){
+    private function getData($request, $type){
         $group_id = $request->get("child_group_id");
         $position = $request->get("position");
         $term = $request->get("term");
@@ -51,7 +52,7 @@ class ReportController extends Controller
         $religion = $request->get("religion");
         $relation = $request->get("relation");
 
-        $query = Member::select(DB::raw('members.fullname as fullname,members.gender as gender, members.birthday as birthday, 
+        $query = Member::select(DB::raw('members.id as id, members.fullname as fullname,members.gender as gender, members.birthday as birthday, 
                                                 members.nation_text as nation, members.position_text as position,
                                                 members.knowledge_text as knowledge, members.political_text as political,
                                                 members.religion_text as religion,
@@ -104,13 +105,35 @@ class ReportController extends Controller
         if($relation){
             $query->where('members.relation','=',$relation);
         }
-        $members = $query->orderBy('parent_id','DESC')->orderBy('level','ASC')->get();
-        $data = $this->groupData($members);
-//        $data = [
-//            'members'=>$members,
-//            'group_ids'=>$ids
-//        ];
-        return $data;
+        $total = $query->count();
+        $report_name = $request->get("report_name");
+        $group_name = $request->get("group_name");
+        $fileList = [];
+        $page = ceil($total / 1000);
+        if($type == 1){
+            $fileType = '.xls';
+            $path = public_path('export/excel/');
+        } else{
+            $fileType = '.doc';
+            $path = public_path('export/word/');
+        }
+        for ($n = 0; $n < $page; $n++){
+            $members = $query->orderBy('parent_id','DESC')->orderBy('level','ASC')->skip($n*1000)->take(1000)->get();
+            $data = $this->groupData($members);
+            $view = View::make('export.word', ['result' => $data,'report_name'=>$report_name,'group_name'=>$group_name,'i'=>$n*1000]);
+            $contents = $view->render();
+            $fileName = $report_name;
+            if($n == $page - 1){
+                $fileName .= ' - end';
+            } else{
+                $fileName .= ' - '.($n + 1);
+            }
+            $fileName .=$fileType;
+            $myfile = fopen($path.$fileName, "w");
+            fwrite($myfile, $contents);
+            $fileList[] = $fileName;
+        }
+        return $fileList;
     }
 
     private function groupData($members){
@@ -130,21 +153,20 @@ class ReportController extends Controller
     }
     public function exportToWord(Request $request)
     {
-        $data = $this->getData($request);
-        $result = $data;
-//        $ids = $data['group_ids'];
-        $report_name = $request->get("report_name");
-        $group_name = $request->get("group_name");
-        return view('export.word',compact('result','report_name','group_name'));
-
+        $fileList = $this->getData($request,0);
+        return json_encode($fileList);
     }
 
     public function exportToExcel(Request $request){
-        $data = $this->getData($request);
-        $result = $data;
-//        $ids = $data['group_ids'];
-        $report_name = $request->get("report_name");
-        $group_name = $request->get("group_name");
-        return view('export.excel',compact('result','report_name','group_name'));
+        $fileList = $this->getData($request,1);
+        return json_encode($fileList);
+    }
+
+    public function deleteDownloadedFile(Request $request){
+        $fileList = $request->get('filelist');
+        $type = $request->get('type');
+        foreach ($fileList as $file){
+            unlink(public_path('export/'.$type.'/'.$file));
+        }
     }
 }

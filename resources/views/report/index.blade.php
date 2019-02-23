@@ -17,7 +17,6 @@
                 <div class="row">
                     <label class="form-label" for="child_group_id" style="padding-right: 40px" >Đơn vị</label>
                     <select name="child_group_id" id="child_group_id" class="width-200 form-select" style="margin-left: 45px">
-                        <option value="">Chọn...</option>
                         @foreach($groups as $group)
                             <option value="{{$group->id}}">{{$group->name}}</option>
                         @endforeach
@@ -176,9 +175,20 @@
                 group_name:group_name
             },
             success: function(data) {
-                var converted = htmlDocx.asBlob(data,{orientation: 'landscape', margins: {left: 720,right:720}});
-                saveAs(converted, report_name + '.doc');
-                $("#loading").hide();
+                var obj = $.parseJSON(data);
+                downloadAll(obj,'word');
+                $.ajax({
+                    url:'/report/delete',
+                    type:'get',
+                    data:{
+                        filelist:obj,
+                        type:'word'
+                    },
+                    success:function () {
+                        $("#loading").hide();
+                    }
+                });
+
             },
             error:function () {
                 $("#loading").hide();
@@ -186,7 +196,19 @@
             }
         })
     });
+    function downloadAll(urls, type) {
+        var link = document.createElement('a');
 
+        link.setAttribute('download', null);
+        link.style.display = 'none';
+
+        document.body.appendChild(link);
+
+        jQuery.each(urls,function (index,item) {
+            window.open('export/'+type+'/'+item,'_blank');
+        });
+        document.body.removeChild(link);
+    }
     $(document).on('click','.btn-excel',function (e) {
         e.preventDefault();
         var report_name = $("#report_name").val();
@@ -236,9 +258,20 @@
                 group_name:group_name
             },
             success: function(data) {
-                var blob = new Blob([data], {type: "text/plain;charset=utf-8"});
-                saveAs(blob, report_name + '.xls');
-                $("#loading").hide();
+                var obj = $.parseJSON(data);
+                downloadAll(obj,'excel');
+                $.ajax({
+                    url:'/report/delete',
+                    type:'get',
+                    data:{
+                        filelist:obj,
+                        type:'excel'
+                    },
+                    success:function () {
+                        $("#loading").hide();
+                    }
+                });
+
             },
             error:function () {
                 $("#loading").hide();
