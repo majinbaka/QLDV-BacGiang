@@ -117,9 +117,11 @@ class ReportController extends Controller
             $fileType = '.doc';
             $path = public_path('export/word/');
         }
-        for ($n = 0; $n < $page; $n++){
-            $members = $query->orderBy('parent_id','DESC')->orderBy('level','ASC')->skip($n*1000)->take(1000)->get();
-            $data = $this->groupData($members);
+        $members = $query->orderBy('parent_id','DESC')->orderBy('level','ASC')->get()->toArray();
+        $members = array_chunk($members,1000);
+        $n = 0;
+        foreach ($members as $memberList){
+            $data = $this->groupData($memberList);
             $view = View::make('export.word', ['result' => $data,'report_name'=>$report_name,'group_name'=>$group_name,'i'=>$n*1000]);
             $contents = $view->render();
             $fileName = $report_name;
@@ -132,6 +134,7 @@ class ReportController extends Controller
             $myfile = fopen($path.$fileName, "w");
             fwrite($myfile, $contents);
             $fileList[] = $fileName;
+            $n++;
         }
         return $fileList;
     }
@@ -139,14 +142,14 @@ class ReportController extends Controller
     private function groupData($members){
         $result = array();
         foreach ($members as $member){
-            if(array_key_exists($member->parent_id,$result)){
-                if(array_key_exists($member->group_id,$result[$member->parent_id])){
-                    $result[$member->parent_id][$member->group_id][]= $member->toArray();
+            if(array_key_exists($member['parent_id'],$result)){
+                if(array_key_exists($member['group_id'],$result[$member['parent_id']])){
+                    $result[$member['parent_id']][$member['group_id']][]= $member;
                 } else{
-                    $result[$member->parent_id][$member->group_id] = [$member->toArray()];
+                    $result[$member['parent_id']][$member['group_id']] = [$member];
                 }
             } else{
-                $result[$member->parent_id] = [$member->group_id => [$member->toArray()]];
+                $result[$member['parent_id']] = [$member['group_id'] => [$member]];
             }
         }
         return $result;
