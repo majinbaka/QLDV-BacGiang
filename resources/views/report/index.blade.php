@@ -17,6 +17,7 @@
                 <div class="row">
                     <label class="form-label" for="child_group_id" style="padding-right: 40px" >Đơn vị</label>
                     <select name="child_group_id" id="child_group_id" class="width-200 form-select" style="margin-left: 45px">
+                        <option value="0">Chọn...</option>
                         @foreach($groups as $group)
                             <option value="{{$group->id}}">{{$group->name}}</option>
                         @endforeach
@@ -144,6 +145,10 @@
         var religion = $("#religion").val();
         var relation = $("#relation").val();
         var group_name = $("#group_name").val();
+        if(child_group_id == 0){
+            alert('Vui lòng chọn 1 đơn vị');
+            return false;
+        }
         if(!group_name){
             alert('Vui lòng nhập tên tổ chức');
             return false;
@@ -197,17 +202,9 @@
         })
     });
     function downloadAll(urls, type) {
-        var link = document.createElement('a');
-
-        link.setAttribute('download', null);
-        link.style.display = 'none';
-
-        document.body.appendChild(link);
-
         jQuery.each(urls,function (index,item) {
             window.open('export/'+type+'/'+item,'_blank');
         });
-        document.body.removeChild(link);
     }
     $(document).on('click','.btn-excel',function (e) {
         e.preventDefault();
@@ -227,6 +224,10 @@
         var religion = $("#religion").val();
         var relation = $("#relation").val();
         var group_name = $("#group_name").val();
+        if(child_group_id == 0){
+            alert('Vui lòng chọn 1 đơn vị');
+            return false;
+        }
         if(!group_name){
             alert('Vui lòng nhập tên tổ chức');
             return false;

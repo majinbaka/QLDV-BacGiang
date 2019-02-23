@@ -105,11 +105,11 @@ class ReportController extends Controller
         if($relation){
             $query->where('members.relation','=',$relation);
         }
-        $total = $query->count();
+
         $report_name = $request->get("report_name");
         $group_name = $request->get("group_name");
         $fileList = [];
-        $page = ceil($total / 1000);
+
         if($type == 1){
             $fileType = '.xls';
             $path = public_path('export/excel/');
@@ -118,14 +118,17 @@ class ReportController extends Controller
             $path = public_path('export/word/');
         }
         $members = $query->orderBy('parent_id','DESC')->orderBy('level','ASC')->get()->toArray();
+
+
         $members = array_chunk($members,1000);
+        $page = count($members);;
         $n = 0;
         foreach ($members as $memberList){
             $data = $this->groupData($memberList);
             $view = View::make('export.word', ['result' => $data,'report_name'=>$report_name,'group_name'=>$group_name,'i'=>$n*1000]);
             $contents = $view->render();
             $fileName = $report_name;
-            if($n == $page - 1){
+            if($n == $page - 1 ){
                 $fileName .= ' - end';
             } else{
                 $fileName .= ' - '.($n + 1);
