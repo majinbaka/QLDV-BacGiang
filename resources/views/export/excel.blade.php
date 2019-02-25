@@ -93,7 +93,7 @@
                                     @endif
                                     <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p style="font-size: 12pt">{{$item['nation']}}</p></td>
                                     <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p style="font-size: 12pt">{{$item['religion']}}</p></td>
-                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p style="font-size: 12pt">'{{$item['education_level']}} / 12</p></td>
+                                    <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p style="font-size: 12pt">=CONCAT("{{$item['education_level']}}"," / 12")</p></td>
                                     <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p style="font-size: 12pt">{{$item['knowledge']}}</p></td>
                                     <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p style="font-size: 12pt">{{$item['position']}}</p></td>
                                     <td scope="col" style="border: 1px solid #000000; border-collapse: collapse;  "><p style="font-size: 12pt">{{$item['group_name']}}</p></td>
