@@ -176,7 +176,9 @@ class ReportController extends Controller
         $fileList = $request->get('filelist');
         $type = $request->get('type');
         foreach ($fileList as $file){
-            unlink(public_path('export/'.$type.'/'.$file));
+            try{
+                unlink(public_path('export/'.$type.'/'.$file));
+            } catch (\Exception $exception){}
         }
     }
 }
