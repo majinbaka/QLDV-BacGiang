@@ -1,18 +1,22 @@
-
-<style>
-    p{
-        font-family: "Times New Roman" !important;
-        text-align: center;
-        vertical-align: middle;
-    }
-    table>thead>th>p{
-        font-size: 12pt !important;
-    }
-    table>tbody>td>p{
-        font-size: 12pt !important;
-        font-weight: normal !important;
-    }
-</style>
+<html>
+<head>
+    <meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">
+    <style>
+        p{
+            font-family: "Times New Roman" !important;
+            text-align: center;
+            vertical-align: middle;
+        }
+        table>thead>th>p{
+            font-size: 12pt !important;
+        }
+        table>tbody>td>p{
+            font-size: 12pt !important;
+            font-weight: normal !important;
+        }
+    </style>
+</head>
+<body>
 <div class="col-xs-12">
     <div class="row">
         <div class="box">
@@ -123,4 +127,7 @@
         </div>
     </div>
 </div>
+</body>
+</html>
+
 
