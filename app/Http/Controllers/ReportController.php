@@ -125,7 +125,11 @@ class ReportController extends Controller
         $n = 0;
         foreach ($members as $memberList){
             $data = $this->groupData($memberList);
-            $view = View::make('export.word', ['result' => $data,'report_name'=>$report_name,'group_name'=>$group_name,'i'=>$n*1000]);
+            if($type == 1){
+                $view = View::make('export.excel', ['result' => $data,'report_name'=>$report_name,'group_name'=>$group_name,'i'=>$n*1000]);
+            } else{
+                $view = View::make('export.word', ['result' => $data,'report_name'=>$report_name,'group_name'=>$group_name,'i'=>$n*1000]);
+            }
             $contents = $view->render();
             $fileName = $report_name;
             if($n == $page - 1 ){
