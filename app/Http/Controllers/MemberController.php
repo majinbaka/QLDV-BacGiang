@@ -28,7 +28,7 @@ class MemberController extends Controller
         $code = request()->get('code');
         $fullname = request()->get('fullname');
         $uuid = request()->get('group');
-
+        $page = \request()->get('page');
         if ($user->isAn('admin')){
             $groups = Group::where('level', 1)->get();
             $members = Member::select(['code', 'fullname', 'group_id', 'position','uuid']);
@@ -48,7 +48,13 @@ class MemberController extends Controller
                 }
             }
             $memberc = $members->count();
-            $members = $members->paginate(20);
+            if($page){
+                $members = $members->paginate(20)->setPageName($page);
+                session()->put('current_page',$page);
+            } else{
+                $members = $members->paginate(20);
+            }
+
 
             return view('home')
                 ->with('code', $code)
@@ -82,7 +88,12 @@ class MemberController extends Controller
             $members = $members->whereIn('group_id', $ids);
 
             $memberc = $members->count();
-            $members = $members->paginate(20);
+            if($page){
+                $members = $members->paginate(20)->setPageName($page);
+                session()->put('current_page',$page);
+            } else{
+                $members = $members->paginate(20);
+            }
 
             return view('home')
                 ->with('code', $code)
@@ -91,6 +102,7 @@ class MemberController extends Controller
                 ->with('members', $members)
                 ->with('groups', $groups)
                 ->with('memberc', $memberc)
+                ->with('page',$page)
                 ->withSuccess(session()->get( 'success' ));
         }
     }

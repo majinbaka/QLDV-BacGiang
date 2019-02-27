@@ -9,7 +9,7 @@
         <div class="arrow-down"></div>
     </div>
     <div class="content-area">
-        <form class="search-form" method="POST" action="{{route('member.search')}}"> 
+        <form class="search-form" id="seach-form" method="POST" action="{{route('member.search')}}">
             @csrf
             <label>Mã đoàn viên</label>
         <input type="text" name="code" class="search-code" @isset($code)value="{{$code}}"@endisset>
@@ -31,7 +31,15 @@
                     @endif
                 @endforeach
             </select>
-            <input type="submit" value='Tìm kiếm'>
+            @php
+                if(session()->get('current_page')){
+                    $page = session()->get('current_page');
+                } else{
+                    $page = 1;
+                }
+            @endphp
+            <input type="hidden" id="page" name="page" value="{{$page}}">
+            <input type="submit" value='Tìm kiếm' id="search">
         </form>
     </div>
 </div>
@@ -56,8 +64,17 @@
                         <td><input type="checkbox" name="member_ids[]" value="{{$member->uuid}}"></td>
                         <td onclick="window.location.href = '{{route('member.edit', $member->uuid)}}'">{{$member->code}}</td>
                         <td onclick="window.location.href = '{{route('member.edit', $member->uuid)}}'">{{$member->fullname}}</td>
-                        <td>{{$member->group->name}}</td>
-                        <td>{{$member->positionr->name}}</td>
+                        @if($member->group)
+                            <td>{{$member->group->name}}</td>
+                        @else
+                            <td></td>
+                        @endif
+                        @if($member->position)
+                            <td>{{$member->positionr->name}}</td>
+                        @else
+                            <td></td>
+                        @endif
+
                     </tr>
                 @endforeach
             </tbody>
@@ -95,5 +112,17 @@
         }
     });
     $("#group_id").chosen({"width":"200px","enable_escape_special_char":true});
+    $(document).on('click','.page-link',function (e) {
+        e.preventDefault();
+        var page = $(this).html();
+        console.log(page);
+        $('#page').val(page);
+        $('#seach-form').submit();
+        // if(href){
+        //     var array = href.split('?page=');
+        //     var page = array[1];
+        //
+        // }
+    })
 </script>
 @endpush
