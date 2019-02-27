@@ -69,7 +69,7 @@
                         @else
                             <td></td>
                         @endif
-                        @if($member->position)
+                        @if($member->positionr)
                             <td>{{$member->positionr->name}}</td>
                         @else
                             <td></td>

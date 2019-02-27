@@ -29,6 +29,12 @@ class MemberController extends Controller
         $fullname = request()->get('fullname');
         $uuid = request()->get('group');
         $page = \request()->get('page');
+        if($fullname != session()->get('fullname') || $code != session()->get('code')){
+            $page = 1;
+        }
+        session()->put('fullname',$fullname);
+        session()->put('code',$code);
+
         if ($user->isAn('admin')){
             $groups = Group::where('level', 1)->get();
             $members = Member::select(['code', 'fullname', 'group_id', 'position','uuid']);
