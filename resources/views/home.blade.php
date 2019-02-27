@@ -123,6 +123,15 @@
         //     var page = array[1];
         //
         // }
-    })
+    });
+    $(document).on('change','.search-fullname',function () {
+        $('#page').val(1);
+    });
+    $(document).on('change','.search-code',function () {
+        $('#page').val(1);
+    });
+    $(document).on('change','#group_id',function () {
+        $('#page').val(1);
+    });
 </script>
 @endpush

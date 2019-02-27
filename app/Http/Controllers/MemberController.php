@@ -29,12 +29,13 @@ class MemberController extends Controller
         $fullname = request()->get('fullname');
         $uuid = request()->get('group');
         $page = \request()->get('page');
-        if($fullname != session()->get('fullname') || $code != session()->get('code')){
+        if($fullname != session()->get('fullname') || $code != session()->get('code') || $uuid != session()->get('group_uuid')){
             $page = 1;
         }
         session()->put('fullname',$fullname);
         session()->put('code',$code);
-
+        session()->put('current_page',$page);
+        session()->put('group_uuid',$uuid);
         if ($user->isAn('admin')){
             $groups = Group::where('level', 1)->get();
             $members = Member::select(['code', 'fullname', 'group_id', 'position','uuid']);
@@ -54,14 +55,7 @@ class MemberController extends Controller
                 }
             }
             $memberc = $members->count();
-            if($page){
-                $members = $members->paginate(20)->setPageName($page);
-                session()->put('current_page',$page);
-            } else{
-                $members = $members->paginate(20);
-            }
-
-
+            $members = $members->paginate(20)->setPageName($page);
             return view('home')
                 ->with('code', $code)
                 ->with('fullname', $fullname)
@@ -94,12 +88,7 @@ class MemberController extends Controller
             $members = $members->whereIn('group_id', $ids);
 
             $memberc = $members->count();
-            if($page){
-                $members = $members->paginate(20)->setPageName($page);
-                session()->put('current_page',$page);
-            } else{
-                $members = $members->paginate(20);
-            }
+            $members = $members->paginate(20)->setPageName($page);
 
             return view('home')
                 ->with('code', $code)
