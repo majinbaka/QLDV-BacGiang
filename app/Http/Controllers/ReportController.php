@@ -271,7 +271,7 @@ class ReportController extends Controller
         $n = (($start - 1 ) >0 )?($start - 1):0;
         $view = View::make('export.preview', ['result' => $data,'report_name'=>$report_name,'group_name'=>$group_name,'i'=>$n*1000]);
         $contents .= $view->render();
-        if($start + 1 >= $page){
+        if($start >= $page){
             $view = View::make('export.footer',['i'=>$total]);
             $footer .= $view->render();
         }
