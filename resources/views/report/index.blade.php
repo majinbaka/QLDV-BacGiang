@@ -42,17 +42,21 @@
                 <div class="row">
                     <label class="form-label" style="padding-right: 22px">Ngày sinh</label>
                     <label for="birthday_from" class="mini-label">Từ ngày</label>
-                    <input type="text" placeholder="dd/mm/yyyy" name="birthday_from" id="birthday_from" class="form-input input-medium " style="width:74px;margin-left:0px;">
+                    <input type="text" placeholder="dd/mm/yyyy" name="birthday_from" id="birthday_from" class="form-input input-medium " style="width:85px;margin-left:0px;">
                     <label for="birthday_to" class="mini-label">Tới ngày</label>
-                    <input type="text" placeholder="dd/mm/yyyy" name="birthday_to" id="birthday_to" class="form-input input-medium " style="width:74px;margin-left:0px;">
+                    <input type="text" placeholder="dd/mm/yyyy" name="birthday_to" id="birthday_to" class="form-input input-medium " style="width:85px;margin-left:0px;">
 
                     <label class="form-label" style="padding-right: 10px">Ngày vào đoàn</label>
                     <label for="join_date_from" class="mini-label">Từ ngày</label>
-                    <input type="text" placeholder="dd/mm/yyyy" name="join_date_from" id="join_date_from" class="form-input input-medium " style="width:74px;margin-left:0px;">
+                    <input type="text" placeholder="dd/mm/yyyy" name="join_date_from" id="join_date_from" class="form-input input-medium " style="width:85px;margin-left:0px;">
                     <label for="birthday_to" class="mini-label">Tới ngày</label>
-                    <input type="text" placeholder="dd/mm/yyyy" name="join_date_to" id="join_date_to" class="form-input input-medium " style="width:74px;margin-left:0px;">
-
-                    <label class="form-label" for="knowledge" style="padding-right: 21px;padding-left: 16px">Trình độ</label>
+                    <input type="text" placeholder="dd/mm/yyyy" name="join_date_to" id="join_date_to" class="form-input input-medium " style="width:85px;margin-left:0px;">
+                </div>
+                <div class="mt-10 mb-15"></div>
+                <div class="row">
+                    
+                
+                    <label class="form-label" for="knowledge" style="padding-right: 15px">Trình độ</label>
                     <select class="form-select" name="knowledge" id="knowledge">
                         <option value="">Chọn...</option>
                         @foreach ($knowledges as $k)
@@ -60,12 +64,19 @@
                         @endforeach
                     </select>
 
-                    <label class="form-label" for="political">Chính trị</label>
+                    <label class="form-label" for="political" style="margin-left: 51px;">Chính trị</label>
                     <select  class="form-select " name="political" id="political">
                         <option value="">Chọn...</option>
                         @foreach ($politicals as $p)
                             <option value="{{$p->id}}">{{$p->name}}</option>
                         @endforeach
+                    </select>
+
+                    <label class="form-label" for="manage_object"  style="padding-right: 10px">Đối tượng quản lý</label>
+                    <select name="manage_object" id="manage_object" class="form-select {{ $errors->has('manage_object') ? 'has-error' : ''}}">
+                        <option value="1">Đoàn viên</option>
+                        <option value="2">Thanh niên</option>
+                        <option value="0" selected>Cả hai</option>
                     </select>
                 </div>
                 <div class="mt-30 mb-15"></div>

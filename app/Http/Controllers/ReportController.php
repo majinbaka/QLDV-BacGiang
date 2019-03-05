@@ -52,6 +52,7 @@ class ReportController extends Controller
         $nation = $request->get("nation");
         $religion = $request->get("religion");
         $relation = $request->get("relation");
+        $manage_object = $request->get("manage_object");
 
         $query = Member::select(DB::raw('members.id as id, members.fullname as fullname,members.gender as gender, members.birthday as birthday, 
                                                 members.nation_text as nation, members.position_text as position,
@@ -105,6 +106,9 @@ class ReportController extends Controller
         }
         if($relation){
             $query->where('members.relation','=',$relation);
+        }
+        if($manage_object){
+            $query->where('members.manage_object','=',$manage_object);
         }
 
         $report_name = $request->get("report_name");
@@ -203,6 +207,7 @@ class ReportController extends Controller
         $nation = $request->get("nation");
         $religion = $request->get("religion");
         $relation = $request->get("relation");
+        $manage_object = $request->get("manage_object");
         $start = $request->get('start');
         $query = Member::select(DB::raw('members.id as id, members.fullname as fullname,members.gender as gender, members.birthday as birthday, 
                                                 members.nation_text as nation, members.position_text as position,
@@ -256,6 +261,9 @@ class ReportController extends Controller
         }
         if($relation){
             $query->where('members.relation','=',$relation);
+        }
+        if($manage_object){
+            $query->where('members.manage_object','=',$manage_object);
         }
         $total = $query->orderBy('parent_id','DESC')->orderBy('level','ASC')->count();
         $page = ceil($total/1000);
