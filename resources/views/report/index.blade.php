@@ -350,9 +350,7 @@
 
                 $("#preview_content").html(data.contents);
 
-                if(data.footer != ''){
-                    $("#preview_footer").html(data.footer);
-                }
+                $("#preview_footer").html(data.footer);
                 $("#start").val(data.start);
                 $("#preview_pagination").html(data.page);
                 $("#loading").hide();
