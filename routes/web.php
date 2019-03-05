@@ -89,4 +89,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('report/word', 'ReportController@exportToWord')->name('report.word');
     Route::get('report/excel', 'ReportController@exportToExcel')->name('report.excel');
     Route::get('report/delete', 'ReportController@deleteDownloadedFile')->name('report.delete');
+    Route::get('report/preview', 'ReportController@preview')->name('report.preview');
 });

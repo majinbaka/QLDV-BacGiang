@@ -27,7 +27,12 @@ class MemberController extends Controller
         $user = Auth::user();
         $code = request()->get('code');
         $fullname = request()->get('fullname');
-        $uuid = request()->get('group');
+        if(request()->get('group')){
+            $uuid = request()->get('group');
+        } else{
+            $uuid = 0;
+        }
+
         $page = \request()->get('page');
         if($fullname != session()->get('fullname') || $code != session()->get('code') || $uuid != session()->get('group_uuid')){
             $page = 1;
@@ -205,7 +210,8 @@ class MemberController extends Controller
             'join_dang' => 'date_format:d/m/Y|nullable',
             'avatar' => 'image',
             'block_member_id'=>'exists:block_members,id',
-            'education_level' => 'required'
+            'education_level' => 'required',
+            'manage_object' => 'required|in:0,1,2'
         ],
         [
             'fullname.required' => 'Chưa nhập họ và tên đoàn viên',
@@ -235,6 +241,8 @@ class MemberController extends Controller
             'avatar.image' => 'Ảnh đại diện chưa đúng định dạng',
             'block_member_id.exists' => 'Khối đối tượng đoàn viên không hợp lệ',
             'education_level.required' => 'Chưa chọn trình độ học vấn',
+            'manage_object.required' => 'Chưa chọn đối tượng quản lý',
+            'manage_object.in' => 'Đối tượng quản lý không hợp lệ'
         ]
         );
 
@@ -290,6 +298,7 @@ class MemberController extends Controller
             $member->nation_text = Nation::find(request()->get('knowledge'))->name;
             $member->religion_text = Religion::find(request()->get('knowledge'))->name;
             $member->blockmember_text = BlockMember::find(request()->get('block_member_id'))->name;
+            $member->manage_object = \request()->get('manage_object');
             $member->save();
 
             if (request()->has('avatar'))
@@ -354,7 +363,8 @@ class MemberController extends Controller
             'join_dang' => 'date_format:d/m/Y|nullable',
             'avatar' => 'image',
             'block_member_id' => 'exists:block_members,id',
-            'education_level' => 'required'
+            'education_level' => 'required',
+            'manage_object' => 'required|in:0,1,2'
         ],
         [
             'fullname.required' => 'Chưa nhập họ và tên đoàn viên',
@@ -384,6 +394,8 @@ class MemberController extends Controller
             'avatar.image' => 'Ảnh đại diện chưa đúng định dạng',
             'block_member_id.exists' => 'Khối đối tượng đoàn viên không hợp lệ',
             'education_level.required' => 'Chưa chọn trình độ học vấn',
+            'manage_object.required' => 'Chưa chọn đối tượng quản lý',
+            'manage_object.in' => 'Đối tượng quản lý không hợp lệ'
         ]
         );
 
@@ -442,6 +454,8 @@ class MemberController extends Controller
             $member->nation_text = Nation::find(request()->get('knowledge'))->name;
             $member->religion_text = Religion::find(request()->get('knowledge'))->name;
             $member->blockmember_text = BlockMember::find(request()->get('block_member_id'))->name;
+
+            $member->manage_object = \request()->get('manage_object');
             $member->save();
 
             //Attachment

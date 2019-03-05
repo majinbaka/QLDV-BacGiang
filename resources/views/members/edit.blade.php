@@ -31,6 +31,12 @@
                 </select>
                 <label class="form-label" for="term" style="margin-right: 21px">Nhiệm kỳ</label>
                 <input type="text" name="term" class="input-medium form-input {{ $errors->has('term') ? 'has-error' : ''}}"  value="{{old('term', $member->term )}}">
+                <label class="form-label" for="manage_object" style="">Đối tượng quản lý</label>
+                <select name="manage_object" id="manage_object" class="custom-select input-large form-select {{ $errors->has('manage_object') ? 'has-error' : ''}}">
+                    <option value="1" @if(old('manage_object', $member->manage_object ) == 1) selected @endif>Đoàn viên</option>
+                    <option value="2" @if(old('manage_object', $member->manage_object ) == 2) selected @endif>Thanh niên</option>
+                    <option value="0" @if(old('manage_object', $member->manage_object ) == 0) selected @endif>Cả hai</option>
+                </select>
                 <div class="row">
                     <label class="form-label" for="group_id" >Đơn vị</label>
                     <select name="group_id" id="group_id" class="input-x-large form-select {{ $errors->has('group_id') ? 'has-error' : ''}}">

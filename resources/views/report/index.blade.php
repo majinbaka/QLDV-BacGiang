@@ -12,7 +12,7 @@
             TIÊU CHÍ BÁO CÁO THỐNG KÊ
         </div>
         <div class="content-area">
-            <form class="search-form" method="POST" action="#">
+            <form class="search-form" method="get" action="{{route('report.preview')}}">
                 @csrf
                 <div class="row">
                     <label class="form-label" for="child_group_id" style="padding-right: 40px" >Đơn vị</label>
@@ -106,11 +106,19 @@
                     </select>
                 </div>
                 <div class="mt-30 mb-15"></div>
+                <input type="hidden" name="start" id="start" value="1">
                 <div class="row" style="text-align: center;vertical-align: middle">
+                    <button type="submit" class="btn-accept btn btn-large btn-info">Chấp nhận</button>
                     <button type="button" class="btn-word btn btn-large btn-primary">In báo cáo word</button>
                     <button type="button" class="btn-excel btn btn-large btn-info"> In báo cáo excel</button>
                 </div>
             </form>
+            <div style="margin-top: 30px">
+                <div id="preview_header"></div>
+                <div id="preview_content"></div>
+                <div id="preview_footer"></div>
+                <div id="preview_pagination"></div>
+            </div>
         </div>
     </div>
     <div id="loading"><img src="{{asset('images/giphy.gif')}}"></div>
@@ -280,5 +288,89 @@
             }
         })
     });
+
+    $(document).on('click','.btn-accept',function (e) {
+        e.preventDefault();
+        var start = $("#start").val();
+        var child_group_id = $("#child_group_id").val();
+        var position = $("#position").val();
+        var term = $("#term").val();
+        var gender = $("#gender").val();
+        var birthday_from = $("#birthday_from").val();
+        var birthday_to = $("#birthday_to").val();
+        var join_date_from = $("#join_date_from").val();
+        var join_date_to = $("#join_date_to").val();
+        var knowledge = $("#knowledge").val();
+        var political = $("#political").val();
+        var current_district = $("#current_district").val();
+        var nation = $("#nation").val();
+        var religion = $("#religion").val();
+        var relation = $("#relation").val();
+        var group_name = $("#group_name").val();
+        var report_name = $("#report_name").val();
+        if(child_group_id == 0){
+            alert('Vui lòng chọn 1 đơn vị');
+            return false;
+        }
+        if(!group_name){
+            alert('Vui lòng nhập tên tổ chức');
+            return false;
+        }
+        if(!report_name){
+            alert('Vui lòng nhập tên báo cáo');
+            return false
+        }
+        $("#loading").show();
+        $.ajax({
+            url: '/report/preview',
+            type: 'get',
+            data:{
+                child_group_id:child_group_id,
+                position:position,
+                term:term,
+                gender:gender,
+                birthday_from:birthday_from,
+                birthday_to:birthday_to,
+                join_date_from:join_date_from,
+                join_date_to:join_date_to,
+                knowledge:knowledge,
+                political:political,
+                current_district:current_district,
+                nation:nation,
+                religion:religion,
+                relation:relation,
+                start:start,
+                report_name:report_name,
+                group_name:group_name
+            },
+            success: function(data) {
+                if(data.header != ''){
+                    $("#preview_header").html(data.header);
+                }
+
+                $("#preview_content").html(data.contents);
+
+                if(data.footer != ''){
+                    $("#preview_footer").html(data.footer);
+                }
+                $("#start").val(data.start);
+                $("#preview_pagination").html(data.page);
+                $("#loading").hide();
+            },
+            error:function () {
+                alert('Có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại sau.');
+            }
+        })
+    });
+
+    $(document).on('click','.page-link',function (e) {
+        e.preventDefault();
+        var page = $(this).attr('data-page');
+        if(!isNaN(page)){
+            $('#start').val(page);
+            $('.btn-accept').click();
+        }
+    });
+
 </script>
 @endpush

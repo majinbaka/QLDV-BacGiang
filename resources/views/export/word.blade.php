@@ -40,13 +40,6 @@
             font-weight: normal !important;
         }
     </style>
-    <xml>
-        <w:WordDocument>
-            <w:View>Print</w:View>
-            <w:Zoom>100</w:Zoom>
-            <w:DoNotOptimizeForBrowser/>
-        </w:WordDocument>
-    </xml>
 </head>
 <body>
 <div class="Section1">

@@ -20,8 +20,8 @@ class GroupController extends Controller
                 $group_count = Group::count();
                 $groups = Group::paginate(20);
                 $groupsFilter = Group::where('level', 1)->get();
-    
-                return view('groups.index', compact('group_count', 'groups', 'groupsFilter'))->withSuccess(session()->get( 'success' ));
+                $leftBarGroups = Group::where('level', 1)->get();
+                return view('groups.index', compact('group_count', 'groups', 'groupsFilter','leftBarGroups'))->withSuccess(session()->get( 'success' ));
             }
             else{
                 $group = $user->group;
@@ -30,8 +30,8 @@ class GroupController extends Controller
                 $group_count = count($ids);
                 $groups = Group::whereIn('id', $ids)->paginate(20);
                 $groupsFilter = Group::where('level', $user->group->level + 1)->where('parent_id', $user->group->id)->get();
-    
-                return view('groups.index', compact('group_count', 'groups', 'groupsFilter'))->withSuccess(session()->get( 'success' ));
+                $leftBarGroups = Group::where('parent_id', $user->group_id)->where('level', $user->group->level + 1)->get();
+                return view('groups.index', compact('group_count', 'groups', 'groupsFilter','leftBarGroups'))->withSuccess(session()->get( 'success' ));
             }
         }
 

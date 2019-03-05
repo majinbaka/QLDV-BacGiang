@@ -17,6 +17,7 @@
             <input type="text" name="fullname" class="search-fullname" @isset($fullname)value="{{$fullname}}"@endisset>
             <label> Đơn vị </label>
             <select name="group" id="group_id" class="custom-select " style="margin-right:10px;width: 165px;">
+                <option value="">Chọn 1 đơn vị</option>
                 @if (Auth::user()->isAn('admin'))
                     <option value="0">TỈNH ĐOÀN BẮC GIANG</option>
                 @else

@@ -1,9 +1,6 @@
 @extends('layouts.app')
 @section('left-bar')
-<span>DANH MỤC</span>
-<ul class="main-list">
-    <li><a href="{{route('group.index')}}">BỘ MÁY TỔ CHỨC</a></li>
-</ul>
+    @include('groups.list_group', ['groups' => $leftBarGroups])
 @endsection
 @section('content')
 <div class="search-area">
@@ -85,7 +82,7 @@
     $checkboxes.change(function(){
         var countCheckedCheckboxes = $checkboxes.filter(':checked').length;
         if (countCheckedCheckboxes === 1){
-            $("#edit-user").attr("href", "/group/" + $checkboxes.filter(':checked')[0].value+ "/edit")
+            $("#edit-user").attr("href", "/group/" + $checkboxes.filter(':checked')[0].value+ "/edit");
             $('#edit-user').show();
         }
         else{

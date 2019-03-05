@@ -29,7 +29,7 @@ class HomeController extends Controller
         $user = Auth::user();
         if ($user->isAn('admin')){
             $memberc = Member::count();
-            $groups = Group::where('level', 1)->get();
+            $groups = $groups = Group::where('level', 1)->get();
             $members = Member::paginate(20);
 
             return view('home', compact('memberc', 'members', 'groups'))->withSuccess(session()->get( 'success' ));
