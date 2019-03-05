@@ -67,6 +67,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('group', 'GroupController@index')->name('group.index');
     Route::get('group/create', 'GroupController@create')->name('group.create');
     Route::get('group/{uuid}/edit', 'GroupController@edit')->name('group.edit');
+    Route::get('group/{uuid}/list', 'GroupController@list')->name('group.list');
     Route::get('group/{uuid}', 'GroupController@show')->name('group.show');
     Route::post('group', 'GroupController@store')->name('group.store');
     Route::post('group/{uuid}', 'GroupController@update')->name('group.update');

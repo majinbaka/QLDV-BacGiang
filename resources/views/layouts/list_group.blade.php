@@ -1,4 +1,4 @@
-<span>TỈNH ĐOÀN BẮC GIANG</span>
+<span><a href="{{route('home')}}" style="color: white;text-decoration: none;">TỈNH ĐOÀN BẮC GIANG</a></span>
 <ul class="main-list">
     @foreach($groups as $gr)
         @if(count($gr->childrens) > 0)

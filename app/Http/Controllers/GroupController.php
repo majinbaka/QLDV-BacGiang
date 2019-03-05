@@ -63,6 +63,34 @@ class GroupController extends Controller
         }
     }
 
+    public function list($uuid){
+        $user = Auth::user();
+        if (Bouncer::can('group')){
+            if ($user->isAn('admin')){
+                $group = Group::where('uuid', $uuid)->first();
+                $ids = $group->getIdsG();
+                $group_count = Group::count();
+                $groups = Group::whereIn('id', $ids)->paginate(20);
+                $groupsFilter = Group::where('level', 1)->get();
+                $leftBarGroups = Group::where('level', 1)->get();
+                return view('groups.index', compact('group_count', 'groups', 'groupsFilter','leftBarGroups', 'group'))->withSuccess(session()->get( 'success' ));
+            }
+            else{
+                $group = Group::where('uuid', $uuid)->first();
+                $user_group = $user->group_id;
+                $has = $group->hasRelation($user_group);
+                if (!$has) return \redirect()->route('group.index')->withErrors(['Không có quyền truy cập đơn vị này']);
+                $ids = $group->getIdsG();
+                $ids = array_diff($group->getIdsG(), [$user->group->id]);
+                $group_count = count($ids);
+                $groups = Group::whereIn('id', $ids)->paginate(20);
+                $groupsFilter = Group::where('level', $user->group->level + 1)->where('parent_id', $user->group->id)->get();
+                $leftBarGroups = Group::where('parent_id', $user->group_id)->where('level', $user->group->level + 1)->get();
+                return view('groups.index', compact('group_count', 'groups', 'groupsFilter','leftBarGroups', 'group'))->withSuccess(session()->get( 'success' ));
+            }
+        }
+    }
+
     public function edit($uuid){
         $user = Auth::user();
         if (Bouncer::can('group')){
