@@ -22,20 +22,30 @@
                 <option value="1">Nam</option>
                 <option value="0">Nữ</option>
             </select>
-            <label class="form-label" for="position" >Chức vụ</label>
-            <select class="input-large form-select {{ $errors->has('position') ? 'has-error' : ''}}" name="position">
-                @foreach ($positions as $p)
-                    <option value="{{$p->id}}">{{$p->name}}</option>
-                @endforeach
-            </select>
-            <label class="form-label" for="term" style="margin-right: 21px">Nhiệm kỳ</label>
-            <input type="text" name="term" class="input-medium form-input {{ $errors->has('term') ? 'has-error' : ''}}" value="{{ old('term') }}">
-            <label class="form-label" for="manage_object" style="">Đối tượng quản lý</label>
-            <select name="manage_object" id="manage_object" class="custom-select input-large form-select {{ $errors->has('manage_object') ? 'has-error' : ''}}">
-                <option value="1">Đoàn viên</option>
-                <option value="2">Thanh niên</option>
-                <option value="0" selected>Cả hai</option>
-            </select>
+            <div class="row" style="margin-bottom: 10px">
+                <label class="form-label" for="position" >Chức vụ</label>
+                <select class="input-large form-select {{ $errors->has('position') ? 'has-error' : ''}}" name="position">
+                    @foreach ($positions as $p)
+                        <option value="{{$p->id}}">{{$p->name}}</option>
+                    @endforeach
+                </select>
+                <label class="form-label" for="term">Nhiệm kỳ</label>
+                <select name="term" id="term" class="custom-select input-large form-select {{ $errors->has('term') ? 'has-error' : ''}}">
+                    <option value="2017 - 2019">2017 - 2019</option>
+                    <option value="2017 - 2022">2017 - 2022</option>
+                    <option value="2018 - 2019">2018 - 2019</option>
+                    <option value="2019 - 2020">2019 - 2020</option>
+                    <option value="2019 - 2022">2019 - 2022</option>
+                    <option value="2020 - 2021">2020 - 2021</option>
+                    <option value="2021 - 2022">2021 - 2022</option>
+                </select>
+                <label class="form-label" for="manage_object">Đối tượng quản lý</label>
+                <select style="margin-right: 0px" name="manage_object" id="manage_object" class="custom-select input-large form-select {{ $errors->has('manage_object') ? 'has-error' : ''}}">
+                    <option value="1">Đoàn viên</option>
+                    <option value="2">Thanh niên</option>
+                    <option value="0" selected>Cả hai</option>
+                </select>
+            </div>
             <div class="row">
                 <label class="form-label" for="group_id" >Đơn vị</label>
                 <select name="group_id" id="group_id" class="input-x-large form-select {{ $errors->has('group_id') ? 'has-error' : ''}}">
@@ -104,7 +114,7 @@
                     @endforeach
                 @endforeach
             </select>
-            <label for="vilage" class="mini-label">Quê quán</label>
+            <label for="vilage" class="mini-label">Thôn, bản, TDP</label>
             <input type="text" value="{{ old('vilage') }}" name="vilage" class="form-input input-x-large special {{ $errors->has('vilage') ? 'has-error' : ''}}">
             <div class="mt-10 mb-15"></div>
             <label class="form-label" style="padding-right: 10px">Nơi ở hiện nay</label>
@@ -135,7 +145,7 @@
                     @endforeach
                 @endforeach
             </select>
-            <label for="current_vilage" class="mini-label">Quê quán</label>
+            <label for="current_vilage" class="mini-label">Thôn, bản, TDP</label>
             <input type="text" value="{{ old('current_vilage') }}" name="current_vilage" class="form-input input-x-large special {{ $errors->has('current_vilage') ? 'has-error' : ''}}">
 
             <hr class="divider">
@@ -173,9 +183,55 @@
             </select>
             <label class="form-label" for="is_dangvien">Đảng viên</label>
             <input type="radio" class="{{ $errors->has('is_dangvien') ? 'has-error' : ''}}" name="is_dangvien" value="1"><label style="margin-right:13px;margin-left:6px">Có</label>
-            <input type="radio" class="{{ $errors->has('is_dangvien') ? 'has-error' : ''}}" name="is_dangvien" value="0"><label style="margin-left:6px;">Không</label>
+            <input type="radio" class="{{ $errors->has('is_dangvien') ? 'has-error' : ''}}" name="is_dangvien" value="0" checked><label style="margin-left:6px;">Không</label>
             <label class="form-label" for="join_dang" style="margin-left: 30px">Ngày vào đảng</label>
             <input type="text" value="{{ old('join_dang') }}" name="join_dang" class="form-input input-x-medium {{ $errors->has('join_dang') ? 'has-error' : ''}}" placeholder="dd/mm/yyyy">
+            <hr class="divider">
+            <label class="form-label" for="is_join_maturity_ceremony">Trưởng thành đoàn</label>
+            <input type="radio" class="{{ $errors->has('is_join_maturity_ceremony') ? 'has-error' : ''}}" name="is_join_maturity_ceremony" value="1"><label style="margin-right:13px;margin-left:6px">Rồi</label>
+            <input type="radio" class="{{ $errors->has('is_join_maturity_ceremony') ? 'has-error' : ''}}" name="is_join_maturity_ceremony" value="0" checked><label style="margin-left:6px;">Chưa</label>
+                <div class="mt-10 mb-15"></div>
+                <hr class="divider">
+            <label>Chuyển nơi sinh hoạt</label>
+            <div class="mt-10 mb-15"></div>
+            <label class="form-label" style="padding-right: 27px">Chuyển đến</label>
+            <label for="from_place" class="mini-label">Nơi chuyển đến</label>
+            <input type="text" value="{{ old('from_place') }}" name="from_place" style="width: 280px" class="form-input input-x-large {{ $errors->has('from_place') ? 'has-error' : ''}}">
+            <label for="from_reason" class="mini-label">Lý do chuyển đến</label>
+            <input type="text" value="{{ old('from_reason') }}" name="from_reason" style="width: 280px" class="form-input input-x-large {{ $errors->has('from_reason') ? 'has-error' : ''}}">
+            <label for="from_date" class="mini-label">Ngày chuyển đến</label>
+            <input type="text" value="{{ old('from_date') }}" name="from_date" placeholder="dd/mm/yyyy" style="margin-right: 0px" class="form-input input-x-medium {{ $errors->has('from_date') ? 'has-error' : ''}}">
+            <div class="mt-10 mb-15"></div>
+            <label class="form-label" style="padding-right: 37px">Chuyển đi</label>
+            <label for="from_place" class="mini-label">Nơi chuyển đi</label>
+            <input type="text" value="{{ old('to_place') }}" name="to_place" style="width: 280px" class="form-input input-x-large {{ $errors->has('to_place') ? 'has-error' : ''}}">
+            <label for="to_reason" class="mini-label">Lý do chuyển đi</label>
+            <input type="text" value="{{ old('to_reason') }}" name="to_reason" style="width: 280px" class="form-input input-x-large {{ $errors->has('to_reason') ? 'has-error' : ''}}">
+            <label for="to_date" class="mini-label">Ngày chuyển đi</label>
+            <input type="text" value="{{ old('to_date') }}" name="to_date" placeholder="dd/mm/yyyy" style="margin-right: 0px" class="form-input input-x-medium {{ $errors->has('to_date') ? 'has-error' : ''}}">
+                <hr class="divider">
+            <label class="form-label">Xóa tên</label>
+            <div class="mt-10 mb-15"></div>
+            <label class="form-label" for="is_go_far_away">Đi làm ăn xa</label>
+            <input type="radio" class="{{ $errors->has('is_go_far_away') ? 'has-error' : ''}}" name="is_go_far_away" value="1"><label style="margin-right:13px;margin-left:6px">Có</label>
+            <input type="radio" class="{{ $errors->has('is_go_far_away') ? 'has-error' : ''}}" name="is_go_far_away" value="0"><label style="margin-left:6px;">Không</label>
+            <label class="form-label " for="delete_reason" style="margin-left: 30px;padding-right: 20px">Lý do xóa tên</label>
+            <input type="text"  name="delete_reason" style="width: 508px;margin-right: 0px" class="form-input input-x-large {{ $errors->has('delete_reason') ? 'has-error' : ''}}" value="{{ old('delete_reason') }}">
+            <div class="mt-10 mb-15"></div>
+            <label class="form-label" for="rating">Đánh giá đoàn viên</label>
+            <select style="margin-right: 0px" name="rating" id="rating" class="custom-select input-large form-select {{ $errors->has('rating') ? 'has-error' : ''}}">
+                <option value="1">Xuất sắc</option>
+                <option value="2">Khá</option>
+                <option value="3">Trung bình</option>
+                <option value="4">Yếu</option>
+            </select>
+            <label class="form-label" for="rating_year" style="margin-left: 15px;padding-right: 20px">Năm đánh giá</label>
+            <select style="margin-right: 0px" name="rating_year" id="rating_year" class="custom-select input-large form-select {{ $errors->has('rating_year') ? 'has-error' : ''}}">
+                @for($i = 2019; $i > 1911; $i--)
+                    <option value="{{$i}}">{{$i}}</option>
+                @endfor
+            </select>
+
             <input type="file" name="avatar" id="avatar" style="display:none">
             <hr class="divider mt-10 mb-15">
             <input type="submit" value="Lưu" class="input-submit">

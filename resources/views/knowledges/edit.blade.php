@@ -9,7 +9,7 @@
     <form method="POST" action="{{route('knowledge.update', $knowledge->id)}}">
         @csrf
         <div>
-            <label class="form-label" style="margin-right:83px;">Tên trình độ</label>
+            <label class="form-label" style="margin-right:83px;">Tên trình độ chuyên môn</label>
             <input type="text" name="name" class="form-input" value="{{$knowledge->name}}">
         </div>
         <hr style="margin:10px 0px;">

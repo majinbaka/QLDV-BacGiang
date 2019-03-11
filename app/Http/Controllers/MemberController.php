@@ -259,7 +259,6 @@ class MemberController extends Controller
             }
             $group_id = $parent_group->id;
 
-            $avatar = null;
             $member = new Member;
             $member->uuid = Str::uuid();
             $member->fullname = \request()->get('fullname');
@@ -286,7 +285,9 @@ class MemberController extends Controller
             $member->it_level = \request()->get('it_level');
             $member->english_level = \request()->get('english_level');
             $member->is_dangvien = \request()->get('is_dangvien');
-            $member->join_dang = Carbon::createFromFormat('d/m/Y', request()->get('join_dang'))->toDateString();
+            if(request()->get('join_dang')){
+                $member->join_dang = Carbon::createFromFormat('d/m/Y', request()->get('join_dang'))->toDateString();
+            }
             $member->block_member_id = \request()->get('block_member_id');
             $member->education_level = \request()->get('education_level');
 
@@ -299,6 +300,24 @@ class MemberController extends Controller
             $member->religion_text = Religion::find(request()->get('knowledge'))->name;
             $member->blockmember_text = BlockMember::find(request()->get('block_member_id'))->name;
             $member->manage_object = \request()->get('manage_object');
+
+            $member->is_join_maturity_ceremony = \request()->get('is_join_maturity_ceremony');
+            $member->from_place = \request()->get('from_place');
+            $member->from_reason = \request()->get('from_reason');
+            if(request()->get('from_date')){
+                $member->from_date = Carbon::createFromFormat('d/m/Y', request()->get('from_date'))->toDateString();
+            }
+
+            $member->to_place = \request()->get('to_place');
+            $member->to_reason = \request()->get('to_reason');
+            if(request()->get('to_date')){
+                $member->to_date = Carbon::createFromFormat('d/m/Y', request()->get('to_date'))->toDateString();
+            }
+            $member->is_go_far_away = \request()->get('is_go_far_away');
+            $member->delete_reason = \request()->get('delete_reason');
+            $member->rating = \request()->get('rating');
+            $member->rating_year = \request()->get('rating_year');
+
             $member->save();
 
             if (request()->has('avatar'))
@@ -328,11 +347,10 @@ class MemberController extends Controller
                     $attachment->save();
                 }
             }
+            return \redirect()->route('member.edit', ['uuid' => $member->uuid])->withSuccess('Tạo thông tin thành công');
         } catch(Exception $e){
-
+            return redirect('member/create')->withErrors(['Có lỗi xẩy ra']);
         }
-
-        return \redirect()->route('member.edit', ['uuid' => $member->uuid])->withSuccess('Tạo thông tin thành công');
     }
     public function update($uuid){
         $user = Auth::user();
@@ -443,7 +461,10 @@ class MemberController extends Controller
             $member->it_level = \request()->get('it_level');
             $member->english_level = \request()->get('english_level');
             $member->is_dangvien = \request()->get('is_dangvien');
-            $member->join_dang = Carbon::createFromFormat('d/m/Y', request()->get('join_dang'))->toDateString();
+            if(\request()->get('join_dang')){
+                $member->join_dang = Carbon::createFromFormat('d/m/Y', request()->get('join_dang'))->toDateString();
+            }
+
             $member->block_member_id = \request()->get('block_member_id');
             $member->education_level = \request()->get('education_level');
             $member->position_text = Position::find(request()->get('position'))->name;
@@ -456,6 +477,23 @@ class MemberController extends Controller
             $member->blockmember_text = BlockMember::find(request()->get('block_member_id'))->name;
 
             $member->manage_object = \request()->get('manage_object');
+
+            $member->is_join_maturity_ceremony = \request()->get('is_join_maturity_ceremony');
+            $member->from_place = \request()->get('from_place');
+            $member->from_reason = \request()->get('from_reason');
+            if(request()->get('from_date')){
+                $member->from_date = Carbon::createFromFormat('d/m/Y', request()->get('from_date'))->toDateString();
+            }
+            $member->to_place = \request()->get('to_place');
+            $member->to_reason = \request()->get('to_reason');
+            if(request()->get('to_date')){
+                $member->to_date = Carbon::createFromFormat('d/m/Y', request()->get('to_date'))->toDateString();
+            }
+            $member->is_go_far_away = \request()->get('is_go_far_away');
+            $member->delete_reason = \request()->get('delete_reason');
+            $member->rating = \request()->get('rating');
+            $member->rating_year = \request()->get('rating_year');
+
             $member->save();
 
             //Attachment
@@ -483,11 +521,12 @@ class MemberController extends Controller
                     $attachment->save();
                 }
             }
+            return \redirect()->route('member.edit', ['uuid' => $member->uuid])->withSuccess('Sửa thông tin thành công');
         } catch(Exception $e){
-
+            return redirect()->back()->withErrors(['Có lỗi xẩy ra']);
         }
 
-        return \redirect()->route('member.edit', ['uuid' => $member->uuid])->withSuccess('Sửa thông tin thành công');
+
 
     }
     public function delete(){

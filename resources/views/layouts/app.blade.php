@@ -31,7 +31,7 @@
                     <img src="{{asset('images/icon_doan.png')}}">
                 </div>
                 <div class="title">
-                    PHẦN MỀM QUẢN LÝ ĐOÀN VIÊN
+                    PHẦN MỀM QUẢN LÝ ĐOÀN VIÊN, THANH NIÊN
                 </div>
                 <div class="right-area">
                     <div class="span">

@@ -5,13 +5,13 @@
 @section('content')
 <div class="search-area">
         <div class="title-bar">
-            Tạo mới trình độ
+            Tạo mới trình độ chuyên môn
             <div class="arrow-down"></div>
         </div>
         <div class="content-area">
             <form class="search-form" method="POST" action="{{route('knowledge.store')}}"> 
                 @csrf
-                <label>Tên trình độ</label>
+                <label>Tên trình độ chuyên môn</label>
                 <input type="text" name="name" class="search-code" style="width:300px">
                 <input type="submit" value='Thêm'>
             </form>
