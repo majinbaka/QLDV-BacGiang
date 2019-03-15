@@ -18,7 +18,7 @@
                 </div>
                 <div class="mt-10 mb-15"></div>
                 <div class="row">
-                    <label>Bước 2: Tải file mẫu</label>
+                    <label>Bước 2: Chọn file dữ liệu</label>
                     <input class="form-input input-x-medium" type="file" name="import_xls" id="import_xls" style="width: 200px; margin-left: 19px" required accept=".xls">
                     <button type="submit" class="btn-import btn btn-large btn-primary">Chấp nhận</button>
                 </div>
