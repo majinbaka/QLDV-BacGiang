@@ -196,6 +196,13 @@
                 <label class="form-label" for="is_join_maturity_ceremony">Trưởng thành đoàn</label>
                 <input type="radio" class="{{ $errors->has('is_join_maturity_ceremony') ? 'has-error' : ''}}" name="is_join_maturity_ceremony" value="1" @if(old('is_join_maturity_ceremony', $member->is_join_maturity_ceremony ) == 1) checked @endif><label style="margin-right:13px;margin-left:6px">Rồi</label>
                 <input type="radio" class="{{ $errors->has('is_join_maturity_ceremony') ? 'has-error' : ''}}" name="is_join_maturity_ceremony" value="0" @if(old('is_join_maturity_ceremony', $member->is_join_maturity_ceremony ) == 0) checked @endif><label style="margin-left:6px;">Chưa</label>
+                <label class="form-label" for="year_of_maturity_ceremony" style="margin-left: 40px;padding-right:  0px">Năm</label>
+                <select style="margin-right: 0px" name="year_of_maturity_ceremony" id="year_of_maturity_ceremony" class="custom-select input-large form-select {{ $errors->has('year_of_maturity_ceremony') ? 'has-error' : ''}}">
+                    <option value="0" @if(strtolower(old('year_of_maturity_ceremony', $member->year_of_maturity_ceremony )) == 0) selected @endif></option>
+                    @for($i = 2019; $i > 1911; $i--)
+                        <option value="{{$i}}" @if(strtolower(old('year_of_maturity_ceremony', $member->year_of_maturity_ceremony )) == $i) selected @endif>{{$i}}</option>
+                    @endfor
+                </select>
                 <div class="mt-10 mb-15"></div>
                 <hr class="divider">
                 <label>Chuyển nơi sinh hoạt</label>
@@ -230,7 +237,7 @@
                 <input type="radio" class="{{ $errors->has('is_go_far_away') ? 'has-error' : ''}}" name="is_go_far_away" value="1" @if(old('is_go_far_away', $member->is_go_far_away ) == 1) checked @endif><label style="margin-right:13px;margin-left:6px">Có</label>
                 <input type="radio" class="{{ $errors->has('is_go_far_away') ? 'has-error' : ''}}" name="is_go_far_away" value="0" @if(old('is_go_far_away', $member->is_go_far_away ) == 0) checked @endif><label style="margin-left:6px;">Không</label>
                 <label class="form-label " for="delete_reason" style="margin-left: 30px;padding-right: 20px">Lý do xóa tên</label>
-                <input type="text"  name="delete_reason" style="width: 508px;margin-right: 0px" class="form-input input-x-large {{ $errors->has('delete_reason') ? 'has-error' : ''}}" value="{{ old('delete_reason',$member->delete_reason) }}">
+                <input type="text"  name="delete_reason" style="width: 300px;margin-right: 0px" class="form-input input-x-large {{ $errors->has('delete_reason') ? 'has-error' : ''}}" value="{{ old('delete_reason',$member->delete_reason) }}">
                 <div class="mt-10 mb-15"></div>
                 <label class="form-label" for="rating">Đánh giá đoàn viên</label>
                 <select style="margin-right: 0px" name="rating" id="rating" class="custom-select input-large form-select {{ $errors->has('rating') ? 'has-error' : ''}}">

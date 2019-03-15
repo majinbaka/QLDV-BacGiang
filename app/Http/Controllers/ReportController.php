@@ -53,7 +53,20 @@ class ReportController extends Controller
         $religion = $request->get("religion");
         $relation = $request->get("relation");
         $manage_object = $request->get("manage_object");
-
+        $is_join_maturity_ceremony = $request->get('is_join_maturity_ceremony');
+        $year_of_maturity_ceremony = $request->get('year_of_maturity_ceremony');
+        $from_place = $request->get('from_place');
+        $from_date_from = $request->get('from_date_from');
+        $from_date_to = $request->get('from_date_to');
+        $from_reason = $request->get('from_reason');
+        $to_place = $request->get('to_place');
+        $to_date_from = $request->get('to_date_from');
+        $to_date_to = $request->get('to_date_to');
+        $to_reason = $request->get('to_reason');
+        $is_go_far_away = $request->get('is_go_far_away');
+        $delete_reason = $request->get('delete_reason');
+        $rating = $request->get('rating');
+        $rating_year = $request->get('rating_year');
         $query = Member::select(DB::raw('members.id as id, members.fullname as fullname,members.gender as gender, members.birthday as birthday, 
                                                 members.nation_text as nation, members.position_text as position,
                                                 members.knowledge_text as knowledge, members.political_text as political,
@@ -109,6 +122,48 @@ class ReportController extends Controller
         }
         if($manage_object){
             $query->where('members.manage_object','=',$manage_object);
+        }
+        if($is_join_maturity_ceremony){
+            $query->where('members.is_join_maturity_ceremony','=',$is_join_maturity_ceremony);
+        }
+        if($year_of_maturity_ceremony && $year_of_maturity_ceremony != 0){
+            $query->where('members.year_of_maturity_ceremony','=',$year_of_maturity_ceremony);
+        }
+        if($from_place){
+            $query->where('members.from_place','=','like','"%'.$from_place.'%"');
+        }
+        if($from_date_from){
+            $query->where('members.from_date','>=',$from_date_from);
+        }
+        if($from_date_to){
+            $query->where('members.from_date','<=',$from_date_to);
+        }
+        if($from_reason){
+            $query->where('members.from_reason','like','"%'.$from_reason.'%"');
+        }
+        if($to_place){
+            $query->where('members.to_place','=','like','"%'.$to_place.'%"');
+        }
+        if($to_date_from){
+            $query->where('members.to_date','>=',$to_date_from);
+        }
+        if($to_date_to){
+            $query->where('members.to_date','<=',$to_date_to);
+        }
+        if($to_reason){
+            $query->where('members.to_reason','like','"%'.$to_reason.'%"');
+        }
+        if($is_go_far_away){
+            $query->where('members.is_go_far_away','=',$is_go_far_away);
+        }
+        if($delete_reason){
+            $query->where('members.delete_reason','like','"%'.$delete_reason.'%"');
+        }
+        if($rating){
+            $query->where('members.rating','=',$rating);
+        }
+        if($rating_year){
+            $query->where('members.rating_year','=',$rating_year);
         }
 
         $report_name = $request->get("report_name");
@@ -209,6 +264,20 @@ class ReportController extends Controller
         $relation = $request->get("relation");
         $manage_object = $request->get("manage_object");
         $start = $request->get('start');
+        $is_join_maturity_ceremony = $request->get('is_join_maturity_ceremony');
+        $year_of_maturity_ceremony = $request->get('year_of_maturity_ceremony');
+        $from_place = $request->get('from_place');
+        $from_date_from = $request->get('from_date_from');
+        $from_date_to = $request->get('from_date_to');
+        $from_reason = $request->get('from_reason');
+        $to_place = $request->get('to_place');
+        $to_date_from = $request->get('to_date_from');
+        $to_date_to = $request->get('to_date_to');
+        $to_reason = $request->get('to_reason');
+        $is_go_far_away = $request->get('is_go_far_away');
+        $delete_reason = $request->get('delete_reason');
+        $rating = $request->get('rating');
+        $rating_year = $request->get('rating_year');
         $query = Member::select(DB::raw('members.id as id, members.fullname as fullname,members.gender as gender, members.birthday as birthday, 
                                                 members.nation_text as nation, members.position_text as position,
                                                 members.knowledge_text as knowledge, members.political_text as political,
@@ -264,6 +333,48 @@ class ReportController extends Controller
         }
         if($manage_object){
             $query->where('members.manage_object','=',$manage_object);
+        }
+        if($is_join_maturity_ceremony){
+            $query->where('members.is_join_maturity_ceremony','=',$is_join_maturity_ceremony);
+        }
+        if($year_of_maturity_ceremony && $year_of_maturity_ceremony != 0){
+            $query->where('members.year_of_maturity_ceremony','=',$year_of_maturity_ceremony);
+        }
+        if($from_place){
+            $query->where('members.from_place','=','like','"%'.$from_place.'%"');
+        }
+        if($from_date_from){
+            $query->where('members.from_date','>=',$from_date_from);
+        }
+        if($from_date_to){
+            $query->where('members.from_date','<=',$from_date_to);
+        }
+        if($from_reason){
+            $query->where('members.from_reason','like','"%'.$from_reason.'%"');
+        }
+        if($to_place){
+            $query->where('members.to_place','=','like','"%'.$to_place.'%"');
+        }
+        if($to_date_from){
+            $query->where('members.to_date','>=',$to_date_from);
+        }
+        if($to_date_to){
+            $query->where('members.to_date','<=',$to_date_to);
+        }
+        if($to_reason){
+            $query->where('members.to_reason','like','"%'.$to_reason.'%"');
+        }
+        if($is_go_far_away){
+            $query->where('members.is_go_far_away','=',$is_go_far_away);
+        }
+        if($delete_reason){
+            $query->where('members.delete_reason','like','"%'.$delete_reason.'%"');
+        }
+        if($rating){
+            $query->where('members.rating','=',$rating);
+        }
+        if($rating_year){
+            $query->where('members.rating_year','=',$rating_year);
         }
         $total = $query->orderBy('parent_id','DESC')->orderBy('level','ASC')->count();
         $page = ceil($total/1000);

@@ -8,8 +8,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('member/{uuid}/edit', 'MemberController@edit')->name('member.edit');
     Route::post('member', 'MemberController@store')->name('member.store');
     Route::post('member/search', 'MemberController@search')->name('member.search');
+    Route::post('member/importData', 'MemberController@importData')->name('member.importdata');
     Route::post('member/{uuid}', 'MemberController@update')->name('member.update');
-
+    Route::get('member/import', 'MemberController@import')->name('member.import');
+    Route::get('member/uploads', 'MemberController@uploads')->name('member.uploads');
+    Route::get('member/exportsample', 'MemberController@exportsample')->name('member.exportsample');
 
 
     Route::get('manage', 'ManageController@index')->name('manage.index');
@@ -87,8 +90,8 @@ Route::middleware(['auth'])->group(function () {
 
     //report
     Route::get('report', 'ReportController@index')->name('report.index');
-    Route::get('report/word', 'ReportController@exportToWord')->name('report.word');
-    Route::get('report/excel', 'ReportController@exportToExcel')->name('report.excel');
-    Route::get('report/delete', 'ReportController@deleteDownloadedFile')->name('report.delete');
-    Route::get('report/preview', 'ReportController@preview')->name('report.preview');
+    Route::post('report/word', 'ReportController@exportToWord')->name('report.word');
+    Route::post('report/excel', 'ReportController@exportToExcel')->name('report.excel');
+    Route::post('report/delete', 'ReportController@deleteDownloadedFile')->name('report.delete');
+    Route::post('report/preview', 'ReportController@preview')->name('report.preview');
 });

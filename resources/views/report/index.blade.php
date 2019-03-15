@@ -38,6 +38,7 @@
                         <option value="0">Nữ</option>
                     </select>
                 </div>
+                <hr class="divider mt-10 mb-15">
                 <div class="mt-10 mb-15"></div>
                 <div class="row">
                     <label class="form-label" style="padding-right: 22px">Ngày sinh</label>
@@ -52,10 +53,9 @@
                     <label for="birthday_to" class="mini-label">Tới ngày</label>
                     <input type="text" placeholder="dd/mm/yyyy" name="join_date_to" id="join_date_to" class="form-input input-medium " style="width:85px;margin-left:0px;">
                 </div>
+                <hr class="divider mt-10 mb-15">
                 <div class="mt-10 mb-15"></div>
                 <div class="row">
-                    
-                
                     <label class="form-label" for="knowledge" style="padding-right: 15px">Trình độ</label>
                     <select class="form-select" name="knowledge" id="knowledge">
                         <option value="">Chọn...</option>
@@ -79,7 +79,8 @@
                         <option value="0" selected>Cả hai</option>
                     </select>
                 </div>
-                <div class="mt-30 mb-15"></div>
+                <hr class="divider mt-10 mb-15">
+                <div class="mt-25 mb-15"></div>
                 @php
                     $districts = config('address.district');
                 @endphp
@@ -114,6 +115,80 @@
                         <option value="">Chọn...</option>
                         <option value="1">Có</option>
                         <option value="0">Không</option>
+                    </select>
+                </div>
+                <hr class="divider mt-10 mb-15">
+                <div class="mb-15"></div>
+                <div class="row">
+                    <label class="form-label" for="relation" style="padding-right: 10px">Trưởng thành đoàn</label>
+                    <select name="is_join_maturity_ceremony" id="is_join_maturity_ceremony" class="custom-select form-select">
+                        <option value="">Chọn...</option>
+                        <option value="1">Rồi</option>
+                        <option value="0">Chưa</option>
+                    </select>
+                    <label class="form-label" for="relation" style="padding-right: 10px">Năm trưởng thành đoàn</label>
+                    <select name="year_of_maturity_ceremony" id="year_of_maturity_ceremony" class="custom-select form-select">
+                        <option value="0">Chọn...</option>
+                        @for($i = 2019; $i > 1911; $i--)
+                            <option value="{{$i}}">{{$i}}</option>
+                        @endfor
+                    </select>
+                </div>
+                <hr class="divider mt-10 mb-15">
+                <div class="mb-15"></div>
+                <div class="row">
+                    <label>Chuyển nơi sinh hoạt</label>
+                    <div class="mt-10 mb-15"></div>
+                    <label class="form-label" style="padding-right: 27px">Chuyển đến</label>
+                    <label for="from_place" class="mini-label">Nơi chuyển đến</label>
+                    <input type="text" value="{{ old('from_place') }}" name="from_place" id="from_place" style="width: 280px" class="form-input input-x-large">
+                    <label for="from_reason" class="mini-label">Lý do chuyển đến</label>
+                    <input type="text" value="{{ old('from_reason') }}" name="from_reason" id="from_reason" style="width: 280px" class="form-input input-x-large">
+                    <label for="from_date_from" class="mini-label">Từ ngày</label>
+                    <input type="text" value="{{ old('from_date_from') }}" name="from_date_from" id="from_date_from" placeholder="dd/mm/yyyy" style="margin-right: 0px" class="form-input input-x-medium">
+                    <label for="from_date_to" class="mini-label">Đến ngày</label>
+                    <input type="text" value="{{ old('from_date_to') }}" name="from_date_to" id="from_date_to" placeholder="dd/mm/yyyy" style="margin-right: 0px" class="form-input input-x-medium">
+                    <div class="mt-10 mb-15"></div>
+                    <label class="form-label" style="padding-right: 37px">Chuyển đi</label>
+                    <label for="from_place" class="mini-label">Nơi chuyển đi</label>
+                    <input type="text" value="{{ old('to_place') }}" name="to_place" id="to_place" style="width: 280px" class="form-input input-x-large">
+                    <label for="to_reason" class="mini-label">Lý do chuyển đi</label>
+                    <input type="text" value="{{ old('to_reason') }}" name="to_reason" id="to_reason" style="width: 280px" class="form-input input-x-large">
+                    <label for="to_date_from" class="mini-label">Từ ngày</label>
+                    <input type="text" value="{{ old('to_date_from') }}" name="to_date_from" id="to_date_from" placeholder="dd/mm/yyyy" style="margin-right: 0px" class="form-input input-x-medium">
+                    <label for="to_date_to" class="mini-label">Đến ngày</label>
+                    <input type="text" value="{{ old('to_date_to') }}" name="to_date_to" id="to_date_to" placeholder="dd/mm/yyyy" style="margin-right: 0px" class="form-input input-x-medium">
+                </div>
+                <hr class="divider mt-10 mb-15">
+                <div class="mt-10 mb-15"></div>
+                <div class="row">
+                    <label >Xóa tên</label> <div class="mt-10 mb-15"></div>
+                    <label class="form-label" for="is_go_far_away">Đi làm ăn xa</label>
+                    <select id="is_go_far_away" name="is_go_far_away" class="custom-select form-select">
+                        <option value="">Chọn...</option>
+                        <option value="1">Có</option>
+                        <option value="1">Không</option>
+                    </select>
+                    <label class="form-label " for="delete_reason" style="margin-left: 30px;padding-right: 20px">Lý do xóa tên</label>
+                    <input type="text"  name="delete_reason" id="delete_reason" style="width: 300px;margin-right: 0px" class="form-input input-x-large " value="{{ old('delete_reason') }}">
+                </div>
+                <hr class="divider mt-10 mb-15">
+                <div class="row">
+                    <div class="mt-10 mb-15"></div>
+                    <label class="form-label" for="rating">Đánh giá đoàn viên</label>
+                    <select style="margin-right: 0px" name="rating" id="rating" class="custom-select input-large form-select {{ $errors->has('rating') ? 'has-error' : ''}}">
+                        <option value="">Chọn...</option>
+                        <option value="1">Xuất sắc</option>
+                        <option value="2">Khá</option>
+                        <option value="3">Trung bình</option>
+                        <option value="4">Yếu</option>
+                    </select>
+                    <label class="form-label" for="rating_year" style="margin-left: 15px;padding-right: 20px">Năm đánh giá</label>
+                    <select style="margin-right: 0px" name="rating_year" id="rating_year" class="custom-select input-large form-select {{ $errors->has('rating_year') ? 'has-error' : ''}}">
+                        <option value="">Chọn...</option>
+                        @for($i = 2019; $i > 1911; $i--)
+                            <option value="{{$i}}">{{$i}}</option>
+                        @endfor
                     </select>
                 </div>
                 <div class="mt-30 mb-15"></div>
@@ -164,6 +239,20 @@
         var religion = $("#religion").val();
         var relation = $("#relation").val();
         var group_name = $("#group_name").val();
+        var is_join_maturity_ceremony = $("#is_join_maturity_ceremony").val();
+        var year_of_maturity_ceremony = $("#year_of_maturity_ceremony").val();
+        var from_place = $("#from_place").val();
+        var from_reason = $("#from_reason").val();
+        var from_date_from = $("#from_date_from").val();
+        var from_date_to = $("#from_date_to").val();
+        var to_place = $("#to_place").val();
+        var to_reason = $("#to_reason").val();
+        var to_date_from = $("#to_date_from").val();
+        var to_date_to = $("#to_date_to").val();
+        var is_go_far_away = $("#is_go_far_away").val();
+        var delete_reason = $("#delete_reason").val();
+        var rating = $("#rating").val();
+        var rating_year = $("#rating_year").val();
         if(child_group_id == 0){
             alert('Vui lòng chọn 1 đơn vị');
             return false;
@@ -179,7 +268,10 @@
         $("#loading").show();
         $.ajax({
             url: '/report/word',
-            type: 'get',
+            type: 'post',
+            headers: {
+                'X-CSRF-TOKEN': $('input[name="_token"]').val()
+            },
             data:{
                 report_name:report_name,
                 child_group_id:child_group_id,
@@ -196,14 +288,31 @@
                 nation:nation,
                 religion:religion,
                 relation:relation,
-                group_name:group_name
+                group_name:group_name,
+                is_join_maturity_ceremony: is_join_maturity_ceremony,
+                year_of_maturity_ceremony: year_of_maturity_ceremony,
+                from_place:from_place,
+                from_date_from:from_date_from,
+                from_date_to:from_date_to,
+                from_reason:from_reason,
+                to_place:to_place,
+                to_date_from:to_date_from,
+                to_date_to:to_date_to,
+                to_reason:to_reason,
+                is_go_far_away:is_go_far_away,
+                delete_reason:delete_reason,
+                rating:rating,
+                rating_year:rating_year
             },
             success: function(data) {
                 var obj = $.parseJSON(data);
                 downloadAll(obj,'word');
                 $.ajax({
                     url:'/report/delete',
-                    type:'get',
+                    type:'post',
+                    headers: {
+                        'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                    },
                     data:{
                         filelist:obj,
                         type:'word'
@@ -243,6 +352,20 @@
         var religion = $("#religion").val();
         var relation = $("#relation").val();
         var group_name = $("#group_name").val();
+        var is_join_maturity_ceremony = $("#is_join_maturity_ceremony").val();
+        var year_of_maturity_ceremony = $("#year_of_maturity_ceremony").val();
+        var from_place = $("#from_place").val();
+        var from_reason = $("#from_reason").val();
+        var from_date_from = $("#from_date_from").val();
+        var from_date_to = $("#from_date_to").val();
+        var to_place = $("#to_place").val();
+        var to_reason = $("#to_reason").val();
+        var to_date_from = $("#to_date_from").val();
+        var to_date_to = $("#to_date_to").val();
+        var is_go_far_away = $("#is_go_far_away").val();
+        var delete_reason = $("#delete_reason").val();
+        var rating = $("#rating").val();
+        var rating_year = $("#rating_year").val();
         if(child_group_id == 0){
             alert('Vui lòng chọn 1 đơn vị');
             return false;
@@ -258,7 +381,10 @@
         $("#loading").show();
         $.ajax({
             url: '/report/excel',
-            type: 'get',
+            type: 'post',
+            headers: {
+                'X-CSRF-TOKEN': $('input[name="_token"]').val()
+            },
             data:{
                 report_name:report_name,
                 child_group_id:child_group_id,
@@ -275,14 +401,31 @@
                 nation:nation,
                 religion:religion,
                 relation:relation,
-                group_name:group_name
+                group_name:group_name,
+                is_join_maturity_ceremony: is_join_maturity_ceremony,
+                year_of_maturity_ceremony: year_of_maturity_ceremony,
+                from_place:from_place,
+                from_date_from:from_date_from,
+                from_date_to:from_date_to,
+                from_reason:from_reason,
+                to_place:to_place,
+                to_date_from:to_date_from,
+                to_date_to:to_date_to,
+                to_reason:to_reason,
+                is_go_far_away:is_go_far_away,
+                delete_reason:delete_reason,
+                rating:rating,
+                rating_year:rating_year
             },
             success: function(data) {
                 var obj = $.parseJSON(data);
                 downloadAll(obj,'excel');
                 $.ajax({
                     url:'/report/delete',
-                    type:'get',
+                    type:'post',
+                    headers: {
+                        'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                    },
                     data:{
                         filelist:obj,
                         type:'excel'
@@ -319,6 +462,20 @@
         var relation = $("#relation").val();
         var group_name = $("#group_name").val();
         var report_name = $("#report_name").val();
+        var is_join_maturity_ceremony = $("#is_join_maturity_ceremony").val();
+        var year_of_maturity_ceremony = $("#year_of_maturity_ceremony").val();
+        var from_place = $("#from_place").val();
+        var from_reason = $("#from_reason").val();
+        var from_date_from = $("#from_date_from").val();
+        var from_date_to = $("#from_date_to").val();
+        var to_place = $("#to_place").val();
+        var to_reason = $("#to_reason").val();
+        var to_date_from = $("#to_date_from").val();
+        var to_date_to = $("#to_date_to").val();
+        var is_go_far_away = $("#is_go_far_away").val();
+        var delete_reason = $("#delete_reason").val();
+        var rating = $("#rating").val();
+        var rating_year = $("#rating_year").val();
         if(child_group_id == 0){
             alert('Vui lòng chọn 1 đơn vị');
             return false;
@@ -334,7 +491,10 @@
         $("#loading").show();
         $.ajax({
             url: '/report/preview',
-            type: 'get',
+            type: 'post',
+            headers: {
+                'X-CSRF-TOKEN': $('input[name="_token"]').val()
+            },
             data:{
                 child_group_id:child_group_id,
                 position:position,
@@ -352,7 +512,21 @@
                 relation:relation,
                 start:start,
                 report_name:report_name,
-                group_name:group_name
+                group_name:group_name,
+                is_join_maturity_ceremony: is_join_maturity_ceremony,
+                year_of_maturity_ceremony: year_of_maturity_ceremony,
+                from_place:from_place,
+                from_date_from:from_date_from,
+                from_date_to:from_date_to,
+                from_reason:from_reason,
+                to_place:to_place,
+                to_date_from:to_date_from,
+                to_date_to:to_date_to,
+                to_reason:to_reason,
+                is_go_far_away:is_go_far_away,
+                delete_reason:delete_reason,
+                rating:rating,
+                rating_year:rating_year
             },
             success: function(data) {
                 if(data.header != ''){

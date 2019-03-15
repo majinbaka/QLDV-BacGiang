@@ -875,3 +875,21 @@ footer{
     left: 50%;
     position: fixed;
 }
+.mt-20{
+    margin-top: 20px;
+}
+.mt-25{
+    margin-top: 25px;
+}
+.import{
+    background-color: #00a508;
+    padding: 4px 10px;
+    color: #fff;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    float: left;
+    text-decoration: none;
+    margin: 0px 7px;
+    font-size: 14px;
+    font-weight: 500;
+}

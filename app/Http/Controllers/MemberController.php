@@ -17,6 +17,8 @@ use App\Nation;
 use App\Religion;
 use Auth;
 use Exception;
+use Illuminate\Support\Facades\View;
+use Maatwebsite\Excel\Facades\Excel;
 use Validator;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -317,7 +319,7 @@ class MemberController extends Controller
             $member->delete_reason = \request()->get('delete_reason');
             $member->rating = \request()->get('rating');
             $member->rating_year = \request()->get('rating_year');
-
+            $member->year_of_maturity_ceremony = \request()->get('year_of_maturity_ceremony');
             $member->save();
 
             if (request()->has('avatar'))
@@ -352,6 +354,7 @@ class MemberController extends Controller
             return redirect('member/create')->withErrors(['Có lỗi xẩy ra']);
         }
     }
+
     public function update($uuid){
         $user = Auth::user();
         $member = Member::where('uuid', $uuid)->first();
@@ -493,7 +496,7 @@ class MemberController extends Controller
             $member->delete_reason = \request()->get('delete_reason');
             $member->rating = \request()->get('rating');
             $member->rating_year = \request()->get('rating_year');
-
+            $member->year_of_maturity_ceremony = \request()->get('year_of_maturity_ceremony');
             $member->save();
 
             //Attachment
@@ -509,7 +512,7 @@ class MemberController extends Controller
                 $attachments = request()->file('attachment') ;
                 foreach ($attachments as $v) {
                     $extension = $v->extension();
-                    $attachment = new Attachment;
+                    $attachment = new Attachment();
                     $attachment->name = $v->getClientOriginalName();
                     $attachment->member_id = $member->id;
                     $attachment->attachment_url = 'xxx';
@@ -529,6 +532,7 @@ class MemberController extends Controller
 
 
     }
+
     public function delete(){
         $member_ids = request()->get('member_ids');
         $avatars = Member::whereIn('uuid', $member_ids)->pluck('avatar');
@@ -544,5 +548,272 @@ class MemberController extends Controller
         Attachment::whereIn('member_id', $ids)->delete();
 
         return \redirect()->route('home')->withSuccess('Xoá thành công');
+    }
+
+    public function import(){
+        return view('members.import');
+    }
+
+    public function uploads(){
+        return view('members.uploads');
+    }
+
+    public function exportsample(){
+        $list = Member::where('id','>','20')->limit(10)->get();
+        $view = View::make('export.sample',['result'=>$list]);
+        $contents = $view->render();
+        $fileName = 'import_data_sample.xls';
+        $path = public_path('export/excel/');
+        $myfile = fopen($path.$fileName, "w");
+        fwrite($myfile, $contents);
+        $fileList[] = $fileName;
+        return json_encode($fileList);
+    }
+
+    public function importData(Request $request){
+        if ($request->hasFile('import_xls')) {
+            $destinationPath = 'public/import';
+            $extension = $request->file('import_xls')->getClientOriginalExtension();
+            if($extension != 'xls'){
+                return redirect('/member/import')->withErrors(['File sai định dạng. Vui lòng chọn file .xls']);
+            }
+            $path = $request->file('import_xls')->store($destinationPath);
+            Excel::load('storage/app/'.$path, function ($reader) {
+                $content = $reader->toArray();
+                $listToInsert =[];
+                $listToUpdate =[];
+                $positionList = Position::all();
+                $positionArr = [];
+                foreach ($positionList as $p){
+                    $positionArr[$this->vn_to_str($p->name)] = $p->id;
+                }
+                $manageObjectArr = ['doan vien'=>1,'thanh nien' => 2, 'ca hai'=>0];
+                $blockMembers = BlockMember::all();
+                $blockMemberList = [];
+                foreach ($blockMembers as $b){
+                    $blockMemberList[$this->vn_to_str($b->name)] = $b->id;
+                }
+                $nations = Nation::all();
+                $nationList = [];
+                foreach ($nations as $n){
+                    $nationList[$this->vn_to_str($n->name)] = $n->id;
+                }
+                $religions = Religion::all();
+                $religionList = [];
+                foreach ($religions as $r){
+                    $religionList[$this->vn_to_str($r->name)] = $r->id;
+                }
+                $yesNo = ['co'=>1,'khong'=>0,'roi'=>1,'chua'=>0];
+                $knowledges = Knowledge::all();
+                $knowledgeList = [];
+                foreach ($knowledges as $k){
+                    $knowledgeList[$this->vn_to_str($k->name)] = $k->id;
+                }
+                $politicals = Political::all();
+                $politicalList = [];
+                foreach ($politicals as $political){
+                    $positionList[$this->vn_to_str($political->name)] = $political->id;
+                }
+                $itLevels = ItLevel::all();
+                $itLevelList = [];
+                foreach ($itLevels as $itLevel){
+                    $itLevelList[$this->vn_to_str($itLevel->name)] = $itLevel->id;
+                }
+                $engLevels = EnglishLevel::all();
+                $engLevelList = [];
+                foreach ($engLevels as $engLevel){
+                    $engLevelList[$this->vn_to_str($engLevel->name)] = $engLevel->id;
+                }
+                $ratingList = ['xuat sac' => 1,'kha'=>2,'trung binh'=>3,'yeu'=>4];
+                foreach ($content as $row) {
+                    $fullname = $row['ho_va_ten'];
+                    $code = $row['ma_doan_vien'];
+                    $birthday = NULL;
+                    if ($row['ngay_sinh']){
+                        if(strpos($row['ngay_sinh'], '/') == false){
+                            $birthday = $row['ngay_sinh'];
+                        } else{
+                            $birthday = Carbon::createFromFormat('d/m/Y',$row['ngay_sinh'])->toDateString();
+                        }
+                    }
+                    $gender = (strtolower($row['gioi_tinh']) == 'nam')?1:0;
+                    $chuc_vu = $this->vn_to_str($row['chuc_vu']);
+                    $positionId = (array_key_exists($chuc_vu,$positionArr))?$positionArr[$chuc_vu]:1;
+                    $term = $row['nhiem_ky'];
+                    $manage_object = $this->vn_to_str($row['doi_tuong_quan_ly']);
+                    $manageObjectId = (array_key_exists($manage_object,$manageObjectArr))?$manageObjectArr[$manage_object]:0;
+                    $groupId = 1; //for test purpose, group Id is always 1;
+                    $khoi_doi_tuong = $this->vn_to_str($row['khoi_doi_tuong']);
+                    $blockMemberId = (array_key_exists($khoi_doi_tuong,$blockMemberList))?$blockMemberList[$khoi_doi_tuong]:1;
+                    $dantoc = $this->vn_to_str($row['dan_toc']);
+                    $nationId = (array_key_exists($dantoc,$nationList))?$nationList[$dantoc]:1;
+                    $tongiao = $this->vn_to_str($row['ton_giao']);
+                    $religionId = (array_key_exists($tongiao,$religionList))?$religionList[$tongiao]:1;
+                    $tinh_trang_hon_nhan = $this->vn_to_str($row['tinh_trang_hon_nhan']);
+                    $relationCode = (array_key_exists($tinh_trang_hon_nhan,$yesNo))?$yesNo[$tinh_trang_hon_nhan]:0;
+                    $join_date = NULL;
+                    if($row['ngay_vao_doan']){
+                        if(strpos($row['ngay_vao_doan'], '/') == false){
+                            $join_date = $row['ngay_vao_doan'];
+                        } else{
+                            $join_date = Carbon::createFromFormat('d/m/Y',$row['ngay_vao_doan'])->toDateString();
+                        }
+                    }
+                    $city = $row['que_quan_tinh'];
+                    $district = $row['que_quan_quanhuyen'];
+                    $commune = $row['que_quan_xaphuong'];
+                    $vilage = $row['que_quan_thonban_tdp'];
+                    $current_city = $row['noi_o_hien_nay_tinh'];
+                    $current_district = $row['noi_o_hien_nay_quanhuyen'];
+                    $current_commune = $row['noi_o_hien_nay_xa_phuong'];
+                    $current_vilage = $row['noi_o_hien_nay_thon_ban_tdp'];
+                    $trinh_do = $this->vn_to_str($row['trinh_do']);
+                    $knowledgeId = (array_key_exists($trinh_do,$knowledgeList))?$knowledgeList[$trinh_do]:1;
+                    $chinh_tri = $this->vn_to_str($row['chinh_tri']);
+                    $politicalId = (array_key_exists($chinh_tri,$politicalList))?$politicalList[$chinh_tri]:1;
+                    $tin_hoc = $this->vn_to_str($row['tin_hoc']);
+                    $itLevelId = (array_key_exists($tin_hoc,$itLevelList))?$itLevelList[$tin_hoc]:1;
+                    $ngoai_ngu  = $this->vn_to_str($row['ngoai_ngu']);
+                    $engLevelId = (array_key_exists($ngoai_ngu,$engLevelList))?$engLevelList[$ngoai_ngu]:1;
+                    $educationLevel = $row['hoc_van'];
+                    $dangvien = $this->vn_to_str($row['dang_vien']);
+                    $isDangvien = (array_key_exists($dangvien,$yesNo))?$yesNo[$dangvien]:0;
+                    $join_dang = NULL;
+                    if($row['ngay_vao_dang']){
+                        if(strpos($row['ngay_vao_dang'], '/') == false){
+                            $join_dang = $row['ngay_vao_dang'];
+                        } else{
+                            $join_dang = Carbon::createFromFormat('d/m/Y',$row['ngay_vao_dang'])->toDateString();
+                        }
+                    }
+                    $truong_thanh_doan = $this->vn_to_str($row['truong_thanh_doan']);
+                    $is_join_maturity_ceremony = (array_key_exists($truong_thanh_doan,$yesNo))?$yesNo[$truong_thanh_doan]:0;
+                    $year_of_maturity_ceremony = $row['nam_truong_thanh_doan'];
+                    $from_place = $row['chuyen_den'];
+                    $from_reason = $row['ly_do_chuyen_den'];
+                    $from_date = NULL;
+                    if($row['ngay_chuyen_den']){
+                        if(strpos($row['ngay_chuyen_den'], '/') == false){
+                            $from_date = $row['ngay_chuyen_den'];
+                        } else{
+                            $from_date = Carbon::createFromFormat('d/m/Y',$row['ngay_chuyen_den'])->toDateString();
+                        }
+                    }
+                    $to_place = $row['chuyen_di'];
+                    $to_reason = $row['ly_do_chuyen_di'];
+                    $to_date = NULL;
+                    if($row['ngay_chuyen_di']){
+                        if(strpos($row['ngay_chuyen_di'], '/') == false){
+                            $join_dang = $row['ngay_chuyen_di'];
+                        } else{
+                            $join_dang = Carbon::createFromFormat('d/m/Y',$row['ngay_chuyen_di'])->toDateString();
+                        }
+                    }
+                    $di_lam_an_xa = $this->vn_to_str($row['di_lam_an_xa']);
+                    $is_go_far_away = (array_key_exists($di_lam_an_xa,$yesNo))?$yesNo[$di_lam_an_xa]:0;
+                    $delete_reason = $row['ly_do_xoa_ten'];
+                    $danh_gia_doan_vien = $this->vn_to_str($row['danh_gia_doan_vien']);
+                    $rating = (array_key_exists($danh_gia_doan_vien,$ratingList))?$ratingList[$danh_gia_doan_vien]:1;
+                    $rating_year = $row['nam_danh_gia'];
+                    $temp = [
+                        'uuid'=>Str::uuid(),
+                        'fullname'=>$fullname,
+                        'code'=>$code,
+                        'birthday'=>$birthday,
+                        'gender'=>$gender,
+                        'position'=>$positionId,
+                        'term'=>$term,
+                        'group_id' => $groupId,
+                        'religion'=>$religionId,
+                        'nation'=>$nationId,
+                        'relation'=>$relationCode,
+                        'join_date'=>$join_date,
+                        'city'=>$city,
+                        'district'=>$district,
+                        'commune'=>$commune,
+                        'vilage'=>$vilage,
+                        'current_city'=>$current_city,
+                        'current_district'=>$current_district,
+                        'current_commune'=>$current_commune,
+                        'current_vilage'=>$current_vilage,
+                        'knowledge'=>$knowledgeId,
+                        'political'=>$politicalId,
+                        'it_level'=>$itLevelId,
+                        'english_level'=>$engLevelId,
+                        'is_dangvien'=>$isDangvien,
+                        'join_dang'=>$join_dang,
+                        'block_member_id'=>$blockMemberId,
+                        'ascii_fullname' => $this->unicode_to_ascii($fullname),
+                        'education_level'=>$educationLevel,
+                        'position_text'=> $row['chuc_vu'],
+                        'knowledge_text'=>$row['trinh_do'],
+                        'political_text'=>$row['chinh_tri'],
+                        'it_text'=>$row['tin_hoc'],
+                        'english_text'=>$row['ngoai_ngu'],
+                        'nation_text'=>$row['dan_toc'],
+                        'religion_text'=>$row['ton_giao'],
+                        'blockmember_text'=>$row['khoi_doi_tuong'],
+                        'manage_object'=>$manageObjectId,
+                        'is_join_maturity_ceremony'=>$is_join_maturity_ceremony,
+                        'from_place'=>$from_place,
+                        'from_reason'=>$from_reason,
+                        'from_date'=>$from_date,
+                        'to_place'=>$to_place,
+                        'to_reason'=>$to_reason,
+                        'to_date'=>$to_date,
+                        'is_go_far_away'=>$is_go_far_away,
+                        'delete_reason'=>$delete_reason,
+                        'rating'=>$rating,
+                        'rating_year'=>$rating_year,
+                        'year_of_maturity_ceremony'=>$year_of_maturity_ceremony
+                    ];
+                    $member = Member::where('code',$code)->first();
+                    if(!$member){
+                        $listToInsert[] = $temp;
+                    } else{
+                        $listToUpdate[] = $temp;
+                    }
+                }
+                if(count($listToInsert)>0){
+                    try{
+                        Member::insert($listToInsert);
+                    } catch (Exception $e){
+                        return redirect('member/import')->withErrors([$e->getMessage()]);
+                    }
+                }
+            });
+            Storage::delete($path);
+            return redirect('member/import')->withSuccess(session()->get('success'));
+        } else{
+            return redirect('member/import')->withErrors(['Vui lòng chọn file dữ liệu']);
+        }
+    }
+
+    private function  vn_to_str ($str) {
+        $unicode = array(
+        'a'=>'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ',
+        'd'=>'đ',
+        'e'=>'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ',
+        'i'=>'í|ì|ỉ|ĩ|ị',
+        'o'=>'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ',
+        'u'=>'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự',
+        'y'=>'ý|ỳ|ỷ|ỹ|ỵ',
+        'A'=>'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ',
+        'D'=>'Đ',
+        'E'=>'É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ',
+        'I'=>'Í|Ì|Ỉ|Ĩ|Ị',
+        'O'=>'Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ỗ|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ',
+        'U'=>'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự',
+        'Y'=>'Ý|Ỳ|Ỷ|Ỹ|Ỵ',
+        );
+            foreach($unicode as $nonUnicode=>$uni){
+
+                $str = preg_replace("/($uni)/i", $nonUnicode, $str);
+
+            }
+            $str = str_replace(' ','_',$str);
+
+            return strtolower($str);
+
     }
 }

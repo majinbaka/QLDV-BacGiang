@@ -45,6 +45,7 @@
     </div>
 </div>
 <div class="body">
+    <a class="import" href="{{route('member.import')}}" >Nhập từ excel</a>
     <a class="addnew" href="{{route('member.create')}}" >Thêm mới</a>
     <a id="edit-user" class="addnew" href="#" style="display:none" >Sửa </a> 
     <button class="delete" id="removeItems">Xoá</button>
