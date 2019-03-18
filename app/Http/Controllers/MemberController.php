@@ -625,6 +625,9 @@ class MemberController extends Controller
                     $engLevelList[$this->vn_to_str($engLevel->name)] = $engLevel->id;
                 }
                 $ratingList = ['xuat sac' => 1,'kha'=>2,'trung binh'=>3,'yeu'=>4];
+                //1 user is only manage 1 group, so group Id will be get from user
+                $user = Auth::user();
+                $groupId = $user->group->id;
                 foreach ($content as $row) {
                     $fullname = $row['ho_va_ten'];
                     $code = $row['ma_doan_vien'];
@@ -642,7 +645,6 @@ class MemberController extends Controller
                     $term = $row['nhiem_ky'];
                     $manage_object = $this->vn_to_str($row['doi_tuong_quan_ly']);
                     $manageObjectId = (array_key_exists($manage_object,$manageObjectArr))?$manageObjectArr[$manage_object]:0;
-                    $groupId = 1; //for test purpose, group Id is always 1;
                     $khoi_doi_tuong = $this->vn_to_str($row['khoi_doi_tuong']);
                     $blockMemberId = (array_key_exists($khoi_doi_tuong,$blockMemberList))?$blockMemberList[$khoi_doi_tuong]:1;
                     $dantoc = $this->vn_to_str($row['dan_toc']);
@@ -778,7 +780,7 @@ class MemberController extends Controller
                     try{
                         Member::insert($listToInsert);
                     } catch (Exception $e){
-                        return redirect('member/import')->withErrors([$e->getMessage()]);
+                        return redirect('member/import')->withErrors(['Vui lòng nhập đủ dữ liệu cho các trường bắt buộc. Trường bắt buộc là trường có đánh dấu * ']);
                     }
                 }
             });

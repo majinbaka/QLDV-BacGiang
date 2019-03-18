@@ -1,19 +1,20 @@
 <table class="table table-bordered" width="100%">
     <thead>
     <tr>
-        <th style="border: 1px solid #000000; border-collapse: collapse; ">Họ và tên</th>
-        <th style="border: 1px solid #000000; border-collapse: collapse; ">Mã đoàn viên</th>
+        <th style="border: 1px solid #000000; border-collapse: collapse; ">Họ và tên*</th>
+        <th style="border: 1px solid #000000; border-collapse: collapse; ">Mã đoàn viên*</th>
         <th style="border: 1px solid #000000; border-collapse: collapse; ">Ngày sinh</th>
-        <th style="border: 1px solid #000000; border-collapse: collapse; ">Giới tính</th>
-        <th style="border: 1px solid #000000; border-collapse: collapse; ">Chức vụ</th>
+        <th style="border: 1px solid #000000; border-collapse: collapse; ">Giới tính*</th>
+        <th style="border: 1px solid #000000; border-collapse: collapse; ">Chức vụ*</th>
         <th style="border: 1px solid #000000; border-collapse: collapse; ">Nhiệm kỳ</th>
-        <th style="border: 1px solid #000000; border-collapse: collapse; ">Đối tượng quản lý</th>
-        <th style="border: 1px solid #000000; border-collapse: collapse; ">Đơn vị</th>
-        <th style="border: 1px solid #000000; border-collapse: collapse; ">Khối đối tượng</th>
-        <th style="border: 1px solid #000000; border-collapse: collapse; ">Dân tộc</th>
-        <th style="border: 1px solid #000000; border-collapse: collapse; ">Tôn giáo</th>
-        <th style="border: 1px solid #000000; border-collapse: collapse; ">Tình trạng hôn nhân</th>
-        <th style="border: 1px solid #000000; border-collapse: collapse; ">Ngày vào đoàn</th>
+        <th style="border: 1px solid #000000; border-collapse: collapse; ">Đối tượng quản lý*</th>
+        <th style="border: 1px solid #000000; border-collapse: collapse; ">Đơn vị*</th>
+        <th style="border: 1px solid #000000; border-collapse: collapse; ">Khối đối tượng*</th>
+        <th style="border: 1px solid #000000; border-collapse: collapse; ">Dân tộc*</th>
+        <th style="border: 1px solid #000000; border-collapse: collapse; ">Tôn giáo*</th>
+        <th style="border: 1px solid #000000; border-collapse: collapse; ">Tình trạng hôn nhân*</th>
+        <th style="border: 1px solid #000000; border-collapse: collapse; ">Ngày vào đoàn*</th>
+        <th style="border: 1px solid #000000; border-collapse: collapse; ">Đảng viên*</th>
         <th style="border: 1px solid #000000; border-collapse: collapse; ">Quê quán - Tỉnh</th>
         <th style="border: 1px solid #000000; border-collapse: collapse; ">Quê quán - Quận/huyện</th>
         <th style="border: 1px solid #000000; border-collapse: collapse; ">Quê quán - Xã/phường</th>
@@ -27,7 +28,6 @@
         <th style="border: 1px solid #000000; border-collapse: collapse; ">Tin học</th>
         <th style="border: 1px solid #000000; border-collapse: collapse; ">Ngoại ngữ</th>
         <th style="border: 1px solid #000000; border-collapse: collapse; ">Học vấn</th>
-        <th style="border: 1px solid #000000; border-collapse: collapse; ">Đảng viên</th>
         <th style="border: 1px solid #000000; border-collapse: collapse; ">Ngày vào đảng</th>
         <th style="border: 1px solid #000000; border-collapse: collapse; ">Trưởng thành đoàn</th>
         <th style="border: 1px solid #000000; border-collapse: collapse; ">Năm trưởng thành đoàn</th>
@@ -58,6 +58,7 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Độc thân</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/2012</td>
+        <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Bắc Giang</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -71,7 +72,6 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B2</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">12</td>
-        <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/201</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -101,6 +101,7 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Độc thân</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/2012</td>
+        <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Bắc Giang</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -114,7 +115,6 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B2</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">12</td>
-        <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -144,6 +144,7 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Độc thân</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/2012</td>
+        <td style="border: 1px solid #000000; border-collapse: collapse; ">Có</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Bắc Giang</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -157,7 +158,6 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B2</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">12</td>
-        <td style="border: 1px solid #000000; border-collapse: collapse; ">Có</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/2012</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -187,6 +187,7 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Độc thân</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/2012</td>
+        <td style="border: 1px solid #000000; border-collapse: collapse; ">Có</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Bắc Giang</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -200,7 +201,6 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B2</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">12</td>
-        <td style="border: 1px solid #000000; border-collapse: collapse; ">Có</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/2012</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -230,6 +230,7 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Độc thân</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/2012</td>
+        <td style="border: 1px solid #000000; border-collapse: collapse; ">Có</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Bắc Giang</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -243,7 +244,6 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B2</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">12</td>
-        <td style="border: 1px solid #000000; border-collapse: collapse; ">Có</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/2012</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -273,6 +273,7 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Độc thân</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/2012</td>
+        <td style="border: 1px solid #000000; border-collapse: collapse; ">Có</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Bắc Giang</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -286,7 +287,6 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B2</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">12</td>
-        <td style="border: 1px solid #000000; border-collapse: collapse; ">Có</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/2012</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -316,6 +316,7 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Độc thân</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/2012</td>
+        <td style="border: 1px solid #000000; border-collapse: collapse; ">Có</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Bắc Giang</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -329,7 +330,6 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B2</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">12</td>
-        <td style="border: 1px solid #000000; border-collapse: collapse; ">Có</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/2012</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -359,6 +359,7 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Độc thân</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/2012</td>
+        <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Bắc Giang</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -372,7 +373,6 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B2</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">12</td>
-        <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -402,6 +402,7 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Độc thân</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/2012</td>
+        <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Bắc Giang</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -415,7 +416,6 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B2</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">12</td>
-        <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -445,6 +445,7 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Độc thân</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">11/11/2012</td>
+        <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">Bắc Giang</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
@@ -458,7 +459,6 @@
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">B2</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; ">12</td>
-        <td style="border: 1px solid #000000; border-collapse: collapse; ">Không</td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
         <td style="border: 1px solid #000000; border-collapse: collapse; "></td>
