@@ -31,7 +31,7 @@
                     </select>
                     <label class="form-label" for="term" style="margin-left: 10px;">Nhiệm kỳ</label>
                     <select name="term" id="term" class="form-select {{ $errors->has('term') ? 'has-error' : ''}}">
-                        <option>Chọn...</option>
+                        <option value="0">Chọn...</option>
                         <option value="2017" >2017</option>
                         <option value="2018" >2018</option>
                         <option value="2019" >2019</option>
@@ -54,15 +54,15 @@
                 <div class="row">
                     <label class="form-label" style="padding-right: 22px">Ngày sinh</label>
                     <label for="birthday_from" class="mini-label">Từ ngày</label>
-                    <input type="text" placeholder="dd/mm/yyyy" name="birthday_from" id="birthday_from" class="form-input input-medium " style="width:85px;margin-left:0px;">
+                    <input type="date" placeholder="dd/mm/yyyy" name="birthday_from" id="birthday_from" class="form-input input-x-large " style="width:145px;margin-left:0px;">
                     <label for="birthday_to" class="mini-label">Tới ngày</label>
-                    <input type="text" placeholder="dd/mm/yyyy" name="birthday_to" id="birthday_to" class="form-input input-medium " style="width:85px;margin-left:0px;">
+                    <input type="date" placeholder="dd/mm/yyyy" name="birthday_to" id="birthday_to" class="form-input input-x-large " style="width:145px;margin-left:0px;">
 
                     <label class="form-label" style="padding-right: 10px">Ngày vào đoàn</label>
                     <label for="join_date_from" class="mini-label">Từ ngày</label>
-                    <input type="text" placeholder="dd/mm/yyyy" name="join_date_from" id="join_date_from" class="form-input input-medium " style="width:85px;margin-left:0px;">
+                    <input type="date" placeholder="dd/mm/yyyy" name="join_date_from" id="join_date_from" class="form-input input-x-large " style="width:145px;margin-left:0px;">
                     <label for="birthday_to" class="mini-label">Tới ngày</label>
-                    <input type="text" placeholder="dd/mm/yyyy" name="join_date_to" id="join_date_to" class="form-input input-medium " style="width:85px;margin-left:0px;">
+                    <input type="date" placeholder="dd/mm/yyyy" name="join_date_to" id="join_date_to" class="form-input input-x-large " style="width:145px;margin-left:0px;">
                 </div>
                 <hr class="divider mt-10 mb-15">
                 <div class="mt-10 mb-15"></div>
@@ -550,7 +550,7 @@
                 $("#preview_content").html(data.contents);
 
                 $("#preview_footer").html(data.footer);
-                $("#start").val(data.start);
+                $("#start").val(1);
                 $("#preview_pagination").html(data.page);
                 $("#loading").hide();
             },

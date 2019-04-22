@@ -295,8 +295,8 @@ class ReportController extends Controller
         if($position){
             $query->where('members.position','=',$position);
         }
-        if($term){
-            $query->where('members.term','like','"%'.$term.'%"');
+        if($term && $term != 0){
+            $query->where('members.terms',$term);
         }
         if($gender){
             $query->where('members.gender','=',$gender);
