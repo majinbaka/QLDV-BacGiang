@@ -29,8 +29,19 @@
                             <option value="{{$p->id}}">{{$p->name}}</option>
                         @endforeach
                     </select>
-                    <label class="form-label" for="term" style="margin-right: 22px;margin-left: 10px;">Nhiệm kỳ</label>
-                    <input type="text" name="term" id="term" class="input-x-large form-input" value="{{ old('term') }}">
+                    <label class="form-label" for="term" style="margin-left: 10px;">Nhiệm kỳ</label>
+                    <select name="term" id="term" class="form-select {{ $errors->has('term') ? 'has-error' : ''}}">
+                        <option>Chọn...</option>
+                        <option value="2017" >2017</option>
+                        <option value="2018" >2018</option>
+                        <option value="2019" >2019</option>
+                        <option value="2020" >2020</option>
+                        <option value="2021" >2021</option>
+                        <option value="2022" >2022</option>
+                        <option value="2023" >2023</option>
+                        <option value="2024" >2024</option>
+                        <option value="2025" >2025</option>
+                    </select>
                     <label class="form-label" for="gender">Giới tính</label>
                     <select name="gender" id="gender" class="form-select {{ $errors->has('gender') ? 'has-error' : ''}}">
                         <option value="">Chọn...</option>
@@ -169,8 +180,11 @@
                         <option value="1">Có</option>
                         <option value="1">Không</option>
                     </select>
-                    <label class="form-label " for="delete_reason" style="margin-left: 30px;padding-right: 20px">Lý do xóa tên</label>
-                    <input type="text"  name="delete_reason" id="delete_reason" style="width: 300px;margin-right: 0px" class="form-input input-x-large " value="{{ old('delete_reason') }}">
+                </div>
+                <div class="mt-10 mb-15"></div>
+                <div class="row">
+                    <label class="form-label " for="delete_reason" style="">Lý do xóa tên</label>
+                    <input type="text"  name="delete_reason" id="delete_reason" style="width: 500px;margin-right: 0px" class="form-input input-x-large " value="{{ old('delete_reason') }}">
                 </div>
                 <hr class="divider mt-10 mb-15">
                 <div class="row">

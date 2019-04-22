@@ -2,7 +2,9 @@
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', 'HomeController@index')->name('home');
+//    Route::get('/statistic', 'HomeController@statistic')->name('statistic');
+    Route::get('/members', 'HomeController@index')->name('members');
+    Route::get('/', 'HomeController@statistic')->name('home');
     Route::delete('member/delete', 'MemberController@delete')->name('member.delete');
     Route::get('member/create', 'MemberController@create')->name('member.create');
     Route::get('member/{uuid}/edit', 'MemberController@edit')->name('member.edit');

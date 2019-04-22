@@ -56,12 +56,15 @@
         <div class="top-navigation">
             <div class="container">
                 <ul>
-                    <li @if(in_array(\Route::currentRouteName(), ["home","member.search", "member.create", "member.edit", "group.show"])) class="active" @endif><a href="{{route('home')}}">HỒ SƠ ĐOÀN VIÊN</a></li>
+                    <li @if(in_array(\Route::currentRouteName(), ["home"])) class="active" @endif><a href="{{route('home')}}">THÔNG TIN CHUNG</a></li>
+                    @can ('group')
+                        <li @if(in_array(\Route::currentRouteName(), ["group.index"])) class="active" @endif><a href="{{route('group.index')}}">BỘ MÁY TỔ CHỨC</a></li>
+                    @endcan
+                    <li @if(in_array(\Route::currentRouteName(), ["members","member.search", "member.create", "member.edit", "group.show"]))  class="active" @endif><a href="{{route('members')}}">HỒ SƠ ĐOÀN VIÊN</a></li>
                     {{--@can ('home')--}}
                     <li @if(in_array(\Route::currentRouteName(), ["report.index"])) class="active" @endif><a href="{{route('report.index')}}">BÁO CÁO THỐNG KÊ</a></li>
                     {{--@endcan--}}
                     @can ('group')
-                    <li @if(in_array(\Route::currentRouteName(), ["group.index"])) class="active" @endif><a href="{{route('group.index')}}">BỘ MÁY TỔ CHỨC</a></li>
                     <li @if(in_array(\Route::currentRouteName(), ["position.index","position.edit","political.index","political.edit","knowledge.index","knowledge.edit","it.index","it.edit","english.index","english.edit","blockmember.index","blockmember.edit"])) class="active" @endif><a href="{{route('position.index')}}">DANH MỤC</a></li>
                     @endcan
                     @can ('user')

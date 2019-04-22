@@ -24,7 +24,7 @@
                     <option value="0">{{Auth::user()->group->name}}</option>
                 @endif
                 @foreach($groups as $gr)
-                    <option value="{{$gr->uuid}}" @isset($group)@if($gr->id == $group->id) selected @endif @endisset>
+                    <option value="{{$gr->uuid}}" @if($gr->id == $groupId) selected @endif>
                         {{$gr->name}}
                     </option>
                     @if($gr->childrens)

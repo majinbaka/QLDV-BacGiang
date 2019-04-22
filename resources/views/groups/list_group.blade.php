@@ -1,4 +1,14 @@
-<span><a href="{{route('group.index')}}" style="color: white;text-decoration: none;">TỈNH ĐOÀN BẮC GIANG</a></span>
+<span><a href="{{route('group.index')}}" style="color: white;text-decoration: none; text-transform: uppercase">
+        @php
+            $user = Auth::user();
+            if ($user->isAn('admin')){
+                echo 'TỈNH ĐOÀN BẮC GIANG';
+            } else{
+                $group = $user->group;
+                echo $group->name;
+            }
+        @endphp
+    </a></span>
 <ul class="main-list">
     @foreach($groups as $gr)
         @if(count($gr->childrens) > 0)

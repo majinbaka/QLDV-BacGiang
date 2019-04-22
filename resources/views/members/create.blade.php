@@ -29,15 +29,17 @@
                         <option value="{{$p->id}}">{{$p->name}}</option>
                     @endforeach
                 </select>
-                <label class="form-label" for="term">Nhiệm kỳ</label>
+                <label class="form-label" for="term">Năm</label>
                 <select name="term" id="term" class="custom-select input-large form-select {{ $errors->has('term') ? 'has-error' : ''}}">
-                    <option value="2017 - 2019">2017 - 2019</option>
-                    <option value="2017 - 2022">2017 - 2022</option>
-                    <option value="2018 - 2019">2018 - 2019</option>
-                    <option value="2019 - 2020">2019 - 2020</option>
-                    <option value="2019 - 2022">2019 - 2022</option>
-                    <option value="2020 - 2021">2020 - 2021</option>
-                    <option value="2021 - 2022">2021 - 2022</option>
+                    <option value="2017">2017</option>
+                    <option value="2018" >2018</option>
+                    <option value="2019" >2019</option>
+                    <option value="2020" >2020</option>
+                    <option value="2021" >2021</option>
+                    <option value="2022" >2022</option>
+                    <option value="2023" >2023</option>
+                    <option value="2024" >2024</option>
+                    <option value="2025" >2025</option>
                 </select>
                 <label class="form-label" for="manage_object">Đối tượng quản lý</label>
                 <select style="margin-right: 0px" name="manage_object" id="manage_object" class="custom-select input-large form-select {{ $errors->has('manage_object') ? 'has-error' : ''}}">
@@ -222,8 +224,9 @@
             <label class="form-label" for="is_go_far_away">Đi làm ăn xa</label>
             <input type="radio" class="{{ $errors->has('is_go_far_away') ? 'has-error' : ''}}" name="is_go_far_away" value="1"><label style="margin-right:13px;margin-left:6px">Có</label>
             <input type="radio" class="{{ $errors->has('is_go_far_away') ? 'has-error' : ''}}" name="is_go_far_away" value="0"><label style="margin-left:6px;">Không</label>
-            <label class="form-label " for="delete_reason" style="margin-left: 30px;padding-right: 20px">Lý do xóa tên</label>
-            <input type="text"  name="delete_reason" style="width: 300px;margin-right: 0px" class="form-input input-x-large {{ $errors->has('delete_reason') ? 'has-error' : ''}}" value="{{ old('delete_reason') }}">
+            <div class="mt-10"></div>
+            <label class="form-label " for="delete_reason" style="margin-top: 10px;padding-right: 30px">Lý do xóa tên</label>
+            <input type="text"  name="delete_reason" style="width: 500px;margin-right: 0px" class="form-input input-x-large {{ $errors->has('delete_reason') ? 'has-error' : ''}}" value="{{ old('delete_reason') }}">
             <div class="mt-10 mb-15"></div>
             <label class="form-label" for="rating">Đánh giá đoàn viên</label>
             <select style="margin-right: 0px" name="rating" id="rating" class="custom-select input-large form-select {{ $errors->has('rating') ? 'has-error' : ''}}">

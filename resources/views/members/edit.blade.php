@@ -30,15 +30,17 @@
                             <option value="{{$p->id}}" @if(old('position', $member->position) == $p->id) selected @endif >{{$p->name}}</option>
                         @endforeach
                     </select>
-                    <label class="form-label" for="term">Nhiệm kỳ</label>
+                    <label class="form-label" for="term">Năm</label>
                     <select name="term" id="term" class="custom-select input-large form-select {{ $errors->has('term') ? 'has-error' : ''}}">
-                        <option value="2017 - 2019" @if(old('manage_object', $member->term ) == '2017 - 2019') selected @endif>2017 - 2019</option>
-                        <option value="2017 - 2022" @if(old('manage_object', $member->term ) == '2017 - 2022') selected @endif>2017 - 2022</option>
-                        <option value="2018 - 2019" @if(old('manage_object', $member->term ) == '2018 - 2019') selected @endif>2018 - 2019</option>
-                        <option value="2019 - 2020" @if(old('manage_object', $member->term ) == '2019 - 2020') selected @endif>2019 - 2020</option>
-                        <option value="2019 - 2022" @if(old('manage_object', $member->term ) == '2019 - 2022') selected @endif>2019 - 2022</option>
-                        <option value="2020 - 2021" @if(old('manage_object', $member->term ) == '2020 - 2021') selected @endif>2020 - 2021</option>
-                        <option value="2021 - 2022" @if(old('manage_object', $member->term ) == '2021 - 2022') selected @endif>2021 - 2022</option>
+                        <option value="2017" @if(old('manage_object', $member->term ) == '2017') selected @endif>2017</option>
+                        <option value="2018" @if(old('manage_object', $member->term ) == '2018') selected @endif>2018</option>
+                        <option value="2019" @if(old('manage_object', $member->term ) == '2019') selected @endif>2019</option>
+                        <option value="2020" @if(old('manage_object', $member->term ) == '2020') selected @endif>2020</option>
+                        <option value="2021" @if(old('manage_object', $member->term ) == '2021') selected @endif>2021</option>
+                        <option value="2022" @if(old('manage_object', $member->term ) == '2022') selected @endif>2022</option>
+                        <option value="2023" @if(old('manage_object', $member->term ) == '2023') selected @endif>2023</option>
+                        <option value="2024" @if(old('manage_object', $member->term ) == '2024') selected @endif>2024</option>
+                        <option value="2025" @if(old('manage_object', $member->term ) == '2025') selected @endif>2025</option>
                     </select>
                     <label class="form-label" for="manage_object" style="">Đối tượng quản lý</label>
                     <select style="margin-right: 0px" name="manage_object" id="manage_object" class="custom-select input-large form-select {{ $errors->has('manage_object') ? 'has-error' : ''}}">
@@ -236,8 +238,9 @@
                 <label class="form-label" for="is_go_far_away">Đi làm ăn xa</label>
                 <input type="radio" class="{{ $errors->has('is_go_far_away') ? 'has-error' : ''}}" name="is_go_far_away" value="1" @if(old('is_go_far_away', $member->is_go_far_away ) == 1) checked @endif><label style="margin-right:13px;margin-left:6px">Có</label>
                 <input type="radio" class="{{ $errors->has('is_go_far_away') ? 'has-error' : ''}}" name="is_go_far_away" value="0" @if(old('is_go_far_away', $member->is_go_far_away ) == 0) checked @endif><label style="margin-left:6px;">Không</label>
-                <label class="form-label " for="delete_reason" style="margin-left: 30px;padding-right: 20px">Lý do xóa tên</label>
-                <input type="text"  name="delete_reason" style="width: 300px;margin-right: 0px" class="form-input input-x-large {{ $errors->has('delete_reason') ? 'has-error' : ''}}" value="{{ old('delete_reason',$member->delete_reason) }}">
+                <div class="mt-10"></div>
+                <label class="form-label " for="delete_reason" style="margin-top: 10px;padding-right: 30px">Lý do xóa tên</label>
+                <input type="text"  name="delete_reason" style="width: 500px;margin-right: 0px" class="form-input input-x-large {{ $errors->has('delete_reason') ? 'has-error' : ''}}" value="{{ old('delete_reason') }}">
                 <div class="mt-10 mb-15"></div>
                 <label class="form-label" for="rating">Đánh giá đoàn viên</label>
                 <select style="margin-right: 0px" name="rating" id="rating" class="custom-select input-large form-select {{ $errors->has('rating') ? 'has-error' : ''}}">

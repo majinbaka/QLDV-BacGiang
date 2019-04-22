@@ -44,8 +44,8 @@
                 <thead>
                     <td><input type="checkbox" id="checkAll"></td>
                     <td>TÊN ĐƠN VỊ</td>
-                    <td>ĐƠN VỊ CẤP TRÊN TRỰC TIẾP</td>
-                    <td>ĐƠN VỊ CẤP TRÊN CAO NHẤT</td>
+                    <td>ĐƠN VỊ CẤP TRÊN</td>
+                    <td>ĐƠN VỊ CẤP TRÊN</td>
                 </thead>
                 <tbody>
                     @foreach ($groups as $group)
