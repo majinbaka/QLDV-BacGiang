@@ -615,71 +615,73 @@ class MemberController extends Controller
                 $user = Auth::user();
 //                var_dump($user);die();
                 $groupId = $user->group->id;
-                foreach ($content as $row) {
+                foreach ($content[0] as $row) {
                     $fullname = $row['ho_va_ten'];
                     $code = $row['ma_doan_vien'];
-                    $birthday = NULL;
-                    if ($row['ngay_sinh']){
-                        if(strpos($row['ngay_sinh'], '/') == false){
-                            $birthday = $row['ngay_sinh'];
-                        } else{
-                            $birthday = Carbon::createFromFormat('d/m/Y',$row['ngay_sinh'])->toDateString();
+                    if($code != ''){
+                        $birthday = NULL;
+                        if ($row['ngay_sinh']){
+                            if(strpos($row['ngay_sinh'], '/') == false){
+                                $birthday = $row['ngay_sinh'];
+                            } else{
+                                $birthday = Carbon::createFromFormat('d/m/Y',$row['ngay_sinh'])->toDateString();
+                            }
                         }
-                    }
-                    $gender = (strtolower($row['gioi_tinh']) == 'nam')?1:0;
-                    $chuc_vu = $this->vn_to_str($row['chuc_vu']);
-                    $positionId = (array_key_exists($chuc_vu,$positionArr))?$positionArr[$chuc_vu]:1;
-                    $manage_object = $this->vn_to_str($row['doi_tuong_quan_ly']);
-                    $manageObjectId = (array_key_exists($manage_object,$manageObjectArr))?$manageObjectArr[$manage_object]:0;
-                    $dantoc = $this->vn_to_str($row['dan_toc']);
-                    $nationId = (array_key_exists($dantoc,$nationList))?$nationList[$dantoc]:1;
-                    $tongiao = $this->vn_to_str($row['ton_giao']);
-                    $religionId = (array_key_exists($tongiao,$religionList))?$religionList[$tongiao]:1;
-                    $tinh_trang_hon_nhan = $this->vn_to_str($row['tinh_trang_hon_nhan']);
-                    $relationCode = (array_key_exists($tinh_trang_hon_nhan,$yesNo))?$yesNo[$tinh_trang_hon_nhan]:0;
-                    $join_date = NULL;
-                    if($row['ngay_vao_doan']){
-                        if(strpos($row['ngay_vao_doan'], '/') == false){
-                            $join_date = $row['ngay_vao_doan'];
-                        } else{
-                            $join_date = Carbon::createFromFormat('d/m/Y',$row['ngay_vao_doan'])->toDateString();
+                        $gender = (strtolower($row['gioi_tinh']) == 'nam')?1:0;
+                        $chuc_vu = $this->vn_to_str($row['chuc_vu']);
+                        $positionId = (array_key_exists($chuc_vu,$positionArr))?$positionArr[$chuc_vu]:1;
+                        $manage_object = $this->vn_to_str($row['doi_tuong_quan_ly']);
+                        $manageObjectId = (array_key_exists($manage_object,$manageObjectArr))?$manageObjectArr[$manage_object]:0;
+                        $dantoc = $this->vn_to_str($row['dan_toc']);
+                        $nationId = (array_key_exists($dantoc,$nationList))?$nationList[$dantoc]:1;
+                        $tongiao = $this->vn_to_str($row['ton_giao']);
+                        $religionId = (array_key_exists($tongiao,$religionList))?$religionList[$tongiao]:1;
+                        $tinh_trang_hon_nhan = $this->vn_to_str($row['tinh_trang_hon_nhan']);
+                        $relationCode = (array_key_exists($tinh_trang_hon_nhan,$yesNo))?$yesNo[$tinh_trang_hon_nhan]:0;
+                        $join_date = NULL;
+                        if($row['ngay_vao_doan']){
+                            if(strpos($row['ngay_vao_doan'], '/') == false){
+                                $join_date = $row['ngay_vao_doan'];
+                            } else{
+                                $join_date = Carbon::createFromFormat('d/m/Y',$row['ngay_vao_doan'])->toDateString();
+                            }
                         }
-                    }
 
-                    $trinh_do = $this->vn_to_str($row['trinh_do']);
-                    $knowledgeId = (array_key_exists($trinh_do,$knowledgeList))?$knowledgeList[$trinh_do]:1;
-                    $educationLevel = $row['hoc_van'];
-                    $dangvien = $this->vn_to_str($row['dang_vien']);
-                    $isDangvien = (array_key_exists($dangvien,$yesNo))?$yesNo[$dangvien]:0;
-                    $temp = [
-                        'uuid'=>Str::uuid(),
-                        'fullname'=>$fullname,
-                        'code'=>$code,
-                        'birthday'=>$birthday,
-                        'gender'=>$gender,
-                        'position'=>$positionId,
-                        'group_id' => $groupId,
-                        'religion'=>$religionId,
-                        'nation'=>$nationId,
-                        'relation'=>$relationCode,
-                        'join_date'=>$join_date,
-                        'knowledge'=>$knowledgeId,
-                        'is_dangvien'=>$isDangvien,
-                        'ascii_fullname' => $this->unicode_to_ascii($fullname),
-                        'education_level'=>$educationLevel,
-                        'position_text'=> $row['chuc_vu'],
-                        'knowledge_text'=>$row['trinh_do'],
-                        'nation_text'=>$row['dan_toc'],
-                        'religion_text'=>$row['ton_giao'],
-                        'manage_object'=>$manageObjectId,
-                        'vilage'=>'',
-                        'current_vilage'=>''
-                    ];
-                    $member = Member::where('code',$code)->first();
-                    if(!$member){
-                        $listToInsert[] = $temp;
-                    } else{
-                        $listToUpdate[] = $temp;
+                        $trinh_do = $this->vn_to_str($row['trinh_do']);
+                        $knowledgeId = (array_key_exists($trinh_do,$knowledgeList))?$knowledgeList[$trinh_do]:1;
+                        $educationLevel = $row['hoc_van'];
+                        $dangvien = $this->vn_to_str($row['dang_vien']);
+                        $isDangvien = (array_key_exists($dangvien,$yesNo))?$yesNo[$dangvien]:0;
+                        $temp = [
+                            'uuid'=>Str::uuid(),
+                            'fullname'=>$fullname,
+                            'code'=>$code,
+                            'birthday'=>$birthday,
+                            'gender'=>$gender,
+                            'position'=>$positionId,
+                            'group_id' => $groupId,
+                            'religion'=>$religionId,
+                            'nation'=>$nationId,
+                            'relation'=>$relationCode,
+                            'join_date'=>$join_date,
+                            'knowledge'=>$knowledgeId,
+                            'is_dangvien'=>$isDangvien,
+                            'ascii_fullname' => $this->unicode_to_ascii($fullname),
+                            'education_level'=>$educationLevel,
+                            'position_text'=> $row['chuc_vu'],
+                            'knowledge_text'=>$row['trinh_do'],
+                            'nation_text'=>$row['dan_toc'],
+                            'religion_text'=>$row['ton_giao'],
+                            'manage_object'=>$manageObjectId,
+                            'vilage'=>'',
+                            'current_vilage'=>''
+                        ];
+                        $member = Member::where('code',$code)->first();
+                        if(!$member){
+                            $listToInsert[] = $temp;
+                        } else{
+                            $listToUpdate[] = $temp;
+                        }
                     }
                 }
                 if(count($listToInsert)>0){
