@@ -67,13 +67,15 @@ class ReportController extends Controller
         $delete_reason = $request->get('delete_reason');
         $rating = $request->get('rating');
         $rating_year = $request->get('rating_year');
+        $is_deleted = $request->get('is_deleted');
+        $reason_for_go_away = $request->get('reason_for_go_away');
         $query = Member::select(DB::raw('members.id as id, members.fullname as fullname,members.gender as gender, members.birthday as birthday, 
                                                 members.nation_text as nation, members.position_text as position,
                                                 members.knowledge_text as knowledge, members.political_text as political,
                                                 members.religion_text as religion,
-                                                groups.name as group_name,members.group_id as group_id,members.education_level as education_level,
-                                                groups.parent_id as parent_id,groups.level as level'))
-            ->leftJoin('groups','members.group_id','=','groups.id');
+                                                members.group_id as group_id,members.education_level as education_level,
+                                                politicals.name as political_name, members.is_dangvien as is_dangvien, members.join_dang as join_dang'))
+            ->leftJoin('politicals','members.political','=','politicals.id');
         if($group_id){
             $group = Group::where('id',$group_id)->first();
             $ids = $group->getIdsG();
@@ -165,7 +167,12 @@ class ReportController extends Controller
         if($rating_year){
             $query->where('members.rating_year','=',$rating_year);
         }
-
+        if($is_deleted){
+            $query->where('members.is_deleted','=',$is_deleted);
+        }
+        if($reason_for_go_away){
+            $query->where('members.reason_for_go_away','=',$reason_for_go_away);
+        }
         $report_name = $request->get("report_name");
         $group_name = $request->get("group_name");
         $fileList = [];
@@ -177,18 +184,18 @@ class ReportController extends Controller
             $fileType = '.doc';
             $path = public_path('export/word/');
         }
-        $members = $query->orderBy('parent_id','DESC')->orderBy('level','ASC')->get()->toArray();
+        $members = $query->get()->toArray();
 
 
         $members = array_chunk($members,1000);
         $page = count($members);;
         $n = 0;
         foreach ($members as $memberList){
-            $data = $this->groupData($memberList);
+//            $data = $this->groupData($memberList);
             if($type == 1){
-                $view = View::make('export.excel', ['result' => $data,'report_name'=>$report_name,'group_name'=>$group_name,'i'=>$n*1000]);
+                $view = View::make('export.excel', ['result' => $memberList,'report_name'=>$report_name,'group_name'=>$group_name,'i'=>$n*1000]);
             } else{
-                $view = View::make('export.word', ['result' => $data,'report_name'=>$report_name,'group_name'=>$group_name,'i'=>$n*1000]);
+                $view = View::make('export.word', ['result' => $memberList,'report_name'=>$report_name,'group_name'=>$group_name,'i'=>$n*1000]);
             }
             $contents = $view->render();
             $fileName = $report_name;
@@ -278,13 +285,15 @@ class ReportController extends Controller
         $delete_reason = $request->get('delete_reason');
         $rating = $request->get('rating');
         $rating_year = $request->get('rating_year');
+        $is_deleted = $request->get('is_deleted');
+        $reason_for_go_away = $request->get('reason_for_go_away');
         $query = Member::select(DB::raw('members.id as id, members.fullname as fullname,members.gender as gender, members.birthday as birthday, 
                                                 members.nation_text as nation, members.position_text as position,
                                                 members.knowledge_text as knowledge, members.political_text as political,
                                                 members.religion_text as religion,
-                                                groups.name as group_name,members.group_id as group_id,members.education_level as education_level,
-                                                groups.parent_id as parent_id,groups.level as level'))
-            ->leftJoin('groups','members.group_id','=','groups.id');
+                                                members.group_id as group_id,members.education_level as education_level,
+                                                politicals.name as political_name, members.is_dangvien as is_dangvien, members.join_dang as join_dang'))
+            ->leftJoin('politicals','members.political','=','politicals.id');
         if($group_id){
             $group = Group::where('id',$group_id)->first();
             $ids = $group->getIdsG();
@@ -376,19 +385,25 @@ class ReportController extends Controller
         if($rating_year){
             $query->where('members.rating_year','=',$rating_year);
         }
-        $total = $query->orderBy('parent_id','DESC')->orderBy('level','ASC')->count();
+        if($is_deleted){
+            $query->where('members.is_deleted','=',$is_deleted);
+        }
+        if($reason_for_go_away){
+            $query->where('members.reason_for_go_away','=',$reason_for_go_away);
+        }
+        $total = $query->count();
         $page = ceil($total/1000);
-        $members = $query->orderBy('parent_id','DESC')->orderBy('level','ASC')->skip(($start-1)*1000)->take(1000)->get()->toArray();
+        $members = $query->skip(($start-1)*1000)->take(1000)->get()->toArray();
         $report_name = $request->get("report_name");
         $group_name = $request->get("group_name");
-        $data = $this->groupData($members);
+//        $data = $this->groupData($members);
         $contents = $header = $footer = '';
         if($start == 1){
             $view = View::make('export.header',['report_name'=>$report_name,'group_name'=>$group_name]);
             $header .= $view->render();
         }
         $n = (($start - 1 ) >0 )?($start - 1):0;
-        $view = View::make('export.preview', ['result' => $data,'report_name'=>$report_name,'group_name'=>$group_name,'i'=>$n*1000]);
+        $view = View::make('export.preview', ['result' => $members,'report_name'=>$report_name,'group_name'=>$group_name,'i'=>$n*1000]);
         $contents .= $view->render();
         if($start >= $page){
             $view = View::make('export.footer',['i'=>$total]);

@@ -2,7 +2,7 @@
 @section('left-bar')
     <div class="avatar-member">
         <div class="name">Nhấn để chọn ảnh</div>
-        <img id="preview" style="max-width:207px;max-height:275px;margin:auto;margin-top:4px;">
+        <img src="{{asset('images/no_image.jpg')}} " id="preview" style="max-width:207px;max-height:275px;margin:auto;margin-top:4px;">
     </div>
 @endsection
 @section('content')
@@ -220,14 +220,19 @@
             <input type="text" value="{{ old('to_date') }}" name="to_date" placeholder="dd/mm/yyyy" style="margin-right: 0px" class="form-input input-x-medium {{ $errors->has('to_date') ? 'has-error' : ''}}">
                 <hr class="divider">
             <label class="form-label">Xóa tên</label>
+                <input type="radio" class="{{ $errors->has('is_deleted') ? 'has-error' : ''}}" name="is_deleted" value="1"><label style="margin-right:13px;margin-left:6px">Có</label>
+                <input type="radio" class="{{ $errors->has('is_deleted') ? 'has-error' : ''}}" name="is_deleted" value="0" checked><label style="margin-left:6px;">Không</label>
+                <label class="form-label " for="delete_reason" style="margin-top: 10px;padding-right: 30px;padding-left: 30px">Lý do xóa tên</label>
+                <input type="text"  name="delete_reason" style="width: 500px;margin-right: 0px" class="form-input input-x-large {{ $errors->has('delete_reason') ? 'has-error' : ''}}" value="{{ old('delete_reason') }}">
             <div class="mt-10 mb-15"></div>
+                <hr class="divider">
             <label class="form-label" for="is_go_far_away">Đi làm ăn xa</label>
             <input type="radio" class="{{ $errors->has('is_go_far_away') ? 'has-error' : ''}}" name="is_go_far_away" value="1"><label style="margin-right:13px;margin-left:6px">Có</label>
-            <input type="radio" class="{{ $errors->has('is_go_far_away') ? 'has-error' : ''}}" name="is_go_far_away" value="0"><label style="margin-left:6px;">Không</label>
-            <div class="mt-10"></div>
-            <label class="form-label " for="delete_reason" style="margin-top: 10px;padding-right: 30px">Lý do xóa tên</label>
-            <input type="text"  name="delete_reason" style="width: 500px;margin-right: 0px" class="form-input input-x-large {{ $errors->has('delete_reason') ? 'has-error' : ''}}" value="{{ old('delete_reason') }}">
+            <input type="radio" class="{{ $errors->has('is_go_far_away') ? 'has-error' : ''}}" name="is_go_far_away" value="0" checked><label style="margin-left:6px;">Không</label>
+            <label class="form-label " for="reason_for_go_away" style="margin-top: 10px;padding-right: 30px;padding-left: 30px">Lý do</label>
+            <input type="text"  name="reason_for_go_away" style="width: 500px;margin-right: 0px" class="form-input input-x-large {{ $errors->has('reason_for_go_away') ? 'has-error' : ''}}" value="{{ old('reason_for_go_away') }}">
             <div class="mt-10 mb-15"></div>
+                <hr class="divider">
             <label class="form-label" for="rating">Đánh giá đoàn viên</label>
             <select style="margin-right: 0px" name="rating" id="rating" class="custom-select input-large form-select {{ $errors->has('rating') ? 'has-error' : ''}}">
                 <option value="1">Xuất sắc</option>

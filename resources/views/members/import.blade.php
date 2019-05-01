@@ -34,33 +34,7 @@
         });
         $(document).on('click','.btn-export-sample',function (e) {
             e.preventDefault();
-            $('#loading').show();
-            $.ajax({
-                url:'/member/exportsample',
-                type:'get',
-                success:function (data) {
-                    var obj = $.parseJSON(data);
-                    downloadAll(obj,'excel');
-                    $.ajax({
-                        url:'/report/delete',
-                        type:'post',
-                        headers: {
-                            'X-CSRF-TOKEN': $('input[name="_token"]').val()
-                        },
-                        data:{
-                            filelist:obj,
-                            type:'excel'
-                        },
-                        success:function () {
-                            $("#loading").hide();
-                        }
-                    });
-                },
-                error:function () {
-                    $("#loading").hide();
-                    alert('Có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại sau.');
-                }
-            })
+            window.location.href  = '/export/import_data_sample.xls'
         });
         function downloadAll(urls, type) {
             jQuery.each(urls,function (index,item) {

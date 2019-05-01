@@ -14,6 +14,7 @@
         @if(count($gr->childrens) > 0)
             <li class="has_sub {{$gr->uuid}} @isset($group)@if($group->hasFatherRelation($gr->id) === true || $group->id == $gr->id) active @endif @endisset"
                 data-uuid="{{$gr->uuid}}" data-parent="0" style="background-color: #c0ebff;">
+                <div class="@isset($group)@if($group->hasFatherRelation($gr->id) === true || $group->id == $gr->id) sub-ico @else plus-ico @endif @endisset position-list" style="margin-left:8px"></div>
                 <a style="color: #000;" href="{{route('group.list', $gr->uuid)}}">{{$gr->name}}</a>
                 <ul @isset($group)@if(!$group->hasFatherRelation($gr->id) === true && $group->id != $gr->id) style="display:none" @endif @else style="display:none"  @endisset>
                     @isset($group)

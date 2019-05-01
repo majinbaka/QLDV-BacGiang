@@ -173,19 +173,27 @@
                 <hr class="divider mt-10 mb-15">
                 <div class="mt-10 mb-15"></div>
                 <div class="row">
-                    <label >Xóa tên</label> <div class="mt-10 mb-15"></div>
+                    <label class="form-label " style="padding-right: 28px">Xóa tên</label>
+                    <select id="is_deleted" name="is_deleted" class="custom-select form-select">
+                        <option value="">Chọn...</option>
+                        <option value="1">Có</option>
+                        <option value="1">Không</option>
+                    </select>
+                    <label class="form-label " for="delete_reason" style="">Lý do xóa tên</label>
+                    <input type="text"  name="delete_reason" id="delete_reason" style="width: 500px;margin-right: 0px" class="form-input input-x-large " value="{{ old('delete_reason') }}">
+                </div>
+                <div class="row">
+                    <div class="mt-10 mb-15"></div>
                     <label class="form-label" for="is_go_far_away">Đi làm ăn xa</label>
                     <select id="is_go_far_away" name="is_go_far_away" class="custom-select form-select">
                         <option value="">Chọn...</option>
                         <option value="1">Có</option>
                         <option value="1">Không</option>
                     </select>
+                    <label class="form-label " for="reason_for_go_away" style="">Lý do</label>
+                    <input type="text"  name="reason_for_go_away" id="reason_for_go_away" style="width: 500px;margin-right: 0px" class="form-input input-x-large " value="{{ old('reason_for_go_away') }}">
                 </div>
-                <div class="mt-10 mb-15"></div>
-                <div class="row">
-                    <label class="form-label " for="delete_reason" style="">Lý do xóa tên</label>
-                    <input type="text"  name="delete_reason" id="delete_reason" style="width: 500px;margin-right: 0px" class="form-input input-x-large " value="{{ old('delete_reason') }}">
-                </div>
+
                 <hr class="divider mt-10 mb-15">
                 <div class="row">
                     <div class="mt-10 mb-15"></div>
@@ -267,6 +275,8 @@
         var delete_reason = $("#delete_reason").val();
         var rating = $("#rating").val();
         var rating_year = $("#rating_year").val();
+        var is_deleted = $("#is_deleted").val();
+        var reason_for_go_away = $("#reason_for_go_away").val();
         if(child_group_id == 0){
             alert('Vui lòng chọn 1 đơn vị');
             return false;
@@ -316,7 +326,9 @@
                 is_go_far_away:is_go_far_away,
                 delete_reason:delete_reason,
                 rating:rating,
-                rating_year:rating_year
+                rating_year:rating_year,
+                is_deleted: is_deleted,
+                reason_for_go_away:reason_for_go_away
             },
             success: function(data) {
                 var obj = $.parseJSON(data);
@@ -380,6 +392,8 @@
         var delete_reason = $("#delete_reason").val();
         var rating = $("#rating").val();
         var rating_year = $("#rating_year").val();
+        var is_deleted = $("#is_deleted").val();
+        var reason_for_go_away = $("#reason_for_go_away").val();
         if(child_group_id == 0){
             alert('Vui lòng chọn 1 đơn vị');
             return false;
@@ -429,7 +443,9 @@
                 is_go_far_away:is_go_far_away,
                 delete_reason:delete_reason,
                 rating:rating,
-                rating_year:rating_year
+                rating_year:rating_year,
+                is_deleted:is_deleted,
+                reason_for_go_away:reason_for_go_away
             },
             success: function(data) {
                 var obj = $.parseJSON(data);
@@ -490,6 +506,8 @@
         var delete_reason = $("#delete_reason").val();
         var rating = $("#rating").val();
         var rating_year = $("#rating_year").val();
+        var is_deleted = $("#is_deleted").val();
+        var reason_for_go_away = $("#reason_for_go_away").val();
         if(child_group_id == 0){
             alert('Vui lòng chọn 1 đơn vị');
             return false;
@@ -540,7 +558,9 @@
                 is_go_far_away:is_go_far_away,
                 delete_reason:delete_reason,
                 rating:rating,
-                rating_year:rating_year
+                rating_year:rating_year,
+                is_deleted:is_deleted,
+                reason_for_go_away:reason_for_go_away
             },
             success: function(data) {
                 if(data.header != ''){

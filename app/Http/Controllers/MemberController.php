@@ -99,7 +99,7 @@ class MemberController extends Controller
 
             $memberc = $members->count();
             $members = $members->paginate(20)->setPageName($page);
-
+            $groupId = $user->group->id;
             return view('home')
                 ->with('code', $code)
                 ->with('fullname', $fullname)
@@ -108,6 +108,7 @@ class MemberController extends Controller
                 ->with('groups', $groups)
                 ->with('memberc', $memberc)
                 ->with('page',$page)
+                ->with('groupId',$groupId)
                 ->withSuccess(session()->get( 'success' ));
         }
     }
@@ -323,6 +324,8 @@ class MemberController extends Controller
             $member->rating = \request()->get('rating');
             $member->rating_year = \request()->get('rating_year');
             $member->year_of_maturity_ceremony = \request()->get('year_of_maturity_ceremony');
+            $member->is_deleted = \request()->get('is_deleted');
+            $member->reason_for_go_away = \request()->get('reason_for_go_away');
             $member->save();
 
             if (request()->has('avatar'))
@@ -500,6 +503,8 @@ class MemberController extends Controller
             $member->rating = \request()->get('rating');
             $member->rating_year = \request()->get('rating_year');
             $member->year_of_maturity_ceremony = \request()->get('year_of_maturity_ceremony');
+            $member->is_deleted = \request()->get('is_deleted');
+            $member->reason_for_go_away = \request()->get('reason_for_go_away');
             $member->save();
 
             //Attachment

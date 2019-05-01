@@ -46,8 +46,8 @@ class GroupController extends Controller
             $memberc = Member::whereIn('group_id', $ids)->count();
             $groups = Group::where('level', 1)->get();
             $members = Member::whereIn('group_id', $ids)->paginate(20);
-
-            return view('home', compact('memberc', 'members', 'groups', 'group'));  
+            $groupId = 0;
+            return view('home', compact('groupId','memberc', 'members', 'groups', 'group'));
         }
         else{
             $user_group = $user->group_id;
@@ -58,8 +58,8 @@ class GroupController extends Controller
             $memberc = Member::whereIn('group_id', $ids)->count();
             $groups = Group::where('level', $user->group->level + 1)->where('parent_id', $user->group->id)->get();
             $members = Member::whereIn('group_id', $ids)->paginate(20);
-
-            return view('home', compact('memberc', 'members', 'groups', 'group'));  
+            $groupId = $group->id;
+            return view('home', compact('groupId','memberc', 'members', 'groups', 'group'));
         }
     }
 

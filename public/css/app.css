@@ -482,6 +482,7 @@ a.addnew{
     text-decoration: none;
     color: #000;
     padding-left: 20px;
+    margin-left: 10px;
 }
   
 .main-list li.active .submenu {
