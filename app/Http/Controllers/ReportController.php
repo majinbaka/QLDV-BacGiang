@@ -69,6 +69,7 @@ class ReportController extends Controller
         $rating_year = $request->get('rating_year');
         $is_deleted = $request->get('is_deleted');
         $reason_for_go_away = $request->get('reason_for_go_away');
+        $is_dangvien = $request->get('is_dangvien');
         $query = Member::select(DB::raw('members.id as id, members.fullname as fullname,members.gender as gender, members.birthday as birthday, 
                                                 members.nation_text as nation, members.position_text as position,
                                                 members.knowledge_text as knowledge, members.political_text as political,
@@ -172,6 +173,9 @@ class ReportController extends Controller
         }
         if($reason_for_go_away){
             $query->where('members.reason_for_go_away','=',$reason_for_go_away);
+        }
+        if($is_dangvien != ''){
+            $query->where('members.is_dangvien','=',$is_dangvien);
         }
         $report_name = $request->get("report_name");
         $group_name = $request->get("group_name");
@@ -287,6 +291,7 @@ class ReportController extends Controller
         $rating_year = $request->get('rating_year');
         $is_deleted = $request->get('is_deleted');
         $reason_for_go_away = $request->get('reason_for_go_away');
+        $is_dangvien = $request->get('is_dangvien');
         $query = Member::select(DB::raw('members.id as id, members.fullname as fullname,members.gender as gender, members.birthday as birthday, 
                                                 members.nation_text as nation, members.position_text as position,
                                                 members.knowledge_text as knowledge, members.political_text as political,
@@ -390,6 +395,9 @@ class ReportController extends Controller
         }
         if($reason_for_go_away){
             $query->where('members.reason_for_go_away','=',$reason_for_go_away);
+        }
+        if($is_dangvien != ''){
+            $query->where('members.is_dangvien','=',$is_dangvien);
         }
         $total = $query->count();
         $page = ceil($total/1000);

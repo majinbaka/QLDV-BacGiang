@@ -1,5 +1,17 @@
 @extends('layouts.app')
 @section('content')
+    @if(session()->get('message_success'))
+        <div class="my-notify-success">
+            {{session()->get('message_success')}}
+            @php session()->forget('message_success') @endphp
+        </div>
+    @endif
+    @if(session()->get('message_error'))
+        <div class="my-notify-error">
+            {{session()->get('message_error')}}
+            @php session()->forget('message_error') @endphp
+        </div>
+    @endif
     <div class="mt-10 mb-15"></div>
     <div class="search-area report-form">
         <div class="title-bar">

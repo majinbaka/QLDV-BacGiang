@@ -67,6 +67,12 @@
                 <hr class="divider mt-10 mb-15">
                 <div class="mt-10 mb-15"></div>
                 <div class="row">
+                    <label class="form-label" for="knowledge" >Đảng viên</label>
+                    <select class="form-select" name="is_dangvien" id="is_dangvien">
+                        <option value="">Chọn...</option>
+                        <option value="1">Có</option>
+                        <option value="0">Không</option>
+                    </select>
                     <label class="form-label" for="knowledge" style="padding-right: 15px">Trình độ</label>
                     <select class="form-select" name="knowledge" id="knowledge">
                         <option value="">Chọn...</option>
@@ -277,6 +283,7 @@
         var rating_year = $("#rating_year").val();
         var is_deleted = $("#is_deleted").val();
         var reason_for_go_away = $("#reason_for_go_away").val();
+        var is_dangvien = $('#is_dangvien').val();
         if(child_group_id == 0){
             alert('Vui lòng chọn 1 đơn vị');
             return false;
@@ -328,7 +335,8 @@
                 rating:rating,
                 rating_year:rating_year,
                 is_deleted: is_deleted,
-                reason_for_go_away:reason_for_go_away
+                reason_for_go_away:reason_for_go_away,
+                is_dangvien: is_dangvien
             },
             success: function(data) {
                 var obj = $.parseJSON(data);
@@ -394,6 +402,7 @@
         var rating_year = $("#rating_year").val();
         var is_deleted = $("#is_deleted").val();
         var reason_for_go_away = $("#reason_for_go_away").val();
+        var is_dangvien = $('#is_dangvien').val();
         if(child_group_id == 0){
             alert('Vui lòng chọn 1 đơn vị');
             return false;
@@ -445,7 +454,8 @@
                 rating:rating,
                 rating_year:rating_year,
                 is_deleted:is_deleted,
-                reason_for_go_away:reason_for_go_away
+                reason_for_go_away:reason_for_go_away,
+                is_dangvien: is_dangvien
             },
             success: function(data) {
                 var obj = $.parseJSON(data);
@@ -508,6 +518,7 @@
         var rating_year = $("#rating_year").val();
         var is_deleted = $("#is_deleted").val();
         var reason_for_go_away = $("#reason_for_go_away").val();
+        var is_dangvien = $('#is_dangvien').val();
         if(child_group_id == 0){
             alert('Vui lòng chọn 1 đơn vị');
             return false;
@@ -560,7 +571,8 @@
                 rating:rating,
                 rating_year:rating_year,
                 is_deleted:is_deleted,
-                reason_for_go_away:reason_for_go_away
+                reason_for_go_away:reason_for_go_away,
+                is_dangvien: is_dangvien
             },
             success: function(data) {
                 if(data.header != ''){
