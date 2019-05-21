@@ -70,6 +70,7 @@
                     @can ('user')
                     <li @if(in_array(\Route::currentRouteName(), ["manage.index","user.index", "user.create"])) class="active" @endif><a href="{{route('user.index')}}">QUẢN TRỊ</a></li>
                     @endcan
+                    <li><a href="{{asset('huong_dan_phan_mem_quan_ly_doan_vien.pdf')}}" target="_blank">HƯỚNG DẪN</a></li>
                 </ul>
             </div>
         </div>

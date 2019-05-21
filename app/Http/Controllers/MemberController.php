@@ -583,8 +583,8 @@ class MemberController extends Controller
         if ($request->hasFile('import_xls')) {
             $destinationPath = 'public/import';
             $extension = $request->file('import_xls')->getClientOriginalExtension();
-            if($extension != 'xls'){
-                return redirect('/member/import')->withErrors(['File sai định dạng. Vui lòng chọn file .xls']);
+            if($extension != 'xls' && $extension != 'xlsx'){
+                return redirect('/member/import')->withErrors(['File sai định dạng. Vui lòng chọn file .xls hoặc .xlsx']);
             }
             $path = $request->file('import_xls')->store($destinationPath);
             $chk = false;

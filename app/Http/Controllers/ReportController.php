@@ -90,7 +90,7 @@ class ReportController extends Controller
         if($term){
             $query->where('members.term','like','"%'.$term.'%"');
         }
-        if($gender){
+        if(!is_null($gender)){
             $query->where('members.gender','=',$gender);
         }
         if($birthday_from){
@@ -312,7 +312,7 @@ class ReportController extends Controller
         if($term && $term != 0){
             $query->where('members.terms',$term);
         }
-        if($gender){
+        if(!is_null($gender)){
             $query->where('members.gender','=',$gender);
         }
         if($birthday_from){

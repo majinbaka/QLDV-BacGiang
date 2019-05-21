@@ -31,7 +31,7 @@
                 <div class="mt-10 mb-15"></div>
                 <div class="row">
                     <label>Bước 2: Chọn file dữ liệu</label>
-                    <input class="form-input input-x-medium" type="file" name="import_xls" id="import_xls" style="width: 200px; margin-left: 19px" required accept=".xls">
+                    <input class="form-input input-x-medium" type="file" name="import_xls" id="import_xls" style="width: 200px; margin-left: 19px" required accept=".xls,.xlsx">
                     <button type="submit" class="btn-import btn btn-large btn-primary">Chấp nhận</button>
                 </div>
             </form>
@@ -46,7 +46,7 @@
         });
         $(document).on('click','.btn-export-sample',function (e) {
             e.preventDefault();
-            window.location.href  = '/export/import_data_sample.xls'
+            window.location.href  = '/export/import_data_sample.xlsx'
         });
         function downloadAll(urls, type) {
             jQuery.each(urls,function (index,item) {
